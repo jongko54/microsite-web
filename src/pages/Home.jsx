@@ -1,9 +1,26 @@
 import React from 'react'
-import { Title } from '../components/Font'
+import CardList from '../components/MainPage/CardList';
+import Community from '../components/MainPage/Community';
+import FinanceGoods from '../components/MainPage/FinanceGoods';
+import Infomation from '../components/MainPage/Infomation';
+import MainSlider from '../components/MainPage/MainSlider';
+import Plaza from '../components/MainPage/Plaza';
 
+import Layout from '../layout/index';
 function Home() {
   return (
-    <Title bold='100' size='20px'>Home</Title>
+    <Layout>
+      <MainSlider />
+      <Plaza scrollY={'500'} />
+      <Infomation 
+        scrollY1={'1700'}
+        scrollY2={'1400'}
+      />
+      <Community />
+      <CardList />
+      <FinanceGoods />
+    </Layout>
+    
   )
 }
 

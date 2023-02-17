@@ -1,0 +1,26 @@
+import React from 'react'
+import styled from 'styled-components'
+import theme from '../../style/Theme';
+
+const Wrap = styled.div`
+  padding-left: 12.5%;
+  padding-right: 12.5%;
+  padding-top: ${props => props.top};
+  padding-bottom: ${props => props.bottom};
+  background-color: ${props => theme.color[props.color]};
+  background-image: url(${(props) => props.bgImg});
+  background-repeat: no-repeat;
+  background-size: 30%;
+  background-position: top left;
+  position: relative;
+`;
+
+function Section({children, top, bottom, bgImg, color}) {
+  return (
+    <Wrap top={top} bottom={bottom} bgImg={bgImg} color={color}>
+      {children}
+    </Wrap>
+  )
+}
+
+export default Section

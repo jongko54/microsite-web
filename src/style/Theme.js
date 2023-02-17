@@ -7,7 +7,7 @@ const theme = {
   color: {
     PRIMARY: '#4575F5',
     SECONDARY: '#6F85E3',
-    POINT: '#E6833B',
+    POINT: '#F58839',
     WARNING: '#FF6060',
     SUCCESS: '#4575F5', 
     BLACK0: '#252525',
@@ -16,7 +16,9 @@ const theme = {
     BLACK4: '#545454',
     WHITE: '#FFFFFF',
     GRAY: '#6C6C6C',
-    BG_WHITE: '#F9F9F9'
+    BG_WHITE: '#FAFAFA',
+    BG_GRAY: '#F9F9F9',
+    BG_BLACK:'#333333',
   },
   gradientsColor: {
     GRADIENT0: `linear-gradient(0deg, rgba(89, 116, 255, 0.5) 0%, rgba(95, 161, 255, 0.5) 61.8%, rgba(99, 189, 255, 0.5) 100%)`,
