@@ -5,7 +5,9 @@ import TitleSet from '../TitleSet';
 import left from '../../assets/img/left_bg.png';
 import right from '../../assets/img/right_bg.png';
 import arrow from '../../assets/img/arrowIcon.png';
+import mb_arrow from '../../assets/img/MbArrowIcon.png';
 import { useScroll } from '../../hooks/useScroll';
+import useWindowSize from '../../hooks/useWindowSize';
 
 const LeftBackground = styled.div`
   position: absolute;
@@ -33,6 +35,12 @@ const RightBackground = styled.div`
   &.show {
     opacity: 1;
   }
+
+  ${(props) => props.theme.window.mobile} {
+    width: 53.4%;
+    top: -7.5%;
+    right: -22%;
+  }
 `;
 
 const Info = styled.div`
@@ -41,6 +49,12 @@ const Info = styled.div`
   padding-top: 30%;
   margin: 5.9% 0 0;
   position: relative;
+
+  ${(props) => props.theme.window.mobile} {
+    width: 100%;
+    margin: 11% 0 0;
+    padding-top: 98%;
+  }
   
 `;
 
@@ -64,14 +78,15 @@ const GoToMoreButton = styled.div`
   right: -35%;
 
   > h3 {
-    padding-left: 30px;
     height: 69px;
     display: flex;
     align-items: center;
-    font-size: 30px;
+    font-size: 1.5rem;
     color: #2F2F2F;
     font-weight: 200;
     position: relative;
+    padding-left: 6.5%;
+    white-space: nowrap;
     :hover::before {
       animation: ${mouseAnimation} 2s infinite;
     }
@@ -90,23 +105,42 @@ const GoToMoreButton = styled.div`
       transition: all 1s;
     }
   }
+
+  ${(props) => props.theme.window.mobile} {
+    top: 85%;
+    left: 15%;
+    > h3 {
+      font-size: 1rem;
+      ::before {
+        width: 25px;
+        height: 25px;
+        top: 36%;
+        left: -10%;
+      }
+    }
+
+    
+  }
 `;
 
 const Arrow = styled.img`
   z-index: 1;
+  ${(props) => props.theme.window.mobile} {
 
-  
+  }
 `;
 
 function Infomation({scrollY1, scrollY2}) {
   const { y } = useScroll();
+  const { width } = useWindowSize();
   console.log(y)
   return (
     <Section 
-      top='5%' 
-      bottom='5.8%'
+      top={width > 768 ? '5%' : '18%'}
+      bottom={width > 768 ? '5.8%' : '20%'}
       scrollY1={scrollY1}
       scrollY2={scrollY2}
+      
     >
       <LeftBackground className={y > scrollY1 ? 'show' : null}>
         <img src={left} alt='insurobo'  />
@@ -118,11 +152,11 @@ function Infomation({scrollY1, scrollY2}) {
         small_title='정보 알림이'
         big_title1='소상공인&nbsp;'
         big_title2='정보마당'
-        row
+        row={width > 768 ? true : false}
       />
         <Info>
           <GoToMoreButton>
-            <Arrow src={arrow} alt='보러가기' />
+            <Arrow src={width > 768 ? arrow : mb_arrow} alt='보러가기' />
             <h3>지원사업 더 보러가기</h3>
           </GoToMoreButton>
         </Info>

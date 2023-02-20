@@ -8,6 +8,11 @@ const Wrap = styled.header`
   justify-content: center;
   align-items: center;
   padding: 2.2% 0;
+
+  ${(props) => props.theme.window.tab} {
+    padding: 4% 0;
+
+  }
 `;
 
 const Nav = styled.nav`
@@ -15,9 +20,14 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+ ${(props) => props.theme.window.mobile} {
+    width: 85.33333333333333%;
+ } 
 `;
 
 const LogoBox = styled.button`
+  width: 23.19444444444444%;
   display: flex;
   align-items: center;
   
@@ -25,17 +35,21 @@ const LogoBox = styled.button`
     white-space: nowrap;
     letter-spacing: -2px;
   }
-`;
+  ${(props) => props.theme.window.tab} {
+      width: 41.875%;
 
-const Logo = styled.img`
-  margin-right: 5px;
+  }
 `;
 
 const Button = styled.button`
   border: 1px solid #393939;
-  font-size: 1.5625rem;
-  padding: 12px 10px;
-  line-height: 36px;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  padding: 0.86% 1.2%;
+  ${(props) => props.theme.window.mobile} {
+    font-size: 1.133333333333333rem;
+    padding: 4.4% 5.7%;
+  }
 `;
 
 
@@ -48,9 +62,9 @@ function Header() {
     <Wrap>
       <Nav>
         <LogoBox onClick={() => handleClick('/test')}>
-          <Logo src={logo} alt='소상공인 지원센터' />
+          <img src={logo} alt='소상공인 지원센터' />
         </LogoBox>
-        <Button onClick={() => handleClick('/')}>풍수해보험 가입확인</Button>
+        <Button onClick={() => handleClick('/')}>가입확인</Button>
       </Nav>
     </Wrap>
   )

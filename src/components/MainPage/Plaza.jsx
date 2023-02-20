@@ -10,6 +10,8 @@ import { Text, Title } from '../Font';
 import { useScroll } from '../../hooks/useScroll';
 import bg_R from '../../assets/img/bg_Img_R.png';
 
+import useWindowSize from '../../hooks/useWindowSize';
+
 const data = [
   {
     id: 1,
@@ -38,7 +40,14 @@ const CardList = styled.ul`
   display: flex;
   justify-content: space-between;
   padding: 8.76% 0;
+
+  ${(props) => props.theme.window.mobile} {
+    flex-direction: column;
+    align-items: center;
+    padding: 18.5% 0 18.3%;
+  }
 `;
+
 const Card = styled.li`
   width: 29.71768202080238%;
   border-radius: 18px;
@@ -48,7 +57,8 @@ const Card = styled.li`
   opacity: 0;
   transform: translate(0, 50px);
   transition: transform 1.5s ease, opacity 1s ease;
-
+  flex-shrink: 1;
+  
   &.delay1 {
     transform: translate(0, 0);
     opacity: 1;
@@ -63,6 +73,7 @@ const Card = styled.li`
     transform: translate(0, 0);
     opacity: 1;
     transition-delay: 0.8s;
+
   }
   > p {
     white-space: pre-wrap;
@@ -72,15 +83,40 @@ const Card = styled.li`
   > h1 {
     text-align: end;
   }
+
+  ${(props) => props.theme.window.mobile} {
+    width: 93.75%;
+    margin-bottom: 10%;
+    padding: 8.9% 7.2% 7%;
+
+    :last-child {
+      margin-bottom: 0;
+    }
+
+    > p {
+      padding-top: 0;
+      padding-bottom: 10.6%;
+    }
+  }
+`;
+
+const ImgWrap = styled.div`
+  ${(props) => props.theme.window.mobile} {
+    height: 63px;
+    > img {
+      max-width: 50px;
+      max-height: 50px;
+    }
+  }
 `;
 
 function Plaza({scrollY}) {
   const { y } = useScroll();
-
+  const { width } = useWindowSize();
   return (
     <Section 
-      top='10.66%' 
-      bottom='5.8%'
+      top={width > 768 ? '10.66%' : '16.5%'} 
+      bottom={width > 768 ? '5.8%' : '0%'}
       bgImg={bg_R}
       scrollY={scrollY}
     >
@@ -92,9 +128,11 @@ function Plaza({scrollY}) {
       <CardList>
         {data.map((dt) => (
           <Card key={dt.id} className={y > scrollY ? `${dt.className}` : null}>
-            <img src={dt.icon} alt='아이콘' />
-            <Text size='23px' bold='400' color='BLACK4'>{dt.text}</Text>
-            <Title size='30px'>{dt.title}</Title>
+            <ImgWrap>
+              <img src={dt.icon} alt='아이콘' />
+            </ImgWrap>
+            <Text size={width > 768 ? '1.15rem' : '1rem' } bold='400' color='BLACK4'>{dt.text}</Text>
+            <Title size={width > 768 ? '1.5rem' : '1.2rem' }>{dt.title}</Title>
           </Card>
         ))}
       </CardList>

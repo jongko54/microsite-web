@@ -8,8 +8,14 @@ import { Title } from '../Font';
 import slider1 from '../../assets/img/slider1.png';
 import slider2 from '../../assets/img/slider2.png';
 import slider3 from '../../assets/img/slider3.png';
+import mb_slider1 from '../../assets/img/mb_slider1.png';
+import mb_slider2 from '../../assets/img/mb_slider2.png';
+import mb_slider3 from '../../assets/img/mb_slider3.png';
 import play from '../../assets/img/playIcon.png';
 import pause from '../../assets/img/pauseIcon.png';
+
+import useWindowSize from '../../hooks/useWindowSize';
+
 
 const data = [
   {
@@ -19,6 +25,7 @@ const data = [
     t_line3: '무료지원 사업',
     link: '',
     bg_img: slider1,
+    mb_bg_img: mb_slider1,
     color: 'PRIMARY',
   },
   {
@@ -28,6 +35,7 @@ const data = [
     t_line3: '오픈 EVENT',
     link: '',
     bg_img: slider2,
+    mb_bg_img: mb_slider2,
     color: 'SECONDARY',
   },
   {
@@ -37,6 +45,7 @@ const data = [
     t_line3: '지원정책',
     link: '',
     bg_img: slider3,
+    mb_bg_img: mb_slider3,
     color: 'POINT',
   }
 ];
@@ -52,29 +61,48 @@ const StyledSlider = styled(Slider)`
 const Banner = styled.div`
   background-image: url(${(props) => props.bgImg});
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: cover;
   background-position: left;
+  padding: 10.03% 12.5% 21.17%;
+  ${(props) => props.theme.window.tab} {
+   
+  }
+  ${(props) => props.theme.window.mobile} {
+    background-image: url(${(props) => props.mbBgImg});
+    padding: 33.2% 7.466666666666667% 129.4%;
+   
+  }
 `;
 
 const DetailButton = styled.button`
   font-family: 'SCoreDream';
   color: ${props => props.theme.color[props.color]};
   background-color: #FFFFFF;
-  font-size: 20px;
-  padding: 12.5px 52px;
-  border-radius: 100px;
+  font-size: 1rem;
+  padding: 0.6rem 1.666666666666667rem;
+  border-radius: 5rem;
   margin-top: 3.7%;
-`;
 
+  ${(props) => props.theme.window.mobile} {
+    padding: 0.6rem 1.666666666666667rem;
+    margin-top: 6.5%;
+  }
+`;
+ 
 const TextBox = styled.div`
-  padding: 10% 12.5% 21.17%;
+  
   > h1 {
-    font-size: 60px;
     color: #FFFFFF;
     line-height: 1.25;
   }
+
+  ${(props) => props.theme.window.mobile} {
+
+  }
+
 `;
 
+// 재생버튼은 px로 고정해야함
 const SliderPlayerGroup = styled.div`
   position: absolute;
   bottom: 10%;
@@ -82,14 +110,25 @@ const SliderPlayerGroup = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 340px;
-  height: 55px;
+  width: 350px;
+  height: 2.75rem;
+
+  ${(props) => props.theme.window.mobile} {
+    width: 200px;
+    left: 7.466666666666667%;
+    bottom: 50%;
+  }
 `;
+
 
 const ButtonBox = styled.div`
   width: 46px;
   display: flex;
   justify-content: space-between;
+
+  ${(props) => props.theme.window.mobile} {
+    width: 31px;
+  }
 `;
 
 const PlayButton = styled.button`
@@ -98,6 +137,10 @@ const PlayButton = styled.button`
   background-image: url(${play});
   background-repeat: no-repeat;
   background-size: contain;
+  ${(props) => props.theme.window.mobile} {
+    width: 15px;
+    height: 15px;
+  } 
 `;
 const PauseButton = styled.button`
   width: 12px;
@@ -105,6 +148,10 @@ const PauseButton = styled.button`
   background-image: url(${pause});
   background-repeat: no-repeat;
   background-size: contain;
+  ${(props) => props.theme.window.mobile} {
+    width: 10px;
+    height: 15px;
+  } 
 `;
 
 const ProgressWrap = styled.div`
@@ -121,14 +168,26 @@ const ProgressBar = styled.div`
     height: 3px;
     transition: 1s ease-in-out;
   }
-  
-`;
+  ${(props) => props.theme.window.mobile} {
+    width: 120px;
+    margin-right: 14px;
+    .progress-bar {
+      height: 2px;
+    }
+  }
 
+`;
 const Page = styled.h2`
-  font-size: 15px;
+  font-size: 0.75rem;
   font-weight: 200;
   color: #FFFFFF;
+  white-space: nowrap;
+
+  ${(props) => props.theme.window.mobile} {
+    font-size: 0.9333333333333333rem;
+  }
 `;
+/////////////////////////////////////
 
 const Progress = ({ currentSlide, totalSlides }) => {
   const progress = ((currentSlide + 1) / totalSlides) * 100;
@@ -143,6 +202,7 @@ const Progress = ({ currentSlide, totalSlides }) => {
 }
 
 function MainSlider() {
+  const { width } = useWindowSize();
   const sliderRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -162,13 +222,15 @@ function MainSlider() {
   
   const settings = {
     dots: false,
-    speed: 3000,
+    speed: 2500,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
     infinite: true,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 1500,
+    pauseOnHover: false,
   }
+
   return (
     <Wrap>
       <StyledSlider
@@ -178,11 +240,11 @@ function MainSlider() {
         {...settings}
       >
         {data.map((dt) => (
-          <Banner key={dt.id} bgImg={dt.bg_img}>
+          <Banner key={dt.id} bgImg={dt.bg_img} mbBgImg={dt.mb_bg_img}>
             <TextBox>
-              <Title bold='300'>{dt.t_line1}</Title>
-              <Title bold='300'>{dt.t_line2}</Title>
-              <Title>{dt.t_line3}</Title>
+              <Title bold='300' size={width > 768 ? '3rem' : '1.866666666666667rem'} mb_size=''>{dt.t_line1}</Title>
+              <Title bold='300' size={width > 768 ? '3rem' : '1.866666666666667rem'}>{dt.t_line2}</Title>
+              <Title size={width > 768 ? '3rem' : '1.866666666666667rem'}>{dt.t_line3}</Title>
               <DetailButton onClick={dt.link} color={dt.color}>자세히보기</DetailButton>
             </TextBox>
           </Banner>

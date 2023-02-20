@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Section from '../components/Section';
 import { Text } from '../components/Font'; 
 import cs from '../assets/img/customer_service_center_icon.png';
+import useWindowSize from '../hooks/useWindowSize';
 
 
 const FooterWrap = styled.footer`
@@ -67,9 +68,13 @@ const Icon = styled.div`
 
 
 function Footer() {
-
+  const {width} = useWindowSize();
   return (
-    <Section color='BG_BLACK' top='5%' bottom='2%'>
+    <Section 
+      color='BG_BLACK' 
+      top={width > 768 ? '5%' : '6%'} 
+      bottom={width > 768 ? '2%' : '6%'}
+    >
       <FooterWrap>
         <LeftContent>
           <Menu>

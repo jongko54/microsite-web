@@ -17,7 +17,7 @@ function Home() {
         scrollY2={'1400'}
       />
       <Community />
-      <CardList />
+      <CardList scrollY={'2200'}/>
       <FinanceGoods />
     </Layout>
     

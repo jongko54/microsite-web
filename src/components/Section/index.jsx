@@ -10,9 +10,14 @@ const Wrap = styled.div`
   background-color: ${props => theme.color[props.color]};
   background-image: url(${(props) => props.bgImg});
   background-repeat: no-repeat;
-  background-size: 30%;
+  background-size: 50%;
   background-position: top left;
   position: relative;
+
+  ${(props) => props.theme.window.mobile} {
+    padding-left: 6.5%;
+    padding-right: 6.5%;
+  }
 `;
 
 function Section({children, top, bottom, bgImg, color}) {
