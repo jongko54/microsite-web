@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Section from '../Section';
+import Content from '../Content';
 import TitleSet from '../TitleSet';
 
 import icon1 from '../../assets/img/bell.png';
@@ -114,7 +114,7 @@ function Plaza({scrollY}) {
   const { y } = useScroll();
   const { width } = useWindowSize();
   return (
-    <Section 
+    <Content 
       top={width > 768 ? '10.66%' : '16.5%'} 
       bottom={width > 768 ? '5.8%' : '0%'}
       bgImg={bg_R}
@@ -136,7 +136,7 @@ function Plaza({scrollY}) {
           </Card>
         ))}
       </CardList>
-    </Section>
+    </Content>
   )
 }
 

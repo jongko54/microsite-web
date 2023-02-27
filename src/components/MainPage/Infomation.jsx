@@ -1,6 +1,6 @@
 import React from 'react'
 import styled,{ keyframes } from 'styled-components'
-import Section from '../Section';
+import Content from '../Content';
 import TitleSet from '../TitleSet';
 import left from '../../assets/img/left_bg.png';
 import right from '../../assets/img/right_bg.png';
@@ -8,10 +8,10 @@ import arrow from '../../assets/img/arrowIcon.png';
 import mb_arrow from '../../assets/img/MbArrowIcon.png';
 import { useScroll } from '../../hooks/useScroll';
 import useWindowSize from '../../hooks/useWindowSize';
+import { Link } from 'react-router-dom';
 
 const LeftBackground = styled.div`
   position: absolute;
-  z-index: -1;
   top: -7%;
   left: -39%;
   width: 80%;
@@ -21,11 +21,16 @@ const LeftBackground = styled.div`
   &.show {
     opacity: 1;
   }
+
+  ${(props) => props.theme.window.mobile} {
+    top: 35%;
+    left: -80%;
+    width: 160%;
+  }
 `;
 
 const RightBackground = styled.div`
   position: absolute;
-  z-index: -1;
   top: -20%;
   right: -30%;
   width: 50%;
@@ -109,7 +114,7 @@ const GoToMoreButton = styled.div`
   ${(props) => props.theme.window.mobile} {
     top: 85%;
     left: 15%;
-    > h3 {
+    h3 {
       font-size: 1rem;
       ::before {
         width: 25px;
@@ -125,6 +130,7 @@ const GoToMoreButton = styled.div`
 
 const Arrow = styled.img`
   z-index: 1;
+
   ${(props) => props.theme.window.mobile} {
 
   }
@@ -135,7 +141,7 @@ function Infomation({scrollY1, scrollY2}) {
   const { width } = useWindowSize();
   console.log(y)
   return (
-    <Section 
+    <Content
       top={width > 768 ? '5%' : '18%'}
       bottom={width > 768 ? '5.8%' : '20%'}
       scrollY1={scrollY1}
@@ -157,11 +163,11 @@ function Infomation({scrollY1, scrollY2}) {
         <Info>
           <GoToMoreButton>
             <Arrow src={width > 768 ? arrow : mb_arrow} alt='보러가기' />
-            <h3>지원사업 더 보러가기</h3>
+            <h3><Link to='/board'>지원사업 더 보러가기</Link></h3>
           </GoToMoreButton>
         </Info>
         
-    </Section>
+    </Content>
   )
 }
 

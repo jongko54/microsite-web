@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Section from '../Section'
+import Content from '../Content'
 import tex from '../../assets/img/tex_refund.png';
 import promotion from '../../assets/img/promotion.png';
 import onestop from '../../assets/img/onestop.png';
@@ -98,7 +98,7 @@ function CardList({scrollY}) {
   const { y } = useScroll();
   const { width } = useWindowSize();
   return (
-    <Section 
+    <Content 
       top={width > 768 ? '8.01%' : '18%'}
       bottom={width > 768 ? '11.5%' : '18%'}
       color='BG_WHITE'
@@ -112,7 +112,7 @@ function CardList({scrollY}) {
           </CardWrap>
         ))}
       </CardListWrap>
-    </Section>
+    </Content>
   )
 }
 

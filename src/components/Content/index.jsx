@@ -10,9 +10,10 @@ const Wrap = styled.div`
   background-color: ${props => theme.color[props.color]};
   background-image: url(${(props) => props.bgImg});
   background-repeat: no-repeat;
-  background-size: 50%;
+  background-size: 29%;
   background-position: top left;
   position: relative;
+
 
   ${(props) => props.theme.window.mobile} {
     padding-left: 6.5%;
@@ -20,7 +21,7 @@ const Wrap = styled.div`
   }
 `;
 
-function Section({children, top, bottom, bgImg, color}) {
+function Content({children, top, bottom, bgImg, color}) {
   return (
     <Wrap top={top} bottom={bottom} bgImg={bgImg} color={color}>
       {children}
@@ -28,4 +29,4 @@ function Section({children, top, bottom, bgImg, color}) {
   )
 }
 
-export default Section
+export default Content

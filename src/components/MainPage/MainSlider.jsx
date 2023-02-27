@@ -15,6 +15,7 @@ import play from '../../assets/img/playIcon.png';
 import pause from '../../assets/img/pauseIcon.png';
 
 import useWindowSize from '../../hooks/useWindowSize';
+import { Link } from 'react-router-dom';
 
 
 const data = [
@@ -33,7 +34,7 @@ const data = [
     t_line1: '소상공인',
     t_line2: '지원센터',
     t_line3: '오픈 EVENT',
-    link: '',
+    link: '/event',
     bg_img: slider2,
     mb_bg_img: mb_slider2,
     color: 'SECONDARY',
@@ -43,7 +44,7 @@ const data = [
     t_line1: '2023년',
     t_line2: '소상공인',
     t_line3: '지원정책',
-    link: '',
+    link: '/bizsupport',
     bg_img: slider3,
     mb_bg_img: mb_slider3,
     color: 'POINT',
@@ -74,7 +75,7 @@ const Banner = styled.div`
   }
 `;
 
-const DetailButton = styled.button`
+const StyleLink = styled(Link)`
   font-family: 'SCoreDream';
   color: ${props => props.theme.color[props.color]};
   background-color: #FFFFFF;
@@ -82,7 +83,7 @@ const DetailButton = styled.button`
   padding: 0.6rem 1.666666666666667rem;
   border-radius: 5rem;
   margin-top: 3.7%;
-
+  display: inline-block;
   ${(props) => props.theme.window.mobile} {
     padding: 0.6rem 1.666666666666667rem;
     margin-top: 6.5%;
@@ -231,6 +232,8 @@ function MainSlider() {
     pauseOnHover: false,
   }
 
+
+
   return (
     <Wrap>
       <StyledSlider
@@ -242,10 +245,12 @@ function MainSlider() {
         {data.map((dt) => (
           <Banner key={dt.id} bgImg={dt.bg_img} mbBgImg={dt.mb_bg_img}>
             <TextBox>
-              <Title bold='300' size={width > 768 ? '3rem' : '1.866666666666667rem'} mb_size=''>{dt.t_line1}</Title>
+              <Title bold='300' size={width > 768 ? '3rem' : '1.866666666666667rem'}>{dt.t_line1}</Title>
               <Title bold='300' size={width > 768 ? '3rem' : '1.866666666666667rem'}>{dt.t_line2}</Title>
               <Title size={width > 768 ? '3rem' : '1.866666666666667rem'}>{dt.t_line3}</Title>
-              <DetailButton onClick={dt.link} color={dt.color}>자세히보기</DetailButton>
+              <StyleLink to={dt.link} color={dt.color}>
+                자세히보기
+              </StyleLink>
             </TextBox>
           </Banner>
         ))}

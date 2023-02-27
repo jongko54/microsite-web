@@ -69,6 +69,7 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     user-select: none;
     -webkit-overflow-scrolling: none;
+    
   }
   article, aside, details, figcaption, figure, 
   footer, header, hgroup, menu, nav, section, img {

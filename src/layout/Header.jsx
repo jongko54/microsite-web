@@ -8,7 +8,8 @@ const Wrap = styled.header`
   justify-content: center;
   align-items: center;
   padding: 2.2% 0;
-
+  background-color: #FFFFFF;
+  
   ${(props) => props.theme.window.tab} {
     padding: 4% 0;
 
@@ -61,7 +62,7 @@ function Header() {
   return (
     <Wrap>
       <Nav>
-        <LogoBox onClick={() => handleClick('/test')}>
+        <LogoBox onClick={() => handleClick('/')}>
           <img src={logo} alt='소상공인 지원센터' />
         </LogoBox>
         <Button onClick={() => handleClick('/')}>가입확인</Button>

@@ -1,17 +1,17 @@
 import React from 'react'
-import Board from '../Board'
-import Section from '../Section'
+import Faq from '../Post/Faq'
+import Content from '../Content'
 import TitleSet from '../TitleSet'
 
 function Community() {
   return (
-    <Section bottom='10%'>
+    <Content bottom='10%'>
       <TitleSet 
         small_title='서로 공유해요!!'
         big_title2='커뮤니티'
       />
-      <Board />
-    </Section>
+      <Faq />
+    </Content>
   )
 }
 

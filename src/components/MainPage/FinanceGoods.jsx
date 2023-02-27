@@ -1,5 +1,5 @@
 import React from 'react'
-import Section from '../Section'
+import Content from '../Content'
 import TitleSet from '../TitleSet'
 import styled from 'styled-components';
 import { Text, Title } from '../Font';
@@ -11,7 +11,7 @@ const GoodsList = styled.ul`
   display: flex;
   justify-content: space-between;
   /* padding: 7%; */
-  padding: 5%;
+  padding: 7% 5%;
   ${(props) => props.theme.window.tab} {
     flex-direction: column;
     padding: 10% 0 0 0;
@@ -97,7 +97,7 @@ const TextArea = styled.div`
 function FinanceGoods() {
   const {width} = useWindowSize();
   return (
-    <Section 
+    <Content 
       top={width > 768 ? '5%' : '18%'} 
       bottom={width > 768 ? '5%' : '15%'}
     >
@@ -147,7 +147,7 @@ function FinanceGoods() {
           </TextArea>
         </Card>
       </GoodsList>
-    </Section>
+    </Content>
   )
 }
 

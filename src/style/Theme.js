@@ -1,6 +1,6 @@
 const size = {
   mobile: 768,
-  tab: 1024,
+  tab: 1567,
 }
 
 const theme = {
@@ -8,6 +8,7 @@ const theme = {
     PRIMARY: '#4575F5',
     SECONDARY: '#6F85E3',
     POINT: '#F58839',
+    ORANGE: '#FF9243',
     WARNING: '#FF6060',
     SUCCESS: '#4575F5', 
     BLACK0: '#252525',
@@ -16,7 +17,10 @@ const theme = {
     BLACK4: '#545454',
     WHITE: '#FFFFFF',
     GRAY: '#6C6C6C',
+    GRAY2: '#EBEBEB',
+    BLUE: '#176FFF',
     BG_WHITE: '#FAFAFA',
+    BG_WHITE2: '#F5F5F5',
     BG_GRAY: '#F9F9F9',
     BG_BLACK:'#333333',
   },
