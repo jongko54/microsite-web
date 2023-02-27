@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text } from '../Font';
 
 const Wrap = styled.div`
   min-width: 1380px;
