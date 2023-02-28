@@ -13,17 +13,21 @@ function App() {
   
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
+     
+        <GlobalStyle />
+        
+   
+
       <Router>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/event' element={<Event />} />
-          <Route path='/bizsupport/*' element={<BizSupport />} />
-          <Route path='/bizsupport/:list' element={<List />} />
-          <Route path='/test' element={<TestPage />} />
-          <Route path='/board' element={<Board />} />
-        </Routes>
-      </Router>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/event' element={<Event />} />
+            <Route path='/bizsupport/*' element={<BizSupport />} />
+            <Route path='/bizsupport/:list' element={<List />} />
+            <Route path='/test' element={<TestPage />} />
+            <Route path='/board' element={<Board />} />
+          </Routes>
+        </Router>
     </ThemeProvider>
   );
 }

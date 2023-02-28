@@ -146,7 +146,6 @@ function Infomation({scrollY1, scrollY2}) {
       bottom={width > 768 ? '5.8%' : '20%'}
       scrollY1={scrollY1}
       scrollY2={scrollY2}
-      
     >
       <LeftBackground className={y > scrollY1 ? 'show' : null}>
         <img src={left} alt='insurobo'  />

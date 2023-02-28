@@ -1,6 +1,6 @@
 const size = {
   mobile: 768,
-  tab: 1567,
+  tab: 1440,
 }
 
 const theme = {

@@ -47,6 +47,9 @@ const CardWrap = styled.li`
   opacity: 0;
   transform: translate(0, 50px);
   transition: transform 1.5s ease, opacity 1s ease;
+  > h1 {
+    white-space: nowrap;
+  }
   &.delay1 {
     transform: translate(0, 0);
     opacity: 1;
@@ -113,7 +116,8 @@ function CardList({scrollY}) {
         ))}
       </CardListWrap>
     </Content>
+      
+
   )
 }
-
 export default CardList

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 import { CommunityData } from '../../api/community';
+import useWindowSize from '../../hooks/useWindowSize';
 import theme from '../../style/Theme';
 
 const FaqListWrap = styled.div`
@@ -9,23 +10,35 @@ const FaqListWrap = styled.div`
   margin-top: 3.5%;
   display: flex;
   flex-direction: column;
+  ${(props) => props.theme.window.mobile} {
+    margin-top: 13.9%;
+  }
 `;
 
 const Menu = styled.ul`
   display: flex;
   align-self: flex-end;
   width: 41.66666666666667%;
+  ${(props) => props.theme.window.mobile} {
+    padding-right: 3.7%;
+  }
 `;
 const Item = styled.li`
   flex: 1;
   text-align: center;
   color: #BABABA;
   padding: 4.2% 0;
+  ${(props) => props.theme.window.mobile} {
+    text-align: end;
+    padding: 15.4% 0;
+    font-size: 0.8666666666666667rem;
+  }
 `;
 
 const ListWrap = styled.ul`
   display: flex;
   flex-direction: column;
+  
 `;
 
 const List = styled.li`
@@ -34,6 +47,7 @@ const List = styled.li`
   padding: 22px 10px;
   line-height: 39px;
   border-top: 2px solid #F5F5F5;
+  
   :last-child {
     border-bottom: 2px solid #F5F5F5;
   }
@@ -52,6 +66,26 @@ const List = styled.li`
     margin-left: 63px;
     font-size: 1rem;
   }
+
+  ${(props) => props.theme.window.mobile} {
+    padding: 10px 15px;
+
+    > span {
+      width: 54px;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 6px;
+      font-size: 0.8666666666666667rem;
+      align-self: center;
+    }
+    > p {
+      margin-left: 13px;
+      font-size: 0.8666666666666667rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
 `;
 
 const ButtonWrap = styled.div`
@@ -64,6 +98,14 @@ const ButtonWrap = styled.div`
     border-radius: 56px;
     font-size: 1rem;
     background-color: #F9F9F9;
+  }
+
+  ${(props) => props.theme.window.mobile} {
+    width: 53.33333333333333%;
+    padding-top: 5%;
+    > button {
+      height: 40px;
+    }
   }
 `;
 
@@ -137,11 +179,13 @@ const ButtonWrap = styled.div`
   const searchType = [
     {
       type: 'ALL', 
-      print: '전체'
+      print: '전체',
+  
     },
     {
       type: 'WIND_STORM',
       print: '풍수'
+      
     },
     {
       type: 'EVENT', 
@@ -162,6 +206,7 @@ const ButtonWrap = styled.div`
   ]
 
 export default function Faq() {
+  const { width } = useWindowSize();
   // const [selected, setSelected] = useState('ALL');
   // const changeSearchTypeHandler = (e) => {
   //   setSelected(e.target.value);
@@ -170,23 +215,27 @@ export default function Faq() {
   return (
     <FaqListWrap>
       <Menu>
-        {searchType.map((dt) => (
+        {width > 768 ? searchType.map((dt) => (
           <Item 
-            key={dt.type}
-            // value={searchType.type}
-          >
+          key={dt.type}
+          // value={searchType.type}
+        >
+          {dt.print}
+        </Item>
+        )) : searchType.filter((dt) => dt.print === '전체').map((dt) => (
+         <Item key={dt.type}>
             {dt.print}
-          </Item>
+         </Item> 
         ))}
       </Menu>
-    <ListWrap>
-      {CommunityData.map((dt) => (
-        <List key={dt.id} color={dt.type === '풍수' ? 'PRIMARY' : '이벤트' ? 'POINT' : '대출' ? 'SECONDARY' : null}>
-          <span>{dt.type}</span>
-          <p>{dt.title}</p>
-        </List>
-      ))}
-    </ListWrap>
+      <ListWrap>
+        {CommunityData.map((dt) => (
+          <List key={dt.id} color={dt.type === '풍수' ? 'PRIMARY' : '이벤트' ? 'POINT' : '대출' ? 'SECONDARY' : null}>
+            <span>{dt.type}</span>
+            <p>{dt.title}</p>
+          </List>
+        ))}
+      </ListWrap>
     <ButtonWrap>
       <button>더 보기</button>
     </ButtonWrap>

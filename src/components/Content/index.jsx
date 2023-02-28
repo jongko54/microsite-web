@@ -13,17 +13,18 @@ const Wrap = styled.div`
   background-size: 29%;
   background-position: top left;
   position: relative;
-
+  min-width: 1440px;
 
   ${(props) => props.theme.window.mobile} {
     padding-left: 6.5%;
     padding-right: 6.5%;
+    min-width: auto;
   }
 `;
 
-function Content({children, top, bottom, bgImg, color}) {
+function Content({children, top, bottom, bgImg, color, min}) {
   return (
-    <Wrap top={top} bottom={bottom} bgImg={bgImg} color={color}>
+    <Wrap top={top} bottom={bottom} bgImg={bgImg} color={color} min={min}>
       {children}
     </Wrap>
   )

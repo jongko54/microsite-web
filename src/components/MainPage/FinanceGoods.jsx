@@ -10,17 +10,20 @@ import useWindowSize from '../../hooks/useWindowSize';
 const GoodsList = styled.ul`
   display: flex;
   justify-content: space-between;
-  /* padding: 7%; */
-  padding: 7% 5%;
-  ${(props) => props.theme.window.tab} {
+  width: 83.88888888888889%;
+  margin: 0 auto;
+  padding: 7.6% 0;
+  
+  ${(props) => props.theme.window.mobile} {
     flex-direction: column;
     padding: 10% 0 0 0;
   }
 `;
 
 const Card = styled.li`
-  width: 500px;
-  min-width: 400px;
+  width: 41.39072847682119%;
+
+  /* min-width: 400px; */
   padding: 3% 2%;
   border: 2px solid #F5F5F5;
   border-radius: 21px;
@@ -32,7 +35,7 @@ const Card = styled.li`
   :hover {
     box-shadow: 0 4px 42px 0 rgba(0, 0, 0, 0.15);
   }
-  ${(props) => props.theme.window.tab} {
+  ${(props) => props.theme.window.mobile} {
     width: 100%;
     min-width: auto;
     padding: 7.4% 6.6%;
@@ -48,6 +51,7 @@ const TextArea = styled.div`
   background-image: url(${props => props.img});
   background-repeat: no-repeat;
   background-position: top right;
+  background-size: 35%;
   > h1 {
     margin-top: 3%;
   }
@@ -74,7 +78,7 @@ const TextArea = styled.div`
     }
   }
 
-  ${(props) => props.theme.window.tab} {
+  ${(props) => props.theme.window.mobile} {
     background-size: 30%;
     background-position: 100% 10%;
     > h1 {
@@ -98,8 +102,8 @@ function FinanceGoods() {
   const {width} = useWindowSize();
   return (
     <Content 
-      top={width > 768 ? '5%' : '18%'} 
-      bottom={width > 768 ? '5%' : '15%'}
+      top={width > 768 ? '8.23%' : '18%'} 
+      bottom={width > 768 ? '3.23%' : '15%'}
     >
       <TitleSet
         small_title='전용 대출과 카드 알아보세요!'

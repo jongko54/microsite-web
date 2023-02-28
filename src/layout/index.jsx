@@ -9,19 +9,18 @@ const Wrap = styled.div`
   margin: 0 auto;
   overflow: hidden;
   background-color: ${props => theme.color[props.color] || '#FFFFFF'};
-  ${(props) => props.theme.window.tab} {
-   
-
-  }
+ 
 `;
 
 const Layout = ({children, color}) => {
   return (
-    <Wrap color={color}>
-      <Header />
-      {children}
-      <Footer />
-    </Wrap>
+    
+      <Wrap color={color}>
+        <Header />
+          {children}
+        <Footer />
+      </Wrap>
+
   )
 }
 

@@ -12,6 +12,7 @@ import bg_R from '../../assets/img/bg_Img_R.png';
 
 import useWindowSize from '../../hooks/useWindowSize';
 
+
 const data = [
   {
     id: 1,
@@ -119,7 +120,10 @@ function Plaza({scrollY}) {
       bottom={width > 768 ? '5.8%' : '0%'}
       bgImg={bg_R}
       scrollY={scrollY}
+      min={width > 768 && '1440px'}
+
     >
+   
       <TitleSet
         small_title='사업장 안정지킴이'
         big_title1='사장님 보험'
