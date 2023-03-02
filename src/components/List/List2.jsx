@@ -3,17 +3,17 @@ import Layout from '../../layout';
 import Content from '../Content';
 import ListTitle from './ListTitle';
 import ListContent from './ListContent';
-
-
+import useWindowSize from '../../hooks/useWindowSize';
 
 function List2() {
+  const {width} = useWindowSize();
   return (
     <Layout>
-      <Content top='5%' bottom='5%'>
+      <Content top={width > 768 ? '5%' : '12.5%'} bottom={width > 768 ? '5%' : '36.7%'}>
         <ListTitle
           page='02'
           title='소상공인 창업지원'
-          desc='유비무환!! 창업전 업종별로 상권정보를 제공합니다.'
+          desc={`유비무환!! 창업전 업종별로 상권정보를\n제공합니다.`}
         />
         <ListContent title='사업내용'>
           <ul>
@@ -30,7 +30,7 @@ function List2() {
           </ul>
         </ListContent>
         <ListContent title='이용방법'>
-          <p style={{paddingTop: '0'}}>인터넷 접속 후 사용 가능 : http://sg.sbiz.or.kr</p>
+          <p style={{paddingTop: '0', color: '#393939'}}>인터넷 접속 후 사용 가능 : http://sg.sbiz.or.kr</p>
         </ListContent>
       </Content>
 

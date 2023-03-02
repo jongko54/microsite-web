@@ -3,11 +3,14 @@ import Layout from '../../layout';
 import Content from '../Content';
 import ListTitle from './ListTitle';
 import ListContent from './ListContent';
+import useWindowSize from '../../hooks/useWindowSize';
 
 function List1() {
+  const {width} = useWindowSize();
+
   return (
     <Layout>
-      <Content top='5%' bottom='5%'>
+      <Content top={width > 768 ? '5%' : '12.5%'} bottom={width > 768 ? '5%' : '23.5%'}>
         <ListTitle
           page='01'
           title='소상공인 정책자금'
@@ -79,8 +82,8 @@ function List1() {
         </ListContent>
         <ListContent title='신청접수'>
           <ul>
-            <li>온라인 접수 : 소상공인 정책자금 홈페이지 (ols.sbiz.or.kr)에서 신청 가능</li>
-            <li>문의처 : 소상공인진흥공단 국번없이 1357</li>
+            <li>온라인 접수 <b>:&nbsp;</b><br />소상공인 정책자금 홈페이지 (ols.sbiz.or.kr)에서 신청 가능</li>
+            <li>문의처 <b>:&nbsp;</b><br />소상공인진흥공단 국번없이 1357</li>
           </ul>
         </ListContent>
       </Content>

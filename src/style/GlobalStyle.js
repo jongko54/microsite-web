@@ -27,9 +27,6 @@ const GlobalStyle = createGlobalStyle`
     overflow-x: hidden;
     scroll-behavior: smooth;
     font-size: 20px;
-    /* ${(props) => props.theme.window.tab} {
-      font-size: 17px;
-    } */
     ${(props) => props.theme.window.mobile} {
       font-size: 15px;
     }

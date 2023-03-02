@@ -18,7 +18,8 @@ const ButtonBase = styled.div`
   cursor: pointer;
   height: ${props => props.height || '100px'};
   ${(props) => props.theme.window.mobile} {
-    
+    font-size: 1rem;
+    height: ${props => props.height || '50px'};
   }
 `;
 

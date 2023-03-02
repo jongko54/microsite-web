@@ -2,12 +2,19 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Wrap = styled.div`
-  min-width: 1380px;
+ 
+  ${(props) => props.theme.window.mobile} {
+
+  }
 `;
 
 const ContentBox = styled.div`
   position: relative;
   padding: 12% 0 0 0;
+
+  ${(props) => props.theme.window.mobile} {
+    padding: 9% 0 0 0;
+  }
 `;
 
 const TitleBox = styled.h1`
@@ -20,6 +27,13 @@ const TitleBox = styled.h1`
   text-align: center;
   display: inline-block;
   transform: translateY(40%);
+
+  ${(props) => props.theme.window.mobile} {
+    padding: 0;
+    height: 30px;
+    width: 100px;
+    line-height: 30px;
+  }
 `;
 
 const TextBox = styled.div`
@@ -45,6 +59,9 @@ const TextBox = styled.div`
         position: absolute;
         top: 14px;
         left: -1%;
+      }
+      > br {
+        display: none;
       }
       > ul {
         display: flex;
@@ -115,6 +132,73 @@ const TextBox = styled.div`
     font-size: 0.7rem;
     color: #C91717;
     padding-top: 2.5%;
+  }
+
+  ${(props) => props.theme.window.mobile} {
+    padding: 5% 4.3%;
+
+    > ul {
+    margin-left: 7%;
+    > li {
+      font-size: 0.8666666666666667rem;
+      margin-bottom: 2%;
+      ::before {
+        top: 8px;
+        left: -4%;
+      }
+      > br {
+        display: block;
+      }
+      > b {
+        display: none;
+      }
+      > ul {
+        flex-direction: column;
+        padding: 5.2% 0 9% 0;
+        > li {
+          flex: none;
+          height: 30px;
+          margin: 0 0 40px 0;
+          ::after {
+            transform: rotate(90deg);
+            top: 45px;
+            right: calc(50% - 15px) ;
+            width: 1.4rem;
+            height: 1rem;
+          }
+          :last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+  ol {
+      flex-direction: column;
+      padding: 5.2% 0 9% 0;
+      > li {
+          position: relative;
+          height: 30px;
+          flex: none;
+          margin: 0 0 40px 0;
+          font-size: 0.8666666666666667rem;
+          ::after {
+            transform: rotate(90deg);
+            top: 45px;
+            right: calc(50% - 15px) ;
+            width: 1.4rem;
+            height: 1rem;
+          }
+          :last-child {
+            margin-right: 0;
+            margin-bottom: 0;
+          }
+        }
+      }
+  > p {
+      font-size: 0.6666666666666667rem;
+      padding: 5% 3% 0 4%;
+    }
   }
 `;
 

@@ -9,7 +9,6 @@ const Wrap = styled.div`
   margin: 0 auto;
   overflow: hidden;
   background-color: ${props => theme.color[props.color] || '#FFFFFF'};
- 
 `;
 
 const Layout = ({children, color}) => {

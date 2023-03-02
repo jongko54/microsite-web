@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { CommunityData } from '../../api/community';
 import useWindowSize from '../../hooks/useWindowSize';
 import theme from '../../style/Theme';
+import moreIcon from '../../assets/img/moreIcon.svg';
 
 const FaqListWrap = styled.div`
   border-top: 2px solid #2F2F2F;
@@ -98,6 +99,9 @@ const ButtonWrap = styled.div`
     border-radius: 56px;
     font-size: 1rem;
     background-color: #F9F9F9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   ${(props) => props.theme.window.mobile} {
@@ -107,6 +111,21 @@ const ButtonWrap = styled.div`
       height: 40px;
     }
   }
+`;
+
+const MoreIcon = styled.span`
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  background-image: url(${moreIcon});
+  background-size: contain;
+  margin-right: 20px;
+
+  ${(props) => props.theme.window.mobile} {
+    width: 12px;
+    height: 12px
+  }
+
 `;
 
  // let searchTypes = searchType[0].type;
@@ -237,7 +256,10 @@ export default function Faq() {
         ))}
       </ListWrap>
     <ButtonWrap>
-      <button>더 보기</button>
+      <button>
+        <MoreIcon />
+        <p>더 보기</p>
+      </button>
     </ButtonWrap>
       {/* <Tr 
             info={info} 

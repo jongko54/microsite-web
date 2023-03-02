@@ -15,8 +15,17 @@ const Wrap = styled.div`
   > div {
     img {
       margin: 0 auto;
+      
     }
   }
+
+  ${(props) => props.theme.window.mobile} {
+    > div {
+      img {
+        width: 260px;
+      }
+    }
+  } 
 `;
 
 
@@ -28,6 +37,10 @@ const BottomContent = styled.div`
     font-weight: 800;
     font-size: 5rem;
     color: #176FFF;
+  }
+
+  ${(props) => props.theme.window.mobile} {
+    
   }
 `;
 

@@ -4,12 +4,14 @@ import Content from '../Content';
 import ListTitle from './ListTitle';
 import ListContent from './ListContent';
 import styled from 'styled-components';
+import useWindowSize from '../../hooks/useWindowSize';
 
 const List3BoxWrap = styled.div`
   display: flex;
-
-
-
+${(props) => props.theme.window.mobile} {
+  flex-direction: column;
+  padding: 6%;
+}
 `;
 
 const List3Box = styled.div`
@@ -25,6 +27,18 @@ const List3Box = styled.div`
     font-size: 1rem;
     font-weight: 400;
     font-family: 'Noto Sans KR', sans-serif;
+    position: relative;
+    ::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height : 4px;
+      border-radius: 50%;
+      background-color: #393939;
+      position: absolute;
+      top: 14px;
+      left: -5%;
+    }
   }
   > p {
     font-size: 0.9rem;
@@ -44,12 +58,48 @@ const List3Box = styled.div`
   :last-child::after {
     content: none;
   }
+
+  ${(props) => props.theme.window.mobile} {
+    border-radius: 15px;
+    height: 85px;
+    width: 100%;
+    min-width: none;
+    padding: 0;
+    margin-right: 0;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 11.5%;
+  > h2 {
+    font-size: 0.8666666666666667rem;
+    ::before {
+      top: 9px;
+    }
+  }
+  > p {
+    font-size: 0.8666666666666667rem;
+  }
+
+  ::after {
+    transform: rotate(90deg);
+    top: 98px;
+    right: calc(50% - 20px);
+  }
+  :last-child {
+    margin-bottom: 0
+  }
+  :last-child::after {
+    content: none;
+  }
+  }
 `;
 
 function List3() {
+  const {width} = useWindowSize();
   return (
     <Layout>
-      <Content top='5%' bottom='5%'>
+      <Content top={width > 768 ? '5%' : '12.5%'} bottom={width > 768 ? '5%' : '36.7%'}>
         <ListTitle
           page='02'
           title='소상공인 성장지원'
