@@ -60,7 +60,7 @@ const TextBox = styled.div`
 function BizSupport() {
   const {width} = useWindowSize();
   return (
-    <Layout color='BG_WHITE2'>
+    <Layout color='BG_GRAY'>
       <DetailContent>
         <Banner>
           <TextBox>

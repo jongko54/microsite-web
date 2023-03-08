@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import logo from '../assets/img/mainLogo.png';
@@ -55,6 +55,7 @@ const Button = styled.button`
 
 
 function Header() {
+  const [showPopup, setShowPopup] = useState(false);
   let navigate = useNavigate();
   function handleClick(link) {
     navigate(link);
@@ -65,7 +66,7 @@ function Header() {
         <LogoBox onClick={() => handleClick('/')}>
           <img src={logo} alt='소상공인 지원센터' />
         </LogoBox>
-        <Button onClick={() => handleClick('/')}>가입확인</Button>
+        <Button>가입확인</Button>
       </Nav>
     </Wrap>
   )

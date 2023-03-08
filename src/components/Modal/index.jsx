@@ -31,7 +31,7 @@ const ModalInner = styled.div`
     height: 250px;
   }
 `;
-function Modal({maskClosable, closable, visible, onClose}) {
+function Modal({children, maskClosable, closable, visible, onClose}) {
   const onMaskClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose(e)
@@ -54,6 +54,7 @@ function Modal({maskClosable, closable, visible, onClose}) {
           {closable && 
             <button onClick={close}>닫기</button>
           }
+          {children}
         </ModalInner>
       </ModalWrap>
     </ModalOveray>

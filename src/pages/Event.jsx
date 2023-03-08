@@ -8,7 +8,7 @@ import Layout from '../layout/index';
 function Event() {
   // const { width } = useWindowSize();
   return (
-    <Layout color='BG_WHITE2'>
+    <Layout color='BG_GRAY'>
       <DetailContent>
         <EventBanner />
         <EventGuide />

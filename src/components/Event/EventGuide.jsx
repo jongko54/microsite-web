@@ -7,7 +7,6 @@ const GuideList = styled.ul`
   &.list-style > li {
     position: relative;
     font-weight: 500;
-    margin-bottom: 5px;
     font-size: 1rem; 
     color: #2F2F2F;
     padding-left: 25px;
@@ -54,6 +53,32 @@ const GuideList = styled.ul`
       font-size: 0.9rem;
       color: #6C6C6C;
       font-weight: 400;
+  }
+
+  ${(props) => props.theme.window.mobile} {
+    padding: 64px 10px 0;
+    &.list-style > li {
+      padding-left: 15px;
+      margin-bottom: 28px;
+      ::before {
+        top: 10px;
+        left: 0px;
+      }
+      > p {
+        font-size: 0.8666666666666667rem;
+      }
+    }
+    .list-style-gray > li {
+      font-size: 0.8666666666666667rem;
+      padding-left: 0;
+      :first-child {
+        margin-top: 23px;
+      }
+      ::before {
+        top: 13px;
+        left: -15px;
+      }
+    }
   }
 `;
 
