@@ -139,7 +139,7 @@ const Arrow = styled.img`
 function Infomation({scrollY1, scrollY2}) {
   const { y } = useScroll();
   const { width } = useWindowSize();
-  console.log(y)
+
   return (
     <Content
       top={width > 768 ? '5%' : '18%'}

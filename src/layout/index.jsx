@@ -3,6 +3,7 @@ import Header from "./Header";
 import styled from "styled-components";
 import Footer from "./Footer";
 import theme from '../style/Theme';
+import ScrollToTop from "./ScrollToTop";
 
 const Wrap = styled.div`
   width: 100%;
@@ -13,13 +14,14 @@ const Wrap = styled.div`
 
 const Layout = ({children, color}) => {
   return (
-    
+    <>
+      <ScrollToTop />
       <Wrap color={color}>
         <Header />
           {children}
         <Footer />
       </Wrap>
-
+    </>
   )
 }
 

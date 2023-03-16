@@ -24,7 +24,7 @@ const data = [
     t_line1: '소상공인',
     t_line2: '풍수해보험',
     t_line3: '무료지원 사업',
-    link: '',
+    link: 'https://insurobowindstorm.com:3333/service/event/free-apply/guide?jehuCd=bccard_f',
     bg_img: slider1,
     mb_bg_img: mb_slider1,
     color: 'PRIMARY',
@@ -65,9 +65,7 @@ const Banner = styled.div`
   background-size: cover;
   background-position: left;
   padding: 10.03% 12.5% 21.17%;
-  ${(props) => props.theme.window.tab} {
-   
-  }
+  
   ${(props) => props.theme.window.mobile} {
     background-image: url(${(props) => props.mbBgImg});
     padding: 33.2% 7.466666666666667% 129.4%;

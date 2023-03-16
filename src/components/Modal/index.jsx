@@ -1,61 +1,46 @@
 import React from 'react'
 import styled from 'styled-components'
-
+import closeIcon from '../../assets/img/closeIcon.png';
 const ModalOveray = styled.div`
-  box-sizing: border-box;
-  display: ${(props) => (props.visible ? 'block' : 'none')};
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
+
+
+
 const ModalWrap = styled.div`
-  display: ${(props) => (props.visible ? 'blcok' : 'none')};
-  position: absolute;
-  inset: 0;
   z-index: 1000;
-  overflow: auto;
-  outline: 0;
+  width: 66vw;
+  height: 90vh;
+  overflow-y: scroll;
 `;
-const ModalInner = styled.div`
-  box-sizing: border-box;
-  position: fixed;
-  inset: 0;
-  transform: translateY(50%);
-  width: 800px;
-  height: 500px;
-  margin: 0 auto;
-  background: ${props => theme.color[props.color] || '#FFFFFF' };
-  ${(props) => props.theme.window.tab} {
-    width: 100%;
-    height: 250px;
-  }
+
+const CloseButton = styled.button`
+  width: 50px;
+  height: 50px;
+  background-image: url(${closeIcon});
+  margin-left: calc(100% - 70px);
 `;
-function Modal({children, maskClosable, closable, visible, onClose}) {
-  const onMaskClick = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose(e)
-    }
-  }
-  const close = (e) => {
-    if (onClose) {
-      onClose(e)
-    }
-  }
+
+const Content = styled.div`
+`;
+
+function Modal({onClick, children}) {
+
   return (
-    <ModalOveray visible={visible}>
-      <ModalWrap
-        onClick={maskClosable ? onMaskClick : null}
-        className={className}
-        tabIndex='-1'
-        visible={visible}
-      >
-        <ModalInner tabIndex='0' className='modal-inner'>
-          {closable && 
-            <button onClick={close}>닫기</button>
-          }
+    <ModalOveray>
+      
+      <ModalWrap>
+        <CloseButton onClick={onClick} />
+        <Content>
           {children}
-        </ModalInner>
+        </Content>
       </ModalWrap>
     </ModalOveray>
   )

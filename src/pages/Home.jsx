@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+
 import CardList from '../components/MainPage/CardList';
 import Community from '../components/MainPage/Community';
 import FinanceGoods from '../components/MainPage/FinanceGoods';
@@ -19,6 +20,7 @@ function Home() {
         scrollY2={width > 768 ? 1400 : 1450}
       />
       <Community />
+
       <CardList scrollY={width > 768 ? 2200 : 2700} />
       <FinanceGoods />
     </Layout>

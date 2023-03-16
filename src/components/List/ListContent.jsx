@@ -29,9 +29,8 @@ const TitleBox = styled.h1`
   transform: translateY(40%);
 
   ${(props) => props.theme.window.mobile} {
-    padding: 0;
+    padding: 0 2.9%;
     height: 30px;
-    width: 100px;
     line-height: 30px;
   }
 `;
@@ -39,95 +38,26 @@ const TitleBox = styled.h1`
 const TextBox = styled.div`
   background-color: #FAFAFA;
   padding: 2.5% 1.2%;
-  
-  > ul {
-    margin-left: 2%;
-    > li {
-      font-size: 1rem;
-      position: relative;
-      margin-bottom: 3%;
-      :last-child {
-        margin-bottom: 0;
-      }
-      ::before {
-        content: '';
-        display: block;
-        width: 4px;
-        height : 4px;
-        border-radius: 50%;
-        background-color: #393939;
-        position: absolute;
-        top: 14px;
-        left: -1%;
-      }
-      > br {
-        display: none;
-      }
-      > ul {
-        display: flex;
-        justify-content: space-between;
-        padding: 2%;
-        > li {
-          position: relative;
-          height: 60px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex: 1;
-          margin-right: 80px;
-          background-color: #EBEBEB;
-          border-radius: 5px;
-          ::after {
-            content: '→';
-            display: block;
-            font-size: 1rem;
-            width: 1.5rem;
-            color: #393939;
-            position: absolute;
-            top: 15px;
-            right: -60px;
-          }
-          :last-child {
-            margin-right: 0;
-          }
-          :last-child::after {
-            content: none;
-          }
+  > div {
+    display: flex;
+    > ul {
+      margin-right: 15%;
+      > li {
+        margin-bottom: 20px;
+        ::before {
+          left: -6%;
         }
       }
     }
   }
-  ol {
-        display: flex;
-        justify-content: space-between;
-        padding: 2%;
-        > li {
-          position: relative;
-          height: 60px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex: 1;
-          margin-right: 5%;
-          background-color: #EBEBEB;
-          border-radius: 5px;
-          ::after {
-            content: '→';
-            display: block;
-            font-size: 1rem;
-            color: #393939;
-            position: absolute;
-            top: 15px;
-            right: -2rem;
-          }
-          :last-child {
-            margin-right: 0;
-          }
-          :last-child::after {
-            content: none;
-          }
-        }
+
+  > ul {
+    > li {
+      > br {
+        display: none;
       }
+    }
+  }
   > p {
     font-size: 0.7rem;
     color: #C91717;
@@ -136,65 +66,45 @@ const TextBox = styled.div`
 
   ${(props) => props.theme.window.mobile} {
     padding: 5% 4.3%;
-
-    > ul {
-    margin-left: 7%;
-    > li {
-      font-size: 0.8666666666666667rem;
-      margin-bottom: 2%;
-      ::before {
-        top: 8px;
-        left: -4%;
-      }
-      > br {
-        display: block;
-      }
-      > b {
-        display: none;
-      }
+    > div {
+      flex-direction: column;
       > ul {
-        flex-direction: column;
-        padding: 5.2% 0 9% 0;
+        margin-right: 0;
+        margin-bottom: 20px;
+        :last-child {
+          margin-bottom: 0;
+        }
         > li {
-          flex: none;
-          height: 30px;
-          margin: 0 0 40px 0;
-          ::after {
-            transform: rotate(90deg);
-            top: 45px;
-            right: calc(50% - 15px) ;
-            width: 1.4rem;
-            height: 1rem;
-          }
-          :last-child {
-            margin-bottom: 0;
+          margin-bottom: 3px;
+          ::before {
+            left: -10px;
           }
         }
       }
     }
-  }
-  ol {
-      flex-direction: column;
-      padding: 5.2% 0 9% 0;
+    > ul {
       > li {
-          position: relative;
-          height: 30px;
-          flex: none;
-          margin: 0 0 40px 0;
-          font-size: 0.8666666666666667rem;
-          ::after {
-            transform: rotate(90deg);
-            top: 45px;
-            right: calc(50% - 15px) ;
-            width: 1.4rem;
-            height: 1rem;
-          }
-          :last-child {
-            margin-right: 0;
-            margin-bottom: 0;
+        > br {
+          display: block;
+        }
+        > b {
+          display: none;
+        }
+        > ul {
+          
+          
+          > li {
+            
+            height: 30px;
+            margin: 0 0 40px 0;
+            
+            :last-child {
+              margin-bottom: 0;
+            }
           }
         }
       }
+    }
   > p {
       font-size: 0.6666666666666667rem;
       padding: 5% 3% 0 4%;

@@ -29,14 +29,14 @@ const Banner = styled.div`
 `;
 
 const BottonBox = styled.div`
-  height: 720px;
+  height: 1100px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding-bottom: 76px;
 
   ${(props) => props.theme.window.mobile} {
-    height: 315px;
+    height: 485px;
     padding-bottom: 0px;
   }
 `;
@@ -87,7 +87,13 @@ function BizSupport() {
             <Button title='소상공인 성장지원' color='WHITE' bgColor='ORANGE' height={width > 768 ? '150px' : '60px'} />
           </Link>
           <Link to='/bizsupport/list4'>
-            <Button title='-' color='WHITE' bgColor='ORANGE' height={width > 768 ? '150px' : '60px'} />
+            <Button title='소상공인 재기지원' color='WHITE' bgColor='ORANGE' height={width > 768 ? '150px' : '60px'} />
+          </Link>
+          <Link to='/bizsupport/list5'>
+            <Button title='소상공인 특화지원' color='WHITE' bgColor='ORANGE' height={width > 768 ? '150px' : '60px'} />
+          </Link>
+          <Link to='/bizsupport/list6'>
+            <Button title='전통시장 활성화지원' color='WHITE' bgColor='ORANGE' height={width > 768 ? '150px' : '60px'} />
           </Link>
         </BottonBox>
       </DetailContent>

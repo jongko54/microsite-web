@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from "styled-components";
+import { FormProvider, useForm } from 'react-hook-form';
 import GlobalStyle from './style/GlobalStyle'
 import theme from './style/Theme';
 import Home from './pages/Home';
@@ -8,26 +10,63 @@ import BizSupport from './pages/BizSupport';
 import TestPage from './pages/TestPage';
 import List from './pages/List';
 import Board from './components/Post/Borad';
-function App() {
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import UserContext from './context/UserContext';
 
+
+
+function App() {
+  const method = useForm();
+  const setLoginUser = (data) => {
+    setState(prevState => (
+      {
+        ...prevState,
+        loggedUser: data
+      }
+    ))
+  }
+
+  const setLogin = () => {
+    setState(prevState => (
+        {
+            ...prevState, 
+            loggedIn: !prevState.loggedIn
+        }
+    ))
+  }
+
+  const initalState = {
+    loginUser: {},
+    login: false,
+    setLoginUser,
+    setLogin
+  }
+  const [state, setState] = useState(initalState);
   
   return (
     <ThemeProvider theme={theme}>
-     
-        <GlobalStyle />
-        
-   
-
-      <Router>
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/event' element={<Event />} />
-            <Route path='/bizsupport/*' element={<BizSupport />} />
-            <Route path='/bizsupport/:list' element={<List />} />
-            <Route path='/test' element={<TestPage />} />
-            <Route path='/board' element={<Board />} />
-          </Routes>
-        </Router>
+      <FormProvider {...method}>
+        <UserContext.Provider value={state}>
+          <GlobalStyle />
+          <Router>
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='?:category'  element={<Home />} />
+              <Route path='?:id'  element={<Home />} />
+              <Route path='?:page'  element={<Home />} />
+              <Route path='/event' element={<Event />} />
+              <Route path='/bizsupport/*' element={<BizSupport />} />
+              <Route path='/bizsupport/:list' element={<List />} />
+              <Route path='/test' element={<TestPage />} />
+              <Route path='/board' element={<Board />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/signup' element={<SignUp />} />
+            </Routes>
+          </Router>
+        </UserContext.Provider>
+      
+      </FormProvider>          
     </ThemeProvider>
   );
 }

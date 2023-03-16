@@ -23,10 +23,10 @@ const ButtonBase = styled.div`
   }
 `;
 
-function Button({onClick, title, bgColor, color, height}) {
+function Button({onClick, title, bgColor, color, height, type}) {
   
   return (
-    <ButtonBase onClick={onClick} bgColor={bgColor} color={color} height={height}>
+    <ButtonBase onClick={onClick} bgColor={bgColor} color={color} height={height} type={type}>
       {title}
     </ButtonBase>
   )
