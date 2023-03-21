@@ -39,21 +39,16 @@ const Nav = styled.nav`
   align-items: center;
   gap: 20px;
   margin: 16px;
-  padding: 10% 0 0 0;
+  padding: 6% 0 0 0;
 `;
 
 const Button = styled.button`
   border: none;
   border-radius: 8px;
-  /* padding: 8px; */
   font-size: 1rem;
   font-weight: 200;
   color: #BABABA;
-  &:hover {
-    background: tomato;
-    cursor: pointer;
-    transform: translateY(-2px);
-  }
+
 
   &[disabled] {
     

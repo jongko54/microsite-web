@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const ViewContainer = styled.div`
   width: 100%;
@@ -19,98 +20,68 @@ const ViewHeader = styled.div`
   background-color: #F7F7F7;
   white-space: pre;
   border-top: 1px solid #C4C4C4;
-  > h1 {
-    white-space: pre-wrap;
+  padding-left: 39px;
+  > h2 {
+    font-size: 1.5rem;
+    width: 800px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
   }
-  > div {
-    display: flex;
-    flex-direction: column;
-
+  > p {
+    font-size: 0.9rem;
   }
-  span {
-    display: none;
-  }
-  .title-img {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 40px;
-  }
+  
   ${(props) => props.theme.window.tab} {
-    height: 70px;
-    width: 100%;
-    > h1 {
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-    .title-img > img {
-      height: 15px;
-    }
+   
   }
 `;
+
 const ViewBody = styled.div`
-  padding: 10% 0;
-  > img {
-      max-width: 500px;
-  }
-  > img.none {
-    display: none;
-  }
-
-  ${(props) => props.theme.window.tab} {
-    font-size: 0.95rem;
-
-    > img {
-      max-width: 100%;
-    }
-  }
-`;
-const SectionTitle = styled.h2`
-  font-weight: 400;
-  font-size: 1.8rem;
-  padding: 10.4% 0 8.3% 0;
-  
-  ${(props) => props.theme.window.tab} {
-    font-size: 0.8rem;
-    padding: 0 0 5% 0;
-
-  }
-`;
-const DataContents = styled.p`
-  color: #808080;
+  padding: 5% 0;
   font-size: 0.9rem;
-  padding-bottom: 5%;
-  white-space: pre;
-
+  color: #808080;
   ${(props) => props.theme.window.tab} {
-    font-size: 0.5rem;
-    white-space: pre-wrap;
+
   }
 `;
-function View({data}) {
-  
 
+const ButtonWrap = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const Button = styled.button`
+  width: 100px;
+  height: 30px;
+  background-color:#4575F5;
+  color: #FFFFFF;
+`;
+
+
+function View({data}) {
+  let navigate = useNavigate();
+
+  function handleClick(link) {
+    navigate(link);
+  }
   return (
     <ViewContainer>
       {data && (
-          <>
-            <SectionTitle>{data.mainTitle}</SectionTitle>
-            <ViewHeader key={data.id}>
-              <h2>{data.title}</h2>
-              <p>{data.date}</p>
-            </ViewHeader>
-            <ViewBody>
-              <DataContents>{data.content}</DataContents>
-              <img src={data.img} alt={data.idx} className={data.img === 'none' ? 'none' : null}/>
-              <img src={data.img2} alt={data.idx} className={data.img2 === 'none' ? 'none' : null}/>
-            </ViewBody>
+        <>
+          <ViewHeader key={data.id}>
+            <h2>{data.title}</h2>
+            <p>{data.date}</p>
+          </ViewHeader>
+          <ViewBody>
+            {data.content}
+          </ViewBody>
            
-            {/* <ButtonWrap>
-              <Button onClick={history.push('/news')}>목록</Button>
-              <Button onClick={handleGoBack}>뒤로가기</Button>
-            </ButtonWrap> */}
-          </>)}
-          </ViewContainer>
+          <ButtonWrap>
+            <Button onClick={() => handleClick('/')}>목록</Button>
+          </ButtonWrap>
+        </>
+      )}
+    </ViewContainer>
   )
 }
 

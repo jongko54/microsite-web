@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link,  } from 'react-router-dom';
 import useWindowSize from '../../hooks/useWindowSize';
 import theme from '../../style/Theme';
 import moreIcon from '../../assets/img/moreIcon.svg';
@@ -36,7 +36,7 @@ const categories = [
   {
     name: 'promotion',
     print: '홍보',
-    color: 'WARNING'
+    color: 'POINT_SUB'
   }
 ]
 
@@ -191,7 +191,20 @@ const MoreIcon = styled.span`
     width: 12px;
     height: 12px
   }
+`;
 
+const WriteButton = styled.button`
+  width: 100px;
+  height: 30px;
+  display: flex;
+  align-self: flex-end;
+  justify-content: center;
+  align-items: center;
+  background-color: #F9F9F9;
+  color: #393939;
+  font-family: 'Malgun Gothic';
+  font-weight: 700;
+  margin: 6% 0;
 `;
 
 export default function Table() {
@@ -199,26 +212,27 @@ export default function Table() {
   const [posts, setPosts] = useState([]);
   const [category, setCategory] = useState('all');
   const [limit, setLimit] = useState(4);
+  // const limit = 4;
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
   
-  // const onSelect  = useCallback(category => setCategory(category), [category]);
   const categoryValue = category === 'all' ? '' : `?category=${category}`
   
   const onSelect = (category) => {
     setPage(1);
     setCategory(category);
+    
   }
-
-  useEffect(()=>{
+  
+  useEffect(() => {
+    const LIST_URL = `http://localhost:4000/community${categoryValue}`
     const getData = async () => {
-      const { data } = await axios.get(
-        `http://localhost:4000/community${categoryValue}`
-        );
-      setPosts(data.slice(0).reverse());
-    }
+    const { data } = await axios.get(LIST_URL);
+    setPosts(data.slice(0).reverse());
+  }
     getData();
-  }, [categoryValue, posts.length]);
+    console.log(category)
+  }, [category, categoryValue]);
 
   return (
     <TableWrap>
@@ -252,14 +266,27 @@ export default function Table() {
             {categories.filter((ct) => (ct.name === dt.category)).map((fd) => (
                 <CategoryLabel color={fd.color}>{fd.print}</CategoryLabel>
               ))}
-            <Link to={`?id=${dt.id}`}>{dt.title}</Link>
+              {category === 'all' ? (<Link to={`?id=${dt.id}`}>{dt.title}</Link>) : (
+                <Link
+                  to={`?id=${dt.id}`}>
+                    {dt.title}
+                </Link>
+              )}
           </ItemBlock>
         ))}
       </ListWrap>
+      {/* <ButtonWrap>
+          <Link
+            to='/community' 
+          >
+            <MoreIcon />
+            <p>더 보기</p>
+          </Link>
+        </ButtonWrap> */}
       {limit === 4 && (
         <ButtonWrap>
           <button
-            onClick={() => setLimit(Number(10))}
+            onClick={() => setLimit(Number(8))}
           >
             <MoreIcon />
             <p>더 보기</p>
@@ -267,18 +294,19 @@ export default function Table() {
         </ButtonWrap>
       )}
       
-      {limit === 10 && (
-        <Pagination
+      {limit === 8 && (
+        <>
+          <WriteButton>글쓰기</WriteButton>
+          <Pagination
           total={posts.length}
           limit={limit}
           page={page}
           setPage={setPage}
-        />  
+          />  
+        </>
       )}
-            
-
-    
     </TableWrap>
+    
     )
   }
 

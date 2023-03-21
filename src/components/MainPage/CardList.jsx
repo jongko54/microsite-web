@@ -15,25 +15,25 @@ const data = [
     bg_img: tex,
     class: 'left',
     class2: 'delay1'
-  },
-  {
-    id: 2,
-    title: '#홍보·판촉물 신청',
-    bg_img: promotion,
-    class: 'center',
-    class2: 'delay2'
-  },
-  {
-    id: 3,
-    title: '#알아두면 좋은 원스톱',
-    bg_img: onestop,
-    class: 'right',
-    class2: 'delay3'
-  },
+  }
+  // {
+  //   id: 2,
+  //   title: '#홍보·판촉물 신청',
+  //   bg_img: promotion,
+  //   class: 'center',
+  //   class2: 'delay2'
+  // },
+  // {
+  //   id: 3,
+  //   title: '#알아두면 좋은 원스톱',
+  //   bg_img: onestop,
+  //   class: 'right',
+  //   class2: 'delay3'
+  // },
 ]
 const CardListWrap = styled.ul`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 
   ${(props) => props.theme.window.mobile} {
     flex-direction: column;

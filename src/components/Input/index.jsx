@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useFormContext } from 'react-hook-form';
-import { ErrorMessage } from '@hookform/error-message';
 
 const InputWrap = styled.div`
+  width: ${props => props.width ? props.width : '100%'};
+  
   > p {
     font-size: 0.7rem;
   }
@@ -11,16 +11,20 @@ const InputWrap = styled.div`
 
 const InputBase = styled.input`
   width: 100%;
-  padding: 13px 16px;
-  height: 50px;
-  border: 1px solid #D8D8D8;
-  border-radius: 5px;
+  padding: 25px 26px;
+  height: 80px;
+  border: 1px solid #989898;
+  border-radius: 10px;
   font-size: 13px;
   box-sizing: border-box;
   background: none;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  color: #989898;
+
   ::placeholder {
-    color: ${(props) => props.theme.color.INPUT_GRAY};
+    color: #989898;
+    font-size: 1rem;
   }
 
   ${props => props.theme.window.mobile} {
@@ -30,59 +34,35 @@ const InputBase = styled.input`
 `;
 
 const Label = styled.label`
-  color: #585858;
-  font-size: 13px;
-  font-weight: 400;
-  margin-bottom: 12px;
   display: block;
   width: 100%;
+  color: #2F2F2F;
+  font-size: 1rem;
+  font-weight: 300;
+  margin-bottom: 15px;
 
   ${props => props.theme.window.mobile} {
     margin-bottom: 8px;
   }
 `;
-const ErrorText = styled.p`
-  font-size: 13px;
-  line-height: 18px;
-  padding-top: 5px;
-  color: ${(props) => props.theme.color.WARNING};
-`;
 
 
 const Input = ({
-  type, name, placeholder, onChange, label, caution,
-  onClick, readOnly, required, validate, pattern
+  type, name, placeholder, onChange, label,
+  readOnly, width
 }) =>  {
 
-  const { 
-    register,
-    formState: { errors } 
-  } = useFormContext();
-
   return (
-    <InputWrap>
+    <InputWrap width={width}>
       {label && (
         <Label>{label}</Label>
       )}
       <InputBase
         type={type}
         name={name}
-        placeholder={placeholder}
         onChange={onChange}
-        onClick={onClick}
+        placeholder={placeholder}
         readOnly={readOnly}
-        
-        {...register(name, {
-          required: required,
-          validate: validate,
-          pattern: pattern
-        })}
-      />
-      {caution && <p>{caution}</p>}
-      <ErrorMessage
-        errors={errors}
-        name={name}
-        render={({message}) => <ErrorText>{message}</ErrorText>}
       />
     </InputWrap>
   )
