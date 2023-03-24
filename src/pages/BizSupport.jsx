@@ -29,14 +29,14 @@ const Banner = styled.div`
 `;
 
 const BottonBox = styled.div`
-  height: 1100px;
+  /* height: 1100px; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding-bottom: 76px;
 
   ${(props) => props.theme.window.mobile} {
-    height: 485px;
+    /* height: 485px; */
     padding-bottom: 0px;
   }
 `;
@@ -80,7 +80,7 @@ function BizSupport() {
           <Link to='/bizsupport/list1'>
             <Button title='소상공인 정책자금' color='WHITE' bgColor='ORANGE' height={width > 768 ? '150px' : '60px'} />
           </Link>
-          <Link to='/bizsupport/list2'>
+          {/* <Link to='/bizsupport/list2'>
             <Button title='소상공인 창업지원' color='WHITE' bgColor='ORANGE' height={width > 768 ? '150px' : '60px'} />
           </Link>
           <Link to='/bizsupport/list3'>
@@ -94,7 +94,7 @@ function BizSupport() {
           </Link>
           <Link to='/bizsupport/list6'>
             <Button title='전통시장 활성화지원' color='WHITE' bgColor='ORANGE' height={width > 768 ? '150px' : '60px'} />
-          </Link>
+          </Link> */}
         </BottonBox>
       </DetailContent>
     </Layout>

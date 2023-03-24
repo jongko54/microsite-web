@@ -1,10 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import styled, { css } from 'styled-components';
 import logo from '../assets/img/mainLogo.png';
-import UserContext from '../context/UserContext';
 import AdminMember from '../components/Modal/AdminMember';
-import { AuthConsumer } from '../context/AuthContext';
 import myPageIcon from '../assets/img/myPageIcon.png';
 import toggleBtn from '../assets/img/toggleBtn.png';
 import closeBtn from '../assets/img/closeBtn.png';
@@ -16,10 +14,8 @@ const Wrap = styled.header`
   padding: 2.2% 0;
   background-color: #FFFFFF;
   
-  ${(props) => props.theme.window.tab} {
-    padding: 4% 0;
+  ${(props) => props.theme.window.mobile} {
     height: 80px;
-
   } 
 `;
 
@@ -54,7 +50,7 @@ const Menu = styled.ul`
   /* width: 50%; */
   justify-content: flex-end;
   align-items: center;
-  
+  position: relative;
   > li {
     margin-right: 45px;
     font-size: 1.25vw;
@@ -118,19 +114,38 @@ const MyPage = styled.div`
   height: 80px;
 `;
 
+const MyPageNav = styled.ul`
+  position: absolute;
+  width: 450px;
+  height: 360px;
+  background-color: #FFFFFF;
+  top: 100%;
+  left: 0%;
+  > li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    position: relative;
+    margin: 0 25px;
+    border-bottom: 1px solid #F5F5F5;
+    :last-child {
+      border: none;
+    }
+    > p {
+      font-size: 1.15rem;
+    }
+    > img {
+      position: absolute;
+      left: 0;
+    }
+  }
+`;
 
 function Header({auth, setAuth}) {
   const [showPopup, setShowPopup] = useState(false);
-
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  // const loginHandler = () => {
-  //   setIsLoggedIn(true);
-  // };
-
-  // const logoutHandler = () => {
-  //   setIsLoggedIn(false);
-  // };
+  const [myPageOpne, setMyPageOpen] = useState(false);
 
   let navigate = useNavigate();
   function goToMainPage(link) {
@@ -154,17 +169,33 @@ function Header({auth, setAuth}) {
               
               {auth ? 
                 <>
-                  <li onClick={() => setAuth(false)}>로그아웃</li>
-                  <li><MyPage /></li>
+                  <li>
+                    <MyPage onClick={() => setMyPageOpen(!myPageOpne)} />
+                    {myPageOpne && (
+                      <MyPageNav>
+                        <li>
+                          <img src={myPageIcon} alt='프로필'/>
+                          <p>홍길동</p>
+                        </li>
+                        <li>
+                          <p>프로필 수정</p>
+                        </li>
+                        <li>
+                          <p>로그아웃</p>
+                        </li>
+                      </MyPageNav>
+                    )}
+                  </li>
                 </>
               :
                 <>
                   <li><Link to='/login'>로그인</Link></li>
-                  <li><Link to='/signup'>회원가입</Link></li>
+                  <li><Link to='/register'>회원가입</Link></li>
                 </>
               }
             </Menu>
             <ToggleBtn onClick={handleClick} isOpen={isOpen} />
+            
           </Nav>
           
         </Wrap>

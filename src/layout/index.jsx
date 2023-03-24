@@ -17,7 +17,7 @@ const Layout = ({children, color}) => {
     <>
       <ScrollToTop />
       <Wrap color={color}>
-        <Header />
+        <Header auth={true} />
           {children}
         <Footer />
       </Wrap>

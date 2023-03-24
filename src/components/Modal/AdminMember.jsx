@@ -3,7 +3,9 @@ import styled from 'styled-components'
 import Modal from '.';
 import policy from '../../assets/img/policy.png';
 
-const Content = styled.div``;
+const Content = styled.div`
+  
+`;
 
 function AdminMember({onClick}) {
   return (

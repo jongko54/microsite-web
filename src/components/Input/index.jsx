@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const InputWrap = styled.div`
   width: ${props => props.width ? props.width : '100%'};
@@ -18,18 +18,18 @@ const InputBase = styled.input`
   font-size: 13px;
   box-sizing: border-box;
   background: none;
-  margin-bottom: 15px;
   font-size: 1rem;
   color: #989898;
-
+  margin-bottom: 15px;
   ::placeholder {
     color: #989898;
     font-size: 1rem;
   }
 
   ${props => props.theme.window.mobile} {
-    padding: 7px;
-    height: 35px;
+    padding: 14px 13px;
+    height: 50px;
+    /* margin-bottom: 10px; */
   }
 `;
 
@@ -41,14 +41,11 @@ const Label = styled.label`
   font-weight: 300;
   margin-bottom: 15px;
 
-  ${props => props.theme.window.mobile} {
-    margin-bottom: 8px;
-  }
 `;
 
 
 const Input = ({
-  type, name, placeholder, onChange, label,
+  name, placeholder, onChange, label,
   readOnly, width
 }) =>  {
 
@@ -58,7 +55,6 @@ const Input = ({
         <Label>{label}</Label>
       )}
       <InputBase
-        type={type}
         name={name}
         onChange={onChange}
         placeholder={placeholder}

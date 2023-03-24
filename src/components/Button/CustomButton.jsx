@@ -9,14 +9,19 @@ const ButtonWrap = styled.button`
   width: ${props => props.width};
   display: block;
   font-weight: 100;
+
+  ${(props) => props.theme.window.mobile} {
+    height: 50px;
+  }
 `;
 
-function CustomButton({children, onClick, bgColor, width}) {
+function CustomButton({children, onClick, bgColor, width, type}) {
   return (
     <ButtonWrap 
       onClick={onClick}
       bgColor={bgColor}
       width={width}
+      type={type}
     >
       {children}
     </ButtonWrap>

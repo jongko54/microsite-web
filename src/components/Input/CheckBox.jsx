@@ -7,8 +7,6 @@ const CheckBoxGroup = styled.div`
   input {
     position: absolute;
     left: -1000px;
-
-    
   }
   input:checked + label::before {
     background-color: #176FFF;
@@ -36,7 +34,17 @@ const CheckBoxGroup = styled.div`
     }
   }
 
-  
+  ${props => props.theme.window.mobile} {
+    label {
+      
+      ::before {
+        width: 15px;
+        height: 15px;
+        margin-left: 0;
+        margin-right: 10px;
+      }
+    }
+  }
 `;
 
 const AllChecked = styled.div``;
@@ -57,6 +65,11 @@ const SelectChecked = styled.ul`
       height: 22px;
       background-image: url(${infoArrow});
     }
+  }
+
+  ${props => props.theme.window.mobile} {
+    padding: 14px 13px;
+    margin-bottom: 10px;
   }
 `;
 

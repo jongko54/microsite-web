@@ -51,34 +51,26 @@ const RightBackground = styled.div`
 
 
 
-function Infomation({scrollY1, scrollY2}) {
-  const { y } = useScroll();
+function TaxReturn() {
   const { width } = useWindowSize();
 
   return (
     <Content
-      top={width > 768 ? '5%' : '18%'}
+      color='BG_WHITE'
+      top={width > 768 ? '4.45%' : '18%'}
       bottom={width > 768 ? '8.45%' : '20%'}
-      scrollY1={scrollY1}
-      scrollY2={scrollY2}
     >
-      <LeftBackground className={y > scrollY1 ? 'show' : null}>
-        <img src={left} alt='insurobo'  />
-      </LeftBackground>
-      <RightBackground className={y > scrollY2 ? 'show' : null}>
-        <img src={right} alt='insurobo' />
-      </RightBackground>
       <TitleSet
-        small_title='정보 알림이'
+        small_title='세무진단을 받을 수 있어요'
         big_title1='소상공인&nbsp;'
-        big_title2='정보마당'
+        big_title2='세금환급'
         row={width > 768 ? true : false}
       />
-       <Passage link='/board' title='지원사업 더 보러가기' circle='POINT'>
+       <Passage link='/board' title='세금환급하러 가기' circle='SECONDARY'>
        </Passage> 
         
     </Content>
   )
 }
 
-export default Infomation
+export default TaxReturn

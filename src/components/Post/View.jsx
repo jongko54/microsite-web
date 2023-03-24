@@ -32,7 +32,11 @@ const ViewHeader = styled.div`
   }
   
   ${(props) => props.theme.window.tab} {
-   
+    height: 100px;
+    padding-left: 0;
+    > h2 {
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -40,8 +44,8 @@ const ViewBody = styled.div`
   padding: 5% 0;
   font-size: 0.9rem;
   color: #808080;
-  ${(props) => props.theme.window.tab} {
-
+  ${(props) => props.theme.window.mobile} {
+    padding: 19% 0 50%;
   }
 `;
 
@@ -55,6 +59,9 @@ const Button = styled.button`
   height: 30px;
   background-color:#4575F5;
   color: #FFFFFF;
+  ${(props) => props.theme.window.mobile} {
+    font-size: 0.8666666666666667rem;
+  }
 `;
 
 
@@ -77,7 +84,7 @@ function View({data}) {
           </ViewBody>
            
           <ButtonWrap>
-            <Button onClick={() => handleClick('/')}>목록</Button>
+            <Button onClick={() => handleClick(-1)}>목록</Button>
           </ButtonWrap>
         </>
       )}

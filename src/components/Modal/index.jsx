@@ -19,6 +19,10 @@ const ModalWrap = styled.div`
   width: 66vw;
   height: 90vh;
   overflow-y: scroll;
+
+  ${(props) => props.theme.window.mobile} {
+    width: 85.33333333333333%;
+  }
 `;
 
 const CloseButton = styled.button`
@@ -26,6 +30,13 @@ const CloseButton = styled.button`
   height: 50px;
   background-image: url(${closeIcon});
   margin-left: calc(100% - 70px);
+  ${(props) => props.theme.window.mobile} {
+    width: 28px;
+    height: 28px;
+    background-size: contain;
+    margin-left: 90%;
+  }
+
 `;
 
 const Content = styled.div`

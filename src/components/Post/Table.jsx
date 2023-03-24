@@ -6,7 +6,8 @@ import theme from '../../style/Theme';
 import moreIcon from '../../assets/img/moreIcon.svg';
 import axios from 'axios';
 import Pagination from '../Pagination';
-import View from './View';
+import usePromise from '../../hooks/usePromise';
+
 const categories = [
   {
     name: 'all', 
@@ -64,7 +65,7 @@ const Categories = styled.ul`
 
   ${(props) => props.theme.window.mobile} {
     > li {
-      width: 80px;
+      width: 62px;
       height: 60px;
     }
   }
@@ -93,10 +94,12 @@ const Category = styled(Link)`
   ${(props) => props.theme.window.mobile} {
     text-align: end;
     font-size: 0.9333333333333333rem;
+    text-align: center;
+    
     ::before {
       width: 6px;
       height: 6px;
-      left: -10px;
+      left: -12px;
       top: calc(50% - 2.5px);
     }
   }
@@ -171,8 +174,8 @@ const ButtonWrap = styled.div`
   }
 
   ${(props) => props.theme.window.mobile} {
-    width: 53.33333333333333%;
-    padding-top: 5%;
+    width: 61.4%;
+    padding-top: 20%;
     > button {
       height: 40px;
     }
@@ -188,6 +191,7 @@ const MoreIcon = styled.span`
   margin-right: 20px;
 
   ${(props) => props.theme.window.mobile} {
+    margin-right: 14px;
     width: 12px;
     height: 12px
   }
@@ -216,7 +220,7 @@ export default function Table() {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
   
-  const categoryValue = category === 'all' ? '' : `?category=${category}`
+ 
   
   const onSelect = (category) => {
     setPage(1);
@@ -224,15 +228,18 @@ export default function Table() {
     
   }
   
+  
+  const categoryValue = category === 'all' ? '' : `?category=${category}`
+  const LIST_URL = `http://localhost:4000/community${categoryValue}`
   useEffect(() => {
-    const LIST_URL = `http://localhost:4000/community${categoryValue}`
     const getData = async () => {
-    const { data } = await axios.get(LIST_URL);
-    setPosts(data.slice(0).reverse());
-  }
+      const { data } = await axios.get(LIST_URL);
+      setPosts(data.slice(0).reverse());
+    }
     getData();
     console.log(category)
   }, [category, categoryValue]);
+
 
   return (
     <TableWrap>
@@ -275,14 +282,6 @@ export default function Table() {
           </ItemBlock>
         ))}
       </ListWrap>
-      {/* <ButtonWrap>
-          <Link
-            to='/community' 
-          >
-            <MoreIcon />
-            <p>더 보기</p>
-          </Link>
-        </ButtonWrap> */}
       {limit === 4 && (
         <ButtonWrap>
           <button

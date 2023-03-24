@@ -1,34 +1,46 @@
 {
-  "info_palace": [
+  "info_place": [
     {
       "id": 1,
       "title": "관련 정보 제목 들어갈자리 1",
       "content": "내용내용 정보관련 글 내용~~~~",
-      "image": ""
+      "image": "",
+      "date": "2023-03-02"
     },
     {
       "id": 2,
       "title": "관련 정보 제목 들어갈자리 2",
       "content": "내용내용 정보관련 글 내용~~~~",
-      "image": ""
+      "image": "",
+      "date": "2023-03-02"
     },
     {
       "id": 3,
       "title": "관련 정보 제목 들어갈자리 3",
       "content": "내용내용 정보관련 글 내용~~~~",
-      "image": ""
+      "image": "",
+      "date": "2023-03-02"
     },
     {
       "id": 4,
       "title": "관련 정보 제목 들어갈자리 4",
       "content": "내용내용 정보관련 글 내용~~~~",
-      "image": ""
+      "image": "",
+      "date": "2023-03-02"
     },
     {
       "id": 5,
       "title": "관련 정보 제목 들어갈자리 5",
       "content": "내용내용 정보관련 글 내용~~~~",
-      "image": ""
+      "image": "",
+      "date": "2023-03-02"
+    },
+    {
+      "id": 6,
+      "title": "관련 정보 제목 들어갈자리 6",
+      "content": "내용내용 정보관련 글 내용~~~~",
+      "image": "",
+      "date": "2023-03-02"
     }
   ],
   "community": [
@@ -140,19 +152,11 @@
       "phone": "01056782707"
     },
     {
-      "email": "",
+      "id": 2,
+      "email": "shn4302@naver.com",
       "password": "qlqk4302",
-      "name": "서한나",
-      "phone": "01057280777",
-      "": "shn4302@insurobo.com",
-      "id": 2
-    },
-    {
-      "email": "hkd123@insurobo.com",
-      "password": "12324546",
-      "name": "홍길동",
       "phone": "01056782707",
-      "id": 3
+      "name": "홍길동"
     }
   ]
 }

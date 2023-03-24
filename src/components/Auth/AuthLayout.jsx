@@ -9,6 +9,10 @@ const Wrap = styled.div`
   background-color: #FFFFFF;
   width: 52.08333333333333%;
   margin: 0 auto;
+
+  ${(props) => props.theme.window.mobile} {
+    width: 100%;
+  }
 `;
 
 const TitleBox = styled.div`
@@ -21,13 +25,21 @@ const TitleBox = styled.div`
       margin-top: 60px;
     }     
   }
+
+  ${props => props.theme.window.mobile} {
+    > h1 {
+      :nth-child(2) {
+        margin-top: 20px;
+      }     
+    }
+  }
 `;
 
-function AccoutLayout({children, title, subTitle}) {
+function AuthLayout({children, title, subTitle}) {
   const { width } = useWindowSize();
   return (
     <Layout>
-      <Content top='65px' bottom='300px'>
+      <Content top={width > 768 ? '65px' : '42px'} bottom={width > 768 ? '300px' : '91px'}>
         <Wrap>
           <TitleBox>
             <Title size={width > 768 ? '1.5rem' : '1.33rem'} color='BLACK2'>{title}</Title>
@@ -42,4 +54,4 @@ function AccoutLayout({children, title, subTitle}) {
   )
 }
 
-export default AccoutLayout
+export default AuthLayout

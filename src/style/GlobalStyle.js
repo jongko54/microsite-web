@@ -113,7 +113,7 @@ const GlobalStyle = createGlobalStyle`
 
   /* List page */
   &.list-style-disc {
-    margin-left: 2%;
+    margin: 0 2%;
     > li {
       position: relative;
       font-size: 1rem;
@@ -209,7 +209,7 @@ const GlobalStyle = createGlobalStyle`
       margin-left: 10px;
       > li {
         font-size: 0.8666666666666667rem;
-        margin-bottom: 2%;
+        margin-bottom: 15px;
         ::before {
           top: 8px;
           left: -10px;
@@ -265,9 +265,16 @@ const GlobalStyle = createGlobalStyle`
         margin-right: 0;
         padding: 0;
         :last-child {
-          margin-bottom: 0px;
+          margin-bottom: 26px;
         }
       }
+    }
+  }
+  &.caution {
+    color: #C91717;
+    font-size: 0.7rem;
+    ${(props) => props.theme.window.mobile} {
+      font-size: 0.6666666666666667rem;
     }
   }
 `;
