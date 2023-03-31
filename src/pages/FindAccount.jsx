@@ -70,6 +70,8 @@ const ResultWrap = styled.div`
 function FindAccount() {
   const { width } = useWindowSize();
   const location = useLocation();
+
+  
   return (
       <AuthLayout
         title='계정찾기'

@@ -1,10 +1,16 @@
-export function login({ email, password }) {
-  if (email === 'russ' && password === 'whynot0') {
-    return {
-      access_token: 'jx84e3kjew1njej3al2q9w',
-      refresh_token: 'g2rjfd7452bjfgn;a&*(jkehj',
-    };
-  } else {
-    return undefined;
-  }
-}
+import { createAction, handleActions } from "redux-actions";
+
+const SAMPLE_ACTION = 'auth/SAMPLE_ACTION';
+
+export const sampleAction = createAction(SAMPLE_ACTION);
+
+const initialState = {};
+
+const auth = handleActions(
+  {
+    [SAMPLE_ACTION] : (state, action) => state,
+  },
+  initialState,
+);
+
+export default auth;

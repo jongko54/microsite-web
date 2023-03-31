@@ -19,16 +19,12 @@ const mouseAnimation = keyframes`
 `
 
 const Wrap = styled.div`
-  background-color: #EEEEEE;
+  /* background-color: #EEEEEE; */
   width: 76.38888888888889%;
-  padding-top: 30%;
-  margin: 5.9% 0 0;
   position: relative;
 
   ${(props) => props.theme.window.mobile} {
     width: 100%;
-    margin: 11% 0 0;
-    padding-top: 98%;
   }
 `;
 
@@ -70,6 +66,7 @@ const GoToMoreButton = styled.div`
   }
 
   ${(props) => props.theme.window.mobile} {
+    display: ${props => props.none ? 'none' : 'flex'};
     top: 85%;
     left: 15%;
     h3 {
@@ -81,8 +78,6 @@ const GoToMoreButton = styled.div`
         left: -10%;
       }
     }
-
-    
   }
 `;
 
@@ -95,12 +90,12 @@ const Arrow = styled.img`
 `;
 
 
-function Passage({children, link, title, circle}) {
+function Passage({children, link, title, circle, none}) {
   const { width } = useWindowSize();
   return (
     <Wrap>
       {children}
-      <GoToMoreButton circle={circle}>
+      <GoToMoreButton circle={circle} none={none}>
         <Arrow src={width > 768 ? arrow : mb_arrow} alt='보러가기' />
         <h3><Link to={link}>{title}</Link></h3>
       </GoToMoreButton>

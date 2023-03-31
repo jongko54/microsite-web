@@ -24,7 +24,7 @@ const data = [
     t_line1: '소상공인',
     t_line2: '풍수해보험',
     t_line3: '무료지원 사업',
-    link: 'https://insurobowindstorm.com:3333/service/event/free-apply/guide?jehuCd=bccard_f',
+    link: '/freeApply',
     bg_img: slider1,
     mb_bg_img: mb_slider1,
     color: 'PRIMARY',

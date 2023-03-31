@@ -1,59 +1,51 @@
 import React from 'react'
-import styled from 'styled-components'
 import Content from '../Content';
 import TitleSet from '../TitleSet';
-import left from '../../assets/img/left_bg.png';
-import right from '../../assets/img/right_bg.png';
-import { useScroll } from '../../hooks/useScroll';
 import useWindowSize from '../../hooks/useWindowSize';
 import Passage from './Passage';
+import styled from 'styled-components';
+import taxRefund from '../../assets/img/tax_refund.png';
+import { useNavigate } from 'react-router-dom';
 
-
-const LeftBackground = styled.div`
-  position: absolute;
-  top: -7%;
-  left: -39%;
-  width: 80%;
-  opacity: 0;
-  transition: opacity 1s ease;
-  transition-delay: 0.4s;
-  &.show {
-    opacity: 1;
+const TaxReturnBanner = styled.div`
+  background-color: #FFF;
+  height: 300px;
+  border-radius: 40px;
+  margin-top: 4.4%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  > h2 {
+    padding-left: 7.3%;
+  }
+  > img {
+    width: 40.31454545454545%;
   }
 
   ${(props) => props.theme.window.mobile} {
-    top: 35%;
-    left: -80%;
-    width: 160%;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 200px;
+    border-radius: 21px;
+    > h2 {
+      font-size: 1rem;
+      padding: 5% 0 0 4%;
+    }
+    > img {
+      width: 60%;
+      align-self: flex-end;
+      margin-bottom: 40px;
+    }
   }
 `;
-
-const RightBackground = styled.div`
-  position: absolute;
-  top: -20%;
-  right: -30%;
-  width: 50%;
-  opacity: 0;
-  transition: opacity 1s ease;
-
-  &.show {
-    opacity: 1;
-  }
-
-  ${(props) => props.theme.window.mobile} {
-    width: 53.4%;
-    top: -7.5%;
-    right: -22%;
-  }
-`;
-
-
-
 
 
 function TaxReturn() {
   const { width } = useWindowSize();
-
+  let navigate = useNavigate();
+  function goToMainPage(link) {
+    navigate(link);
+  }
   return (
     <Content
       color='BG_WHITE'
@@ -66,7 +58,14 @@ function TaxReturn() {
         big_title2='세금환급'
         row={width > 768 ? true : false}
       />
-       <Passage link='/board' title='세금환급하러 가기' circle='SECONDARY'>
+       <Passage link='/board' title='세금환급하러 가기' circle='SECONDARY' none>
+          <TaxReturnBanner>
+            <h2>
+              지금 바로! 소상공인 세금환급<br />
+              확인해 보세요
+            </h2>
+            <img src={taxRefund} alt='소상공인 세금환급' onClick={width > 768 ? null : () => goToMainPage('/login')} />
+          </TaxReturnBanner>
        </Passage> 
         
     </Content>

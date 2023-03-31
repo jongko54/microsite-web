@@ -8,6 +8,16 @@ import { useScroll } from '../../hooks/useScroll';
 import useWindowSize from '../../hooks/useWindowSize';
 import Passage from './Passage';
 
+const InfoBanner = styled.div`
+  height: 400px;
+  background-color: #EEE;
+  margin-top: 9%;
+
+  ${(props) => props.theme.window.mobile} {
+    margin-top: 11%;
+  }
+`;
+
 
 const LeftBackground = styled.div`
   position: absolute;
@@ -75,6 +85,9 @@ function Infomation({scrollY1, scrollY2}) {
         row={width > 768 ? true : false}
       />
        <Passage link='/board' title='지원사업 더 보러가기' circle='POINT'>
+          <InfoBanner>
+
+          </InfoBanner>
        </Passage> 
         
     </Content>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState } from 'react'
 import styled, { css } from 'styled-components';
 import { Link,  } from 'react-router-dom';
 import useWindowSize from '../../hooks/useWindowSize';
@@ -6,7 +6,7 @@ import theme from '../../style/Theme';
 import moreIcon from '../../assets/img/moreIcon.svg';
 import axios from 'axios';
 import Pagination from '../Pagination';
-import usePromise from '../../hooks/usePromise';
+import useAsync from '../../hooks/useAsync';
 
 const categories = [
   {
@@ -16,7 +16,7 @@ const categories = [
   },
   {
     name: 'windstorm',
-    print: '풍수',
+    print: '풍수해',
     color: 'PRIMARY'
   },
   {
@@ -40,6 +40,8 @@ const categories = [
     color: 'POINT_SUB'
   }
 ]
+
+
 
 const TableWrap = styled.div`
   border-top: 2px solid #2F2F2F;
@@ -211,35 +213,35 @@ const WriteButton = styled.button`
   margin: 6% 0;
 `;
 
+
+
 export default function Table() {
   const { width } = useWindowSize();
-  const [posts, setPosts] = useState([]);
-  const [category, setCategory] = useState('all');
   const [limit, setLimit] = useState(4);
   // const limit = 4;
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
-  
- 
+  const [category, setCategory] = useState('all');
+  const categoryValue = category === 'all' ? '' : `?category=${category}`
+  const [state, refetch] = useAsync(getData, [category]);
+  const { loading, data, error } = state;
+  if (loading) return <div>로딩중..</div>;
+  if (error) return <div>에러가 발생했습니다</div>;
+  if (!data) return null;
+
+  async function getData() {
+    const response = await axios.get(
+      `http://localhost:8080/api/public/communityList${categoryValue}`
+    );
+    console.log(response.data.data)
+    return response.data.data.slice(0).reverse();
+  }
   
   const onSelect = (category) => {
     setPage(1);
     setCategory(category);
     
   }
-  
-  
-  const categoryValue = category === 'all' ? '' : `?category=${category}`
-  const LIST_URL = `http://localhost:4000/community${categoryValue}`
-  useEffect(() => {
-    const getData = async () => {
-      const { data } = await axios.get(LIST_URL);
-      setPosts(data.slice(0).reverse());
-    }
-    getData();
-    console.log(category)
-  }, [category, categoryValue]);
-
 
   return (
     <TableWrap>
@@ -268,9 +270,9 @@ export default function Table() {
       </Categories>
   
       <ListWrap className={limit === 10 ? 'open' : null}>
-        {posts.slice(offset, offset + limit).map((dt) => (
+        {data.slice(offset, offset + limit).map((dt) => (
           <ItemBlock key={dt.id}>
-            {categories.filter((ct) => (ct.name === dt.category)).map((fd) => (
+            {categories.filter((ct) => (ct.name === dt.code)).map((fd) => (
                 <CategoryLabel color={fd.color}>{fd.print}</CategoryLabel>
               ))}
               {category === 'all' ? (<Link to={`?id=${dt.id}`}>{dt.title}</Link>) : (
@@ -297,10 +299,10 @@ export default function Table() {
         <>
           <WriteButton>글쓰기</WriteButton>
           <Pagination
-          total={posts.length}
-          limit={limit}
-          page={page}
-          setPage={setPage}
+            total={data.length}
+            limit={limit}
+            page={page}
+            setPage={setPage}
           />  
         </>
       )}

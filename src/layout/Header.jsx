@@ -40,7 +40,7 @@ const LogoBox = styled.button`
     letter-spacing: -2px;
   }
   ${(props) => props.theme.window.mobile} {
-      width: 41.875%;
+      width: 44.6875%;
 
   }
 `;
@@ -98,7 +98,7 @@ const Menu = styled.ul`
 
 const ToggleBtn = styled.div`
   width: 28px;
-  height: ${props => props.isOpen ?  '28px' : '20px'};
+  height: ${props => props.isOpen ?  ' ' : '20px'};
   background-image: ${props => props.isOpen ? `url(${closeBtn})` : `url(${toggleBtn})`};
   display: none;
   background-size: contain;
@@ -121,6 +121,8 @@ const MyPageNav = styled.ul`
   background-color: #FFFFFF;
   top: 100%;
   left: 0%;
+  z-index: 9999;
+
   > li {
     display: flex;
     justify-content: center;
@@ -142,10 +144,20 @@ const MyPageNav = styled.ul`
   }
 `;
 
-function Header({auth, setAuth}) {
+function Header() {
   const [showPopup, setShowPopup] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [myPageOpne, setMyPageOpen] = useState(false);
+
+  const logout = () => {
+    localStorage.removeItem("@access-Token");
+    localStorage.removeItem("@user");
+    navigate('/')
+  }
+  const auth = localStorage.getItem("@access-Token");
+  const user = localStorage.getItem("@user");
+
+  console.log(auth, user)
 
   let navigate = useNavigate();
   function goToMainPage(link) {
@@ -166,7 +178,6 @@ function Header({auth, setAuth}) {
               <li onClick={() => setShowPopup(true)}>
                 <span>풍수해보험 가입확인</span>
               </li>
-              
               {auth ? 
                 <>
                   <li>
@@ -175,13 +186,13 @@ function Header({auth, setAuth}) {
                       <MyPageNav>
                         <li>
                           <img src={myPageIcon} alt='프로필'/>
-                          <p>홍길동</p>
+                          <p>{user}</p>
                         </li>
                         <li>
                           <p>프로필 수정</p>
                         </li>
                         <li>
-                          <p>로그아웃</p>
+                          <p onClick={logout}>로그아웃</p>
                         </li>
                       </MyPageNav>
                     )}

@@ -1,9 +1,12 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { useFormContext } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
 
 const InputWrap = styled.div`
   width: ${props => props.width ? props.width : '100%'};
-  
+  position: relative;
+  margin-bottom: 25px;
   > p {
     font-size: 0.7rem;
   }
@@ -20,7 +23,8 @@ const InputBase = styled.input`
   background: none;
   font-size: 1rem;
   color: #989898;
-  margin-bottom: 15px;
+  
+  
   ::placeholder {
     color: #989898;
     font-size: 1rem;
@@ -43,12 +47,19 @@ const Label = styled.label`
 
 `;
 
+const ErrorText = styled.p`
+  font-size: 13px;
+  line-height: 13px;
+  padding-top: 5px;
+  color: ${(props) => props.theme.color.WARNING_MESSAGE};
+  position: absolute;
+`;
 
 const Input = ({
-  name, placeholder, onChange, label,
-  readOnly, width
+  name, placeholder, onChange, label, type,
+  readOnly, width, require, validate, pattern, maxLength, minLength
 }) =>  {
-
+  const { register, formState: { errors } } = useFormContext();
   return (
     <InputWrap width={width}>
       {label && (
@@ -56,9 +67,22 @@ const Input = ({
       )}
       <InputBase
         name={name}
+        type={type}
         onChange={onChange}
         placeholder={placeholder}
         readOnly={readOnly}
+        {...register(name, {
+          required: require,
+          validate: validate,
+          pattern: pattern,
+          maxLength: maxLength,
+          minLength: minLength,
+        })}
+      />
+      <ErrorMessage
+        errors={errors}
+        name={name}
+        render={({message}) => <ErrorText>{message}</ErrorText>}
       />
     </InputWrap>
   )

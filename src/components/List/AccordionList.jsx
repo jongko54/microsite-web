@@ -94,7 +94,7 @@ function AccordionList({list}) {
     for (let i = 0; i < bx[0].children.length; i++) {
       bx[0].children[i].classList.remove('active');
     }
-   }
+  }
   return (
     <AccordionListWrap className='accordion'>
       {list.map((item) => (

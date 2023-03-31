@@ -6,25 +6,29 @@ import { useLocation, useSearchParams } from 'react-router-dom';
 import View from '../Post/View';
 import axios from 'axios';
 import useWindowSize from '../../hooks/useWindowSize';
-
+import useAsync from '../../hooks/useAsync';
 
 function Community() {
   const [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get('category');
   const id = searchParams.get('id');
   const location = useLocation();
-  const [data, setData] = useState({});
-
-  const CONTENT_URL = `http://localhost:4000/community?id=${id}`
-  useEffect(() => {
-    const getData = async () => {
-        const {data} = await axios.get(CONTENT_URL);
-        setData(data);
-    }
-    getData();
-  }, [CONTENT_URL]);
-
   const { width } = useWindowSize();
+
+  const [state, refetch] = useAsync(getData, [id]);
+  const { loading, data, error } = state;
+  if (loading) return <div>로딩중..</div>;
+  if (error) return <div>에러가 발생했습니다</div>;
+  if (!data) return null;
+  async function getData() {
+    const response = await axios.get(
+      `http://localhost:8080/api/public/communityList?id=${id}`
+    );
+    console.log(response.data.data)
+    return response.data.data
+  }
+
+
   return (
     <Content bottom={width > 768 ? '3.4%' : '15.4%'}>
       <TitleSet 
@@ -34,8 +38,6 @@ function Community() {
       {location.search === `?id=${id}` ? (<View data={data[0]} />) : (
         <Table category={category}  />
       )}
-      
-
     </Content>
   )
 }

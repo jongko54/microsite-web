@@ -10,6 +10,9 @@ import CustomButton from '../components/Button/CustomButton';
 import useWindowSize from '../hooks/useWindowSize';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import { useFormContext } from 'react-hook-form';
+import { setAccessToken, setUser } from '../container/Auth';
+
 const SocialLoginGroup = styled.div`
   display: flex;
   justify-content: space-between;
@@ -108,36 +111,37 @@ const TextLink = styled(Link)`
 
 
 
-function Login({setAuth}) {
+
+function Login() {
   const { width }= useWindowSize();
-  const navigate = useNavigate()
-  const [inputValue, setInputValue] = useState({
-    email: '',
-    password: '',
-  })
-  
-  const inputChangeHandler = (e) => {
-    const { name, value } = e.target
-    setInputValue({
-      ...inputValue,
-      [name]: value,
+  const navigate = useNavigate();
+  const { handleSubmit, reset } = useFormContext();
+
+  const onError = (error) => {
+    console.log(error)
+  }
+  const onSubmit = async (data) => {
+    console.log(data)
+    
+    await axios({
+      url: 'http://localhost:8080/api/public/login',
+      headers: { "Content-Type": `application/json`},
+      method: 'post',
+      data : JSON.stringify(data)
+    }).then(function (response) {
+        console.log(response.data);
+        setAccessToken(response.data.data.accessToken);
+        setUser(response.data.data.userName)
+        navigate('/')
     })
+    .catch(function (error) {
+      console.log(error)
+    })
+
+    reset();
   }
 
-  const doLogin = () => {
-    // try {
-    //   const { data } = await axios.post(
-    //     'http://localhost:4000/users',
-    //     inputValue,
-    //   )
-    //   // setCookie('accessToken', data['accessToken'], { path: '/' })
 
-    // } catch (error) {
-    //   console.log(error)
-    // }
-    // setAuth(true);
-    // useNavigate('/');
-  }
   return (
     <AuthLayout
       title='로그인'
@@ -156,20 +160,25 @@ function Login({setAuth}) {
     <Linear>
       <hr /><span>또는</span><hr />
     </Linear>
-    <Form>
+    <Form onSubmit={handleSubmit(onSubmit, onError)}>
       <Input
         label='이메일'
-        name='email'
+        name='userId'
         placeholder='이메일주소를 입력하세요'
-        onChange={inputChangeHandler}
+        require='*필수 입력 사항입니다.'
+        pattern={{
+          value: /^[a-zA-Z0-9+-.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+          message: '규칙에 맞는 이메일 주소를 입력해주세요.'
+        }}
       />
       <Input 
-        name='password'
+        name='userPw'
+        type='password'
         placeholder='비밀번호를 입력하세요'
-        onChange={inputChangeHandler}
+        require='*필수 입력 사항입니다.'
       />
       <ButtonWrap>
-        <CustomButton bgColor='GRAY' width='100%' onClick={doLogin}>
+        <CustomButton bgColor='GRAY' width='100%' type='submit'>
           <Text color='WHITE' bold='200'>
             이메일로 계속하기
           </Text>

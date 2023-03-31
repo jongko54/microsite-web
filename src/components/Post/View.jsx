@@ -26,6 +26,18 @@ const ViewHeader = styled.div`
     width: 800px;
     overflow-x: hidden;
     text-overflow: ellipsis;
+    display: flex;
+    > span {
+      display: block;
+      color: #FFFFFF;
+      height: 39px;
+      padding: 0 23px;
+      border-radius: 19px;
+      text-align: center;
+      line-height: 39px;
+      font-size: 0.75rem;
+      margin-right: 39px;
+    }
   }
   > p {
     font-size: 0.9rem;
@@ -76,8 +88,19 @@ function View({data}) {
       {data && (
         <>
           <ViewHeader key={data.id}>
-            <h2>{data.title}</h2>
-            <p>{data.date}</p>
+            <h2>
+              <span style={{
+                backgroundColor: data.category === '풍수해' ? '#4575F5' :
+                  data.category === '이벤트' ? '#F58839' :
+                  data.category === '지원정책' ? '#336BFF' : 
+                  data.category === '대출' ? '#6F85E3' :
+                  data.category === '홍보' ? '#FFCAB2' : null
+              }}>
+                {data.category}
+              </span>
+              {data.title}
+            </h2>
+            <p>{data.createdDate}</p>
           </ViewHeader>
           <ViewBody>
             {data.content}

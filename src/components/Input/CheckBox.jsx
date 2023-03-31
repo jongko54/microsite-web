@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import infoArrow from '../../assets/img/infoArrow.png';
 import checkIcon from '../../assets/img/checkboxIcon.png';
+import { useFormContext } from 'react-hook-form';
 
 const CheckBoxGroup = styled.div`
   input {
@@ -74,7 +75,7 @@ const SelectChecked = styled.ul`
 `;
 
 
-function CheckBox({data}) {
+function CheckBox({data, }) {
   const [checkItems, setCheckItems] = useState([]);
 
   const handleSingleCheck = (checked, id) => {
@@ -95,6 +96,9 @@ function CheckBox({data}) {
       setCheckItems([]);
     }
   }
+
+  const { register, formState: { errors }} = useFormContext();
+
   return (
     <>
       <CheckBoxGroup>
@@ -109,16 +113,16 @@ function CheckBox({data}) {
           <label for='all'>전체 약관 동의</label>
         </AllChecked>
         <SelectChecked>
-          {data?.map((data) => (
-            <li key={data.id}>
+          {data?.map((data, index) => (
+            <li key={index}>
               <input 
                 type='checkbox' 
-                name={`select-${data.id}`}
-                id={`check${data.id}`}
-                onChange={(e) => handleSingleCheck(e.target.checked, data.id)}
-                checked={checkItems.includes(data.id) ? true : false}
+                name={`select-${index}`}
+                id={`check${index}`}
+                onChange={(e) => handleSingleCheck(e.target.checked, index)}
+                checked={checkItems.includes(index) ? true : false}
               />
-              <label for={`check${data.id}`}>{data.title}</label>
+              <label for={`check${index}`}>{data.title}</label>
             </li>
           ))}
         </SelectChecked>
