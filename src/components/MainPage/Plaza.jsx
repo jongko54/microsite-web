@@ -11,6 +11,7 @@ import { useScroll } from '../../hooks/useScroll';
 import bg_R from '../../assets/img/bg_Img_R.png';
 
 import useWindowSize from '../../hooks/useWindowSize';
+import { useNavigate } from 'react-router-dom';
 
 
 const data = [
@@ -19,6 +20,7 @@ const data = [
     icon: icon1,
     title: '의무보험',
     text: '업종별 의무보험\n꼭! 챙기세요',
+    link: '/insuranceInfo?item=duty',
     className: 'delay1'
   },
   {
@@ -26,6 +28,7 @@ const data = [
     icon: icon2,
     title: '필수보험',
     text: '사업장 안전!\n선택이 아닌 필수',
+    link: '/insuranceInfo?item=must',
     className: 'delay2'
   },
   {
@@ -33,6 +36,7 @@ const data = [
     icon: icon3,
     title: '재테크보험',
     text: '저축과\n 위험보장을 동시에',
+    link: '/insuranceInfo?item=invest',
     className: 'delay3'
   },
 ]
@@ -112,6 +116,7 @@ const ImgWrap = styled.div`
 `;
 
 function Plaza({scrollY}) {
+  let navigate = useNavigate();
   const { y } = useScroll();
   const { width } = useWindowSize();
   return (
@@ -121,17 +126,19 @@ function Plaza({scrollY}) {
       bgImg={bg_R}
       scrollY={scrollY}
       min={width > 768 && '1440px'}
-
     >
-   
       <TitleSet
-        small_title='사업장 안정지킴이'
+        small_title='사업장 안전지킴이'
         big_title1='사장님 보험'
         big_title2='Plaza'
       />
       <CardList>
         {data.map((dt) => (
-          <Card key={dt.id} className={y > scrollY ? `${dt.className}` : null}>
+          <Card 
+            key={dt.id} 
+            className={y > scrollY ? `${dt.className}` : null}
+            onClick={() => navigate(dt.link)}
+          >
             <ImgWrap>
               <img src={dt.icon} alt='아이콘' />
             </ImgWrap>

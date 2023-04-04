@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import { useFormContext } from 'react-hook-form';
 import { setAccessToken, setUser } from '../container/Auth';
+import { useEffect } from 'react';
 
 const SocialLoginGroup = styled.div`
   display: flex;
@@ -109,13 +110,15 @@ const TextLink = styled(Link)`
   }
 `;
 
-
-
-
 function Login() {
   const { width }= useWindowSize();
   const navigate = useNavigate();
   const { handleSubmit, reset } = useFormContext();
+
+  const [userPwMessage, setUserPwMessage] = useState('');
+  useEffect(() => {
+    reset();
+  }, []);
 
   const onError = (error) => {
     console.log(error)
@@ -129,18 +132,19 @@ function Login() {
       method: 'post',
       data : JSON.stringify(data)
     }).then(function (response) {
-        console.log(response.data);
+        console.log(response.data.data);
         setAccessToken(response.data.data.accessToken);
         setUser(response.data.data.userName)
+        
         navigate('/')
+        reset();
     })
     .catch(function (error) {
-      console.log(error)
+      console.log(error.response.data.message);
+      setUserPwMessage(error.response.data.message);
+      alert(userPwMessage)
     })
-
-    reset();
   }
-
 
   return (
     <AuthLayout
@@ -177,6 +181,7 @@ function Login() {
         placeholder='비밀번호를 입력하세요'
         require='*필수 입력 사항입니다.'
       />
+  
       <ButtonWrap>
         <CustomButton bgColor='GRAY' width='100%' type='submit'>
           <Text color='WHITE' bold='200'>

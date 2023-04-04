@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import styled, { css } from 'styled-components';
 import logo from '../assets/img/mainLogo.png';
-import AdminMember from '../components/Modal/AdminMember';
 import myPageIcon from '../assets/img/myPageIcon.png';
 import toggleBtn from '../assets/img/toggleBtn.png';
 import closeBtn from '../assets/img/closeBtn.png';
+import WindStormModal from '../components/Modal/WindStormModal';
 
 const Wrap = styled.header`
   display: flex;
@@ -13,6 +13,7 @@ const Wrap = styled.header`
   align-items: center;
   padding: 2.2% 0;
   background-color: #FFFFFF;
+  
   
   ${(props) => props.theme.window.mobile} {
     height: 80px;
@@ -31,7 +32,7 @@ const Nav = styled.nav`
 `;
 
 const LogoBox = styled.button`
-  width: 23.19444444444444%;
+  width: 15.9%;
   display: flex;
   align-items: center;
   
@@ -40,7 +41,7 @@ const LogoBox = styled.button`
     letter-spacing: -2px;
   }
   ${(props) => props.theme.window.mobile} {
-      width: 44.6875%;
+      width: 35.3125%;
 
   }
 `;
@@ -61,6 +62,7 @@ const Menu = styled.ul`
     }
     :last-child {
       margin-right: 0;
+      border: none;
     }
   }
   ${(props) => props.theme.window.mobile} {
@@ -98,13 +100,14 @@ const Menu = styled.ul`
 
 const ToggleBtn = styled.div`
   width: 28px;
-  height: ${props => props.isOpen ?  ' ' : '20px'};
+  height: ${props => props.isOpen ?  '30px' : '20px'};
   background-image: ${props => props.isOpen ? `url(${closeBtn})` : `url(${toggleBtn})`};
   display: none;
   background-size: contain;
   
   ${(props) => props.theme.window.mobile} {
     display: block;
+    
   }
 `;
 
@@ -112,6 +115,10 @@ const MyPage = styled.div`
   background-image: url(${myPageIcon});
   width: 80px;
   height: 80px;
+
+  ${(props) => props.theme.window.mobile} {
+    display: none;
+  } 
 `;
 
 const MyPageNav = styled.ul`
@@ -122,7 +129,8 @@ const MyPageNav = styled.ul`
   top: 100%;
   left: 0%;
   z-index: 9999;
-
+  display: flex;
+  flex-direction: column;
   > li {
     display: flex;
     justify-content: center;
@@ -142,6 +150,24 @@ const MyPageNav = styled.ul`
       left: 0;
     }
   }
+
+  ${(props) => props.theme.window.mobile} {
+    top: 80px;
+    width: 100%;
+    > li {
+      height: 80px;
+    
+
+      > p {
+       
+      }
+      > img {
+        width: 40px;
+        height: 40px;
+        left: 23%;
+      }
+    }
+  } 
 `;
 
 function Header() {
@@ -156,9 +182,7 @@ function Header() {
   }
   const auth = localStorage.getItem("@access-Token");
   const user = localStorage.getItem("@user");
-
-  console.log(auth, user)
-
+  console.log(user)
   let navigate = useNavigate();
   function goToMainPage(link) {
     navigate(link);
@@ -189,7 +213,7 @@ function Header() {
                           <p>{user}</p>
                         </li>
                         <li>
-                          <p>프로필 수정</p>
+                          <p><Link to='/myProfile'>프로필 수정</Link></p>
                         </li>
                         <li>
                           <p onClick={logout}>로그아웃</p>
@@ -211,7 +235,7 @@ function Header() {
           
         </Wrap>
         {showPopup && (
-          <AdminMember onClick={() => setShowPopup(false)} />
+          <WindStormModal onClick={() => setShowPopup(false)} />
         )}
   
     </>

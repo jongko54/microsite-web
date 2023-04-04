@@ -56,6 +56,9 @@ const Form = styled.form`
 const InputGroup = styled.div`
   margin-bottom: 30px;
 
+  ${(props) => props.theme.window.mobile} {
+    margin-bottom: 20px;
+  }
   
 `;
 
@@ -78,7 +81,15 @@ const PhoneGroup = styled.div`
       cursor: pointer;
     }
   }
-
+  ${(props) => props.theme.window.mobile} {
+    > div {
+      > .button {
+          height: 50px;
+          margin-bottom: 20px;
+          margin-left: 5px;
+      }
+    }
+  }
 `;
 
 const SmsCheckIcon = styled.div`
@@ -118,12 +129,6 @@ function Register() {
   }
 
   const onError = (error) => {
-    // console.log(
-    //   watch('userId'),
-    //   watch('userPw'),
-    //   watch('userName'),
-    //   watch('phoneRole'),
-    // )
     console.log(error);
   }
   const openEmailCheck = async (value) => {
@@ -257,7 +262,7 @@ function Register() {
               name='confirmCode'
               type='number'
               placeholder='인증번호를 입력해주세요'
-              validate={{check: () => openSmsCheck() }}
+              validate={{check: () => openSmsCheck()}}
             />
             {message === '인증이 완료 되었습니다.' ? (<SmsCheckIcon check={message} />) : null}
           </PhoneGroup>

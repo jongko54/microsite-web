@@ -16,9 +16,7 @@ const ModalOveray = styled.div`
 
 const ModalWrap = styled.div`
   z-index: 1000;
-  width: 66vw;
-  height: 90vh;
-  overflow-y: scroll;
+  margin: 0 auto;
 
   ${(props) => props.theme.window.mobile} {
     width: 85.33333333333333%;
@@ -29,7 +27,8 @@ const CloseButton = styled.button`
   width: 50px;
   height: 50px;
   background-image: url(${closeIcon});
-  margin-left: calc(100% - 70px);
+  margin-left: calc(100% - 50px);
+  margin-bottom: 20px;
   ${(props) => props.theme.window.mobile} {
     width: 28px;
     height: 28px;

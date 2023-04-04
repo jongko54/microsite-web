@@ -10,6 +10,11 @@ const InputWrap = styled.div`
   > p {
     font-size: 0.7rem;
   }
+
+  ${props => props.theme.window.mobile} {
+    margin-bottom: 20px;
+  }
+
 `;
 
 const InputBase = styled.input`
@@ -53,6 +58,12 @@ const ErrorText = styled.p`
   padding-top: 5px;
   color: ${(props) => props.theme.color.WARNING_MESSAGE};
   position: absolute;
+
+  ${props => props.theme.window.mobile} {
+    padding-top: 0px;
+    line-height: 20px;
+  }
+
 `;
 
 const Input = ({

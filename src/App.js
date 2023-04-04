@@ -13,6 +13,8 @@ import Register from './pages/Register';
 import FindAccount from './pages/FindAccount';
 import FreeApply from './pages/FreeApply';
 import { useForm, FormProvider } from "react-hook-form";
+import EditProfile from './pages/EditProfile';
+import InsuranceInfo from './pages/InsuranceInfo';
 
 function App() {
   const methods = useForm({
@@ -34,12 +36,13 @@ function App() {
             <Route path='/event' element={<Event />} />
             <Route path='/bizsupport/*' element={<BizSupport />} />
             <Route path='/bizsupport/:list' element={<List />} />
+            <Route path='/insuranceInfo' element={<InsuranceInfo />} />
             <Route path='/freeApply' element={<FreeApply />} />
             <Route path='/test' element={<TestPage />} />
             <Route path='/board' element={<Board />} />
             <Route path='/login' element={<Login />} />
             <Route path='/login/findAccount' element={<FindAccount />} />
-            <Route path='/login/findAccount?:search' element={<FindAccount />} />
+            <Route path='/myProfile' element={<EditProfile />} />
             <Route path='/register' element={<Register />} />
           </Routes>
         </Router>       
