@@ -218,7 +218,6 @@ function Register() {
 
 
   const openEmailCheck =  () => {
-
      axios({
       url: 'http://localhost:8080/api/public/email',
       method: 'get',

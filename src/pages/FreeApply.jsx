@@ -158,6 +158,7 @@ const Accordion = styled.div`
   border: 1px solid #F0F0F0;
   padding: 0 15px;
   margin-bottom: 20px;
+  background-color:#FFFFFF;
 `;
 
 const Title = styled.div`
