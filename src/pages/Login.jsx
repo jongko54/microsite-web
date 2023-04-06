@@ -8,11 +8,12 @@ import { Text } from '../components/Font';
 import { Link } from 'react-router-dom';
 import CustomButton from '../components/Button/CustomButton';
 import useWindowSize from '../hooks/useWindowSize';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import axios from 'axios';
 import { useFormContext } from 'react-hook-form';
 import { setAccessToken, setUser } from '../container/Auth';
 import { useEffect } from 'react';
+import LoginFailModal from "../components/Modal/LoginFailModal"
 
 const SocialLoginGroup = styled.div`
   display: flex;
@@ -113,19 +114,54 @@ const TextLink = styled(Link)`
 function Login() {
   const { width }= useWindowSize();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [showPopup, setShowPopup] = useState(false);
+  const [type, setType] = useState(); //로그인 타입 (kakao, naver, email)
+  const [type_kor, setType_kor] = useState(); //로그인 타입 한글 (kakao, naver, email)
+  const [loginCode, setLoginCode] = useState();
   const { handleSubmit, reset } = useFormContext();
 
   const [userPwMessage, setUserPwMessage] = useState('');
   useEffect(() => {
     reset();
+    const loginCode = searchParams.get("loginCode");
+
+    if(loginCode !== null && loginCode === 'fail'){
+      setShowPopup(true);
+      setType(searchParams.get("type"));
+
+      switch (searchParams.get("type")){
+        case "kakao":
+          setType_kor("카카오");
+          break;
+        case "naver":
+          setType_kor("네이버");
+          break;
+        default:
+          setType_kor("이메일");
+      }
+    }
+
+    if(loginCode !== null && loginCode === 'success') {
+        const accessToken = searchParams.get("token");
+        const name = searchParams.get("name");
+
+        setAccessToken(accessToken);
+        setUser(name)
+
+      navigate('/')
+    }
+
   }, []);
+
+
 
   const onError = (error) => {
     console.log(error)
   }
   const onSubmit = async (data) => {
     console.log(data)
-    
+
     await axios({
       url: 'http://localhost:8080/api/public/login',
       headers: { "Content-Type": `application/json`},
@@ -135,15 +171,26 @@ function Login() {
         console.log(response.data.data);
         setAccessToken(response.data.data.accessToken);
         setUser(response.data.data.userName)
-        
+
         navigate('/')
         reset();
     })
     .catch(function (error) {
       console.log(error.response.data.message);
       setUserPwMessage(error.response.data.message);
-      alert(userPwMessage)
+      alert(error.response.data.message)
     })
+  }
+
+  const onKakaoLogin = () => {
+    const KAKAO_REDI_URL = `http://localhost:8080/api/oauth2/authorization/kakao`;
+    window.location.href =  KAKAO_REDI_URL;
+  }
+
+
+  const onNaverLogin = () => {
+    const NAVER_REDI_URL = `http://localhost:8080/api/oauth2/authorization/naver`;
+    window.location.href =  NAVER_REDI_URL;
   }
 
   return (
@@ -152,11 +199,11 @@ function Login() {
       subTitle={width > 768 ? `소상공인의 성공을 지원하는 \n소상공인 도우미 방문을 환영합니다.` : `소상공인의 성공을 지원하는 \n소상공인 도우미 방문을\n환영합니다.`}
     >
     <SocialLoginGroup>
-      <CustomButton bgColor='YELLOW'>
+      <CustomButton bgColor='YELLOW' onClick={onKakaoLogin}>
         <img src={kakaoIcon} alt='카카오톡' />
         <Text size={width > 768 ? '1.15rem' : '1rem'} color='BLACK4'>카카오톡 로그인</Text>
       </CustomButton>
-      <CustomButton bgColor='GREEN'>
+      <CustomButton bgColor='GREEN' onClick={onNaverLogin}>
         <img src={naverIcon} alt='네이버' />
         <Text size={width > 768 ? '1.15rem' : '1rem'} color='WHITE'>네이버 로그인</Text>
       </CustomButton>
@@ -175,13 +222,13 @@ function Login() {
           message: '규칙에 맞는 이메일 주소를 입력해주세요.'
         }}
       />
-      <Input 
+      <Input
         name='userPw'
         type='password'
         placeholder='비밀번호를 입력하세요'
         require='*필수 입력 사항입니다.'
       />
-  
+
       <ButtonWrap>
         <CustomButton bgColor='GRAY' width='100%' type='submit'>
           <Text color='WHITE' bold='200'>
@@ -191,6 +238,10 @@ function Login() {
       </ButtonWrap>
       <TextLink to='/login/findAccount'>계정정보를 잊으셨나요?</TextLink>
     </Form>
+      {
+        showPopup &&
+          <LoginFailModal type={type} kor_name={type_kor} onClick={()=> setShowPopup(false)}></LoginFailModal>
+      }
   </AuthLayout>
   )
 }
