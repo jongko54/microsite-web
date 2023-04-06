@@ -97,7 +97,7 @@ function CheckBox({data, }) {
     }
   }
 
-  const { register, formState: { errors }} = useFormContext();
+  const { register, watch, formState: { errors }} = useFormContext();
 
   return (
     <>
@@ -105,24 +105,27 @@ function CheckBox({data, }) {
         <AllChecked>
           <input
             type='checkbox'
-            name='select-all'
             id='all'
             onChange={(e) => handleAllCheck(e.target.checked)}
             checked={checkItems.length === data.length ? true : false}
+            {...register('select-all', {
+               required: '필수입력사항입니다'
+            })}
           />
           <label for='all'>전체 약관 동의</label>
         </AllChecked>
         <SelectChecked>
-          {data?.map((data, index) => (
-            <li key={index}>
-              <input 
+          {data?.map((data) => (
+            <li key={data.id}>
+              <input
                 type='checkbox' 
-                name={`select-${index}`}
-                id={`check${index}`}
-                onChange={(e) => handleSingleCheck(e.target.checked, index)}
-                checked={checkItems.includes(index) ? true : false}
+                name={`select-${data.id}`}
+                id={`check${data.id}`}
+                onChange={(e) => handleSingleCheck(e.target.checked, data.id)}
+                checked={checkItems.includes(data.id) ? true : false}
+                
               />
-              <label for={`check${index}`}>{data.title}</label>
+              <label for={`check${data.id}`}>{data.title}</label>
             </li>
           ))}
         </SelectChecked>

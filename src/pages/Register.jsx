@@ -5,10 +5,11 @@ import AuthLayout from '../components/Auth/AuthLayout';
 import { Text } from '../components/Font';
 import CustomButton from '../components/Button/CustomButton';
 import useWindowSize from '../hooks/useWindowSize';
-import CheckBox from '../components/Input/CheckBox';
+import checkboxIcon from '../assets/img/checkboxIcon.png';
 import Input from '../components/Input';
 import axios from 'axios';
 import checkIcon from '../assets/icon/smsCheckIcon.png';
+import infoArrow from '../assets/img/infoArrow.png';
 import { useLocation } from 'react-router-dom';
 
 const data = [
@@ -104,48 +105,138 @@ const SmsCheckIcon = styled.div`
   right: 5%;
 `;
 
+const CheckBoxGroup = styled.div`
+  input {
+    position: absolute;
+    left: -1000px;
+  }
+  input:checked + label::before {
+    background-color: #176FFF;
+    border-color: #176FFF;
+    background-image: url(${checkboxIcon});
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  label {
+    display: flex;
+    align-items: center;
+    height: 80px;
+    color: #2F2F2F;
+
+    ::before {
+      content: '';
+      display: block;
+      width: 18px;
+      height: 18px;
+      border: 1px solid #989898;
+      border-radius: 50%;
+      margin-right: 15px;
+      margin-left: 3px;
+      transition: background-color .3s;
+    }
+  }
+
+  ${props => props.theme.window.mobile} {
+    label {
+      
+      ::before {
+        width: 15px;
+        height: 15px;
+        margin-left: 0;
+        margin-right: 10px;
+      }
+    }
+  }
+`;
+
+const AllChecked = styled.div``;
+
+const SelectChecked = styled.ul`
+  padding: 15px 0;
+  background-color: #F9F9F9;
+  margin-bottom: 13px;
+
+  > li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    ::after {
+      content: '';
+      display: block;
+      width: 10px;
+      height: 22px;
+      background-image: url(${infoArrow});
+    }
+  }
+
+  ${props => props.theme.window.mobile} {
+    padding: 14px 13px;
+    margin-bottom: 10px;
+  }
+`;
 
 function Register() {
   const { width } = useWindowSize();
   const location = useLocation();
   const [messageId, setMessageId] = useState('');
-  const [message, setMessage] = useState('');
-
-  const { handleSubmit, watch, setFocus, reset } = useFormContext();
+  const [smsIcon, setSmsIcon] = useState(false);
+  const { register, handleSubmit, watch, setFocus, reset, setError, setValue } = useFormContext({ 
+    mode: 'onBlur'
+  });
   useEffect(() => {
     reset()
   }, [location, reset]);
 
   const onSubmit = async (data) => {
+   
     await axios({
       url: 'http://localhost:8080/api/public/join',
       method: 'post',
-      body: data
+      data: {
+        userId: data.userId,
+        userPw: data.userPw,
+        userName: data.userName,
+        phoneRole: data.phoneRole,
+        marketing_yn: data.marketing_yn === true ? 'Y' : 'N'
+      }
     }).then(function (response) {
       console.log(response)
+      alert('회원가입이 완료되었습니다')
+      reset()
+      setSmsIcon('')
+
     }).catch(function (error) {
-      console.log(error)
+      console.log(JSON.stringify(error))
     });
   }
 
   const onError = (error) => {
+    setSmsIcon(false)
+    console.log(watch())
     console.log(error);
   }
-  const openEmailCheck = async (value) => {
-    await axios({
+
+
+  const openEmailCheck =  () => {
+
+     axios({
       url: 'http://localhost:8080/api/public/email',
       method: 'get',
       params: {
-        email: value
+        email: watch('userId')
       }
-    }).then(function (response) {
-      console.log(response)
-      return true;
+    })
+    .then(function (response) {
+      console.log(response.status)
+      
+    //  alert('성공')
     })
     .catch(function (error) {
-      console.log(error)
+      console.log(error.response.status)
+      setError('userId', { type: 'custom', message: '이미 등록된 이메일입니다'});
       return false;
-    })
+    });
+    return true;
   }
 
   const passwordCheck = () => {
@@ -170,6 +261,7 @@ function Register() {
     })
     .catch(function (error) {
       console.log(error)
+
     })
   }
 
@@ -182,13 +274,21 @@ function Register() {
         authKey: watch('confirmCode')
       }
     }).then(function (response) {
-        setMessage(response.data.message)
+        console.log(response)
+        return true
     })
     .catch(function (error) {
-        setMessage(error.response.data.message)
+      setError('confirmCode', { type: 'custom', message: '인증번호를 확인해주세요'});
+      setSmsIcon(false)
+        // setStatue(error.response.data.message)
     })
   }
-  
+
+  const handleAllCheck = (checked) => {
+    if (checked) {
+      
+    }
+  }
 
   return (
     <AuthLayout title='회원가입'>
@@ -199,14 +299,15 @@ function Register() {
             name="userId"
             placeholder='AAA.@HJJJJ.COM'
             require='*필수 입력 사항입니다.'
-            validate={{
-              check: (value) => openEmailCheck(value) ? '중복확인이 완료되었습니다' : '이미존재하는아이디입니다'
-            }}
             pattern={{
               value: /^[a-zA-Z0-9+-.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
               message: '규칙에 맞는 이메일 주소를 입력해주세요.'
             }}
+            validate={{
+              value: () => openEmailCheck()
+            }}
           />
+
         </InputGroup>
         <InputGroup>
           <Input 
@@ -262,11 +363,55 @@ function Register() {
               name='confirmCode'
               type='number'
               placeholder='인증번호를 입력해주세요'
-              validate={{check: () => openSmsCheck()}}
+              // minLength={5}
+              // maxLength={5}
+              validate={{
+                value: () => openSmsCheck() && setSmsIcon(true)
+              }}
             />
-            {message === '인증이 완료 되었습니다.' ? (<SmsCheckIcon check={message} />) : null}
+            {smsIcon && (<SmsCheckIcon />)}
+            
           </PhoneGroup>
-          <CheckBox data={data} />
+          <div>
+            <div>
+              <input
+                type='checkbox'
+                id='all'
+                onChange={(e) => handleAllCheck(e.target.checked)}
+              />
+              <label for='all'>전체약관동의</label>
+            </div>
+          </div>
+          <ul>
+            <li>
+              <input 
+                type='checkbox'
+                id='select-1'
+                {...register('select1', {
+                  required: ''
+                })}
+              />
+              <label for='select-1'>회원가입 및 운영약관 동의</label>
+            </li>
+            <li>
+              <input 
+                type='checkbox'
+                id='select-2'
+                {...register('select2', {
+                  required: true
+                })}
+              />
+              <label for='select-2'>회원가입 및 운영약관 동의</label>
+            </li>
+            <li>
+              <input 
+                type='checkbox'
+                id='select-3'
+                {...register('marketing_yn')}
+              />
+              <label for='select-3'>마케팅 이용동의 (선택)</label>
+            </li>
+          </ul>
           <Text size={width > 768 ? '0.9rem' : '0.86rem'} color='WARNING_MESSAGE'>
             *선택 항목을 동의하지 않아도 가입이 가능합니다.
           </Text>

@@ -18,7 +18,7 @@ import InsuranceInfo from './pages/InsuranceInfo';
 
 function App() {
   const methods = useForm({
-    mode: 'onChange'
+    mode: 'onBlur'
   });
   
   

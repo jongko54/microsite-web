@@ -58,6 +58,7 @@ const ErrorText = styled.p`
   padding-top: 5px;
   color: ${(props) => props.theme.color.WARNING_MESSAGE};
   position: absolute;
+  bottom: -17px;
 
   ${props => props.theme.window.mobile} {
     padding-top: 0px;
@@ -70,7 +71,9 @@ const Input = ({
   name, placeholder, onChange, label, type,
   readOnly, width, require, validate, pattern, maxLength, minLength
 }) =>  {
-  const { register, formState: { errors } } = useFormContext();
+  const { register, formState: { errors } } = useFormContext({
+    mode: 'onBlur'
+  });
   return (
     <InputWrap width={width}>
       {label && (

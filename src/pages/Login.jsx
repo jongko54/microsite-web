@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import AuthLayout from '../components/Auth/AuthLayout';
 import naverIcon from '../assets/img/naverIcon.png';
 import kakaoIcon from '../assets/img/kakaoIcon.png';
@@ -115,7 +115,6 @@ function Login() {
   const navigate = useNavigate();
   const { handleSubmit, reset } = useFormContext();
 
-  const [userPwMessage, setUserPwMessage] = useState('');
   useEffect(() => {
     reset();
   }, []);
@@ -135,14 +134,12 @@ function Login() {
         console.log(response.data.data);
         setAccessToken(response.data.data.accessToken);
         setUser(response.data.data.userName)
-        
         navigate('/')
         reset();
     })
     .catch(function (error) {
       console.log(error.response.data.message);
-      setUserPwMessage(error.response.data.message);
-      alert(userPwMessage)
+      alert(error.response.data.message)
     })
   }
 

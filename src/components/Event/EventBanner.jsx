@@ -5,6 +5,7 @@ import banner from '../../assets/img/event/event_banner.png';
 import { Title } from '../Font';
 import icon from '../../assets/img/event/money_icon.png';
 import useWindowSize from '../../hooks/useWindowSize';
+import { useNavigate } from 'react-router-dom';
 
 
 const Wrap = styled.div`
@@ -84,6 +85,7 @@ const MoneyIcon = styled.div`
 
 const EventBanner = () => {
   const { width } = useWindowSize();
+  let navigate = useNavigate();
   return (
     <Wrap>
       <div>
@@ -98,7 +100,7 @@ const EventBanner = () => {
           <MoneyIcon className='right' />
         </BottomContent>
       </div>
-      <Button title='이벤트 참여하기' bgColor='BLUE' color='WHITE' />
+      <Button title='이벤트 참여하기' bgColor='BLUE' color='WHITE' onClick={() => navigate('/register')} />
     </Wrap>
   )
 }

@@ -103,7 +103,8 @@ function View({data}) {
             <p>{data.createdDate}</p>
           </ViewHeader>
           <ViewBody>
-            {data.content}
+            <p>{data.content}</p>
+            
           </ViewBody>
            
           <ButtonWrap>

@@ -118,6 +118,7 @@ const MyPage = styled.div`
 
   ${(props) => props.theme.window.mobile} {
     display: none;
+    
   } 
 `;
 
@@ -159,7 +160,7 @@ const MyPageNav = styled.ul`
     
 
       > p {
-       
+      
       }
       > img {
         width: 40px;
@@ -167,7 +168,7 @@ const MyPageNav = styled.ul`
         left: 23%;
       }
     }
-  } 
+  }  
 `;
 
 function Header() {
@@ -182,7 +183,7 @@ function Header() {
   }
   const auth = localStorage.getItem("@access-Token");
   const user = localStorage.getItem("@user");
-  console.log(user)
+
   let navigate = useNavigate();
   function goToMainPage(link) {
     navigate(link);
