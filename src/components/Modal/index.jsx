@@ -45,7 +45,6 @@ function Modal({onClick, children}) {
 
   return (
     <ModalOveray>
-      
       <ModalWrap>
         <CloseButton onClick={onClick} />
         <Content>

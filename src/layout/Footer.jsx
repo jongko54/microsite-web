@@ -118,7 +118,9 @@ function Footer() {
             <li>개인정보처리방침</li>
           </Menu>
           <Info>
-            <p>06247 ) <br />서울특별시 강남구 논현로75길</p>
+            <p>대&nbsp;&nbsp;표 | 서 민</p>
+            <p>이 메 일 | info@insurobo.com</p>
+            <p>06247 ) <br />서울특별시 강남구 역삼동 746-18 4층</p>
             <p>사업자등록번호 690-87-01268</p>
           </Info>
         </LeftContent>

@@ -127,7 +127,7 @@ const MyPageNav = styled.ul`
   width: 450px;
   height: 360px;
   background-color: #FFFFFF;
-  top: 100%;
+  top: calc(100% - -41px);
   left: 0%;
   z-index: 9999;
   display: flex;
@@ -157,8 +157,6 @@ const MyPageNav = styled.ul`
     width: 100%;
     > li {
       height: 80px;
-    
-
       > p {
       
       }
@@ -190,6 +188,7 @@ function Header() {
   }
   const handleClick = () => {
     setIsOpen(!isOpen);
+    
   }
 
   return (

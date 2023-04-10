@@ -64,7 +64,6 @@ const ErrorText = styled.p`
     padding-top: 0px;
     line-height: 20px;
   }
-
 `;
 
 const Input = ({

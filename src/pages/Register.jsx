@@ -5,31 +5,25 @@ import AuthLayout from '../components/Auth/AuthLayout';
 import { Text } from '../components/Font';
 import CustomButton from '../components/Button/CustomButton';
 import useWindowSize from '../hooks/useWindowSize';
-import checkboxIcon from '../assets/img/checkboxIcon.png';
 import Input from '../components/Input';
 import axios from 'axios';
 import checkIcon from '../assets/icon/smsCheckIcon.png';
-import infoArrow from '../assets/img/infoArrow.png';
 import { useLocation } from 'react-router-dom';
+import HookFormCheckbox from '../components/Input/HookFormCheckbox';
 
 const data = [
   {
     id: 1,
     title: '회원가입 및 운영약관 동의(필수)',
+    checked: false,
     textArea: `
       <div>약관동의</div>
     `
   },
   {
     id: 2,
-    title: '회원가입 및 운영약관 동의(필수)',
-    textArea: `
-      <div>약관동의</div>
-    `
-  },
-  {
-    id: 3,
     title: '마케팅 이용 동의(선택)',
+    checked: false,
     textArea: `
       <div>약관동의</div>
     `
@@ -105,85 +99,17 @@ const SmsCheckIcon = styled.div`
   right: 5%;
 `;
 
-const CheckBoxGroup = styled.div`
-  input {
-    position: absolute;
-    left: -1000px;
-  }
-  input:checked + label::before {
-    background-color: #176FFF;
-    border-color: #176FFF;
-    background-image: url(${checkboxIcon});
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-  label {
-    display: flex;
-    align-items: center;
-    height: 80px;
-    color: #2F2F2F;
-
-    ::before {
-      content: '';
-      display: block;
-      width: 18px;
-      height: 18px;
-      border: 1px solid #989898;
-      border-radius: 50%;
-      margin-right: 15px;
-      margin-left: 3px;
-      transition: background-color .3s;
-    }
-  }
-
-  ${props => props.theme.window.mobile} {
-    label {
-      
-      ::before {
-        width: 15px;
-        height: 15px;
-        margin-left: 0;
-        margin-right: 10px;
-      }
-    }
-  }
-`;
-
-const AllChecked = styled.div``;
-
-const SelectChecked = styled.ul`
-  padding: 15px 0;
-  background-color: #F9F9F9;
-  margin-bottom: 13px;
-
-  > li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    ::after {
-      content: '';
-      display: block;
-      width: 10px;
-      height: 22px;
-      background-image: url(${infoArrow});
-    }
-  }
-
-  ${props => props.theme.window.mobile} {
-    padding: 14px 13px;
-    margin-bottom: 10px;
-  }
-`;
 
 function Register() {
   const { width } = useWindowSize();
   const location = useLocation();
   const [messageId, setMessageId] = useState('');
   const [smsIcon, setSmsIcon] = useState(false);
-  const { register, handleSubmit, watch, setFocus, reset, setError, setValue } = useFormContext({ 
+  const { handleSubmit, watch, setFocus, reset, setError, setValue, formState: { errors } } = useFormContext({ 
     mode: 'onBlur'
   });
   useEffect(() => {
+
     reset()
   }, [location, reset]);
 
@@ -247,14 +173,17 @@ function Register() {
   }
 
   const openSmsSend = async () => {
+    
     await axios({
       url: 'http://localhost:8080/api/public/sms_send',
       method: 'post',
+      timeout: 500,
       data: {
         mobile: watch('phoneRole')
       }
     })
     .then(function (response) {
+      console.log(response)
       setMessageId(response.data.data.messageId);
       setFocus('confirmCode')
     })
@@ -281,12 +210,6 @@ function Register() {
       setSmsIcon(false)
         // setStatue(error.response.data.message)
     })
-  }
-
-  const handleAllCheck = (checked) => {
-    if (checked) {
-      
-    }
   }
 
   return (
@@ -369,48 +292,10 @@ function Register() {
               }}
             />
             {smsIcon && (<SmsCheckIcon />)}
-            
           </PhoneGroup>
-          <div>
-            <div>
-              <input
-                type='checkbox'
-                id='all'
-                onChange={(e) => handleAllCheck(e.target.checked)}
-              />
-              <label for='all'>전체약관동의</label>
-            </div>
-          </div>
-          <ul>
-            <li>
-              <input 
-                type='checkbox'
-                id='select-1'
-                {...register('select1', {
-                  required: ''
-                })}
-              />
-              <label for='select-1'>회원가입 및 운영약관 동의</label>
-            </li>
-            <li>
-              <input 
-                type='checkbox'
-                id='select-2'
-                {...register('select2', {
-                  required: true
-                })}
-              />
-              <label for='select-2'>회원가입 및 운영약관 동의</label>
-            </li>
-            <li>
-              <input 
-                type='checkbox'
-                id='select-3'
-                {...register('marketing_yn')}
-              />
-              <label for='select-3'>마케팅 이용동의 (선택)</label>
-            </li>
-          </ul>
+
+          <HookFormCheckbox />
+
           <Text size={width > 768 ? '0.9rem' : '0.86rem'} color='WARNING_MESSAGE'>
             *선택 항목을 동의하지 않아도 가입이 가능합니다.
           </Text>
