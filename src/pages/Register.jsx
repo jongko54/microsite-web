@@ -10,25 +10,7 @@ import axios from 'axios';
 import checkIcon from '../assets/icon/smsCheckIcon.png';
 import { useLocation } from 'react-router-dom';
 import HookFormCheckbox from '../components/Input/HookFormCheckbox';
-
-const data = [
-  {
-    id: 1,
-    title: '회원가입 및 운영약관 동의(필수)',
-    checked: false,
-    textArea: `
-      <div>약관동의</div>
-    `
-  },
-  {
-    id: 2,
-    title: '마케팅 이용 동의(선택)',
-    checked: false,
-    textArea: `
-      <div>약관동의</div>
-    `
-  },
-]
+import Timer from '../components/Timer';
 
 
 const ButtonWrap = styled.div`
@@ -87,6 +69,26 @@ const PhoneGroup = styled.div`
   }
 `;
 
+const SmsCheckBox = styled.div`
+  display: flex;
+
+  input {
+    border-bottom: 1px solid #989898;
+    width: 75%;
+    height: 50px;
+  }
+  .confirmButton {
+    width: 20%;
+    height: 50px;
+    background-color: #989898;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`;
+
+
 const SmsCheckIcon = styled.div`
   width: 21.65px;
   height: 80px;
@@ -99,18 +101,37 @@ const SmsCheckIcon = styled.div`
   right: 5%;
 `;
 
+// const ErrorText = styled.p`
+//   font-size: 13px;
+//   line-height: 13px;
+//   padding-top: 5px;
+//   color: ${(props) => props.theme.color.WARNING_MESSAGE};
+//   position: absolute;
+//   bottom: -20px;
+
+//   ${props => props.theme.window.mobile} {
+//     padding-top: 0px;
+//     line-height: 20px;
+//   }
+// `;
 
 function Register() {
   const { width } = useWindowSize();
   const location = useLocation();
+  const [codeMessage, setCodeMessage] = useState('');
+  const [buttonMessage, setButtonMessage] = useState('인증번호받기');
   const [messageId, setMessageId] = useState('');
   const [smsIcon, setSmsIcon] = useState(false);
-  const { handleSubmit, watch, setFocus, reset, setError, setValue, formState: { errors } } = useFormContext({ 
+  const [timeStart, setTimeStart] = useState(false);
+  const [smsCheckOpen, setSmsCheckOpen] = useState(false);
+
+  const { handleSubmit, watch, setFocus, reset, setError, register } = useFormContext({ 
     mode: 'onBlur'
   });
   useEffect(() => {
-
     reset()
+    setSmsIcon(false)
+    setCodeMessage('')
   }, [location, reset]);
 
   const onSubmit = async (data) => {
@@ -130,16 +151,12 @@ function Register() {
       alert('회원가입이 완료되었습니다')
       reset()
       setSmsIcon('')
-
-    }).catch(function (error) {
-      console.log(JSON.stringify(error))
-    });
+      setCodeMessage('')
+    })
   }
 
   const onError = (error) => {
     setSmsIcon(false)
-    console.log(watch())
-    console.log(error);
   }
 
 
@@ -152,9 +169,6 @@ function Register() {
       }
     })
     .then(function (response) {
-      console.log(response.status)
-      
-    //  alert('성공')
     })
     .catch(function (error) {
       console.log(error.response.status)
@@ -172,24 +186,22 @@ function Register() {
     }
   }
 
+ // 본인인증 문자 전송
   const openSmsSend = async () => {
-    
     await axios({
       url: 'http://localhost:8080/api/public/sms_send',
       method: 'post',
-      timeout: 500,
       data: {
         mobile: watch('phoneRole')
       }
     })
-    .then(function (response) {
-      console.log(response)
-      setMessageId(response.data.data.messageId);
-      setFocus('confirmCode')
-    })
-    .catch(function (error) {
-      console.log(error)
 
+    .then(function (response) {
+      setTimeStart(true)
+      setSmsCheckOpen(true);
+      setMessageId(response.data.data.messageId);
+      
+      setFocus('confirmCode')
     })
   }
 
@@ -202,16 +214,14 @@ function Register() {
         authKey: watch('confirmCode')
       }
     }).then(function (response) {
-        console.log(response)
-        return true
-    })
-    .catch(function (error) {
-      setError('confirmCode', { type: 'custom', message: '인증번호를 확인해주세요'});
-      setSmsIcon(false)
-        // setStatue(error.response.data.message)
+      
+
+    }).catch(function (error) {
+    
     })
   }
-
+ 
+  
   return (
     <AuthLayout title='회원가입'>
       <Form onSubmit={handleSubmit(onSubmit, onError)}>
@@ -278,22 +288,26 @@ function Register() {
                 }}
               />
               <div className='button' onClick={openSmsSend}>
-                <Text color='WHITE' bold='200'>인증번호받기</Text>
+                <Text color='WHITE' bold='200'>{buttonMessage}</Text>
               </div>
             </div>
-            <Input
-              name='confirmCode'
-              type='number'
-              placeholder='인증번호를 입력해주세요'
-              // minLength={5}
-              // maxLength={5}
-              validate={{
-                value: () => openSmsCheck() && setSmsIcon(true)
-              }}
-            />
-            {smsIcon && (<SmsCheckIcon />)}
+            {smsCheckOpen && (
+              <SmsCheckBox>
+                <input
+                  name='confirmCode'
+                  type='number'
+                  placeholder='인증번호를 입력해주세요'
+                  {...register('confirmCode', {
+                    require: true
+                  })}
+                />
+              <div className='confirmButton' onClick={openSmsCheck}>
+                <Text color='WHITE' bold='200'>확인</Text>
+              </div>
+              </SmsCheckBox>
+            )}
           </PhoneGroup>
-
+            
           <HookFormCheckbox />
 
           <Text size={width > 768 ? '0.9rem' : '0.86rem'} color='WARNING_MESSAGE'>

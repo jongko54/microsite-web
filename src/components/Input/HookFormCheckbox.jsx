@@ -40,7 +40,6 @@ const CheckBoxGroup = styled.div`
 
   ${props => props.theme.window.mobile} {
     label {
-      
       ::before {
         width: 15px;
         height: 15px;
@@ -62,7 +61,7 @@ const SelectChecked = styled.ul`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    > button {
+    .button {
       content: '';
       display: block;
       width: 20px;
@@ -71,6 +70,7 @@ const SelectChecked = styled.ul`
       background-size: contain;
       background-repeat: no-repeat;
       background-position: right;
+      cursor: pointer;
     }
   }
 
@@ -196,7 +196,7 @@ const HookFormCheckbox = (props) => {
                     />
                     <label for={item.label}>{item.title}</label>
                   </div>
-                  <button onClick={() => openModal(item.id)} />
+                  <div className='button' onClick={() => openModal(item.id)} />
                 </li>
             )})}
           </SelectChecked>
