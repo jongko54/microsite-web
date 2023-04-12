@@ -7,11 +7,9 @@ import CustomButton from '../components/Button/CustomButton';
 import useWindowSize from '../hooks/useWindowSize';
 import Input from '../components/Input';
 import axios from 'axios';
-import checkIcon from '../assets/icon/smsCheckIcon.png';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from "react-router-dom";
 import HookFormCheckbox from '../components/Input/HookFormCheckbox';
 import Timer from '../components/Timer';
-
 
 const ButtonWrap = styled.div`
   padding-top: 50px;
@@ -57,6 +55,9 @@ const PhoneGroup = styled.div`
       justify-content: center;
       cursor: pointer;
     }
+    > .button.disabled {
+       opacity: 0.2;
+    }
   }
   ${(props) => props.theme.window.mobile} {
     > div {
@@ -71,11 +72,16 @@ const PhoneGroup = styled.div`
 
 const SmsCheckBox = styled.div`
   display: flex;
-
-  input {
-    border-bottom: 1px solid #989898;
+  margin-bottom: 20px;
+  > div {
     width: 75%;
     height: 50px;
+    border-bottom: 1px solid #989898;
+    position: relative;
+      input {
+        width: 100%;
+      
+    }
   }
   .confirmButton {
     width: 20%;
@@ -89,74 +95,66 @@ const SmsCheckBox = styled.div`
 `;
 
 
-const SmsCheckIcon = styled.div`
-  width: 21.65px;
-  height: 80px;
-  background-image: url(${checkIcon});
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+const ErrorText = styled.p`
+  font-size: 13px;
+  line-height: 13px;
+  padding-top: 5px;
+  color: ${(props) => props.theme.color.WARNING_MESSAGE};
   position: absolute;
-  bottom: 0;
-  right: 5%;
+  bottom: -20px;
+
+  ${props => props.theme.window.mobile} {
+    padding-top: 0px;
+    line-height: 20px;
+  }
 `;
 
-// const ErrorText = styled.p`
-//   font-size: 13px;
-//   line-height: 13px;
-//   padding-top: 5px;
-//   color: ${(props) => props.theme.color.WARNING_MESSAGE};
-//   position: absolute;
-//   bottom: -20px;
 
-//   ${props => props.theme.window.mobile} {
-//     padding-top: 0px;
-//     line-height: 20px;
-//   }
-// `;
+
 
 function Register() {
   const { width } = useWindowSize();
   const location = useLocation();
-  const [codeMessage, setCodeMessage] = useState('');
-  const [buttonMessage, setButtonMessage] = useState('인증번호받기');
+  const [codeValidate, setCodeValidate] = useState(false);
+  const [button, setButton] = useState(true);
   const [messageId, setMessageId] = useState('');
-  const [smsIcon, setSmsIcon] = useState(false);
-  const [timeStart, setTimeStart] = useState(false);
   const [smsCheckOpen, setSmsCheckOpen] = useState(false);
-
-  const { handleSubmit, watch, setFocus, reset, setError, register } = useFormContext({ 
+  const [isActiveTimer, setIsActiveTimer] = useState(false);
+  
+  const { handleSubmit, watch, setFocus, reset, setError, register, formState: {errors} } = useFormContext({ 
     mode: 'onBlur'
   });
   useEffect(() => {
     reset()
-    setSmsIcon(false)
-    setCodeMessage('')
   }, [location, reset]);
+  let navigate = useNavigate();
 
   const onSubmit = async (data) => {
    
-    await axios({
-      url: 'http://localhost:8080/api/public/join',
-      method: 'post',
-      data: {
-        userId: data.userId,
-        userPw: data.userPw,
-        userName: data.userName,
-        phoneRole: data.phoneRole,
-        marketing_yn: data.marketing_yn === true ? 'Y' : 'N'
-      }
-    }).then(function (response) {
-      console.log(response)
-      alert('회원가입이 완료되었습니다')
-      reset()
-      setSmsIcon('')
-      setCodeMessage('')
-    })
+    if (codeValidate) {
+      await axios({
+        url: 'http://localhost:8080/api/public/join',
+        method: 'post',
+        data: {
+          userId: data.userId,
+          userPw: data.userPw,
+          userName: data.userName,
+          phoneRole: data.phoneRole,
+          marketing_yn: data.marketing_yn === true ? 'Y' : 'N'
+        }
+      }).then(function (response) {
+        console.log(response)
+        alert('회원가입이 완료되었습니다')
+        navigate('/')
+      })
+    } else {
+      alert('본인인증이 완료되지 않았습니다.')
+      setFocus('confirmCode')
+    }
   }
 
   const onError = (error) => {
-    setSmsIcon(false)
+    console.log(error)
   }
 
 
@@ -188,6 +186,7 @@ function Register() {
 
  // 본인인증 문자 전송
   const openSmsSend = async () => {
+    setIsActiveTimer(false);
     await axios({
       url: 'http://localhost:8080/api/public/sms_send',
       method: 'post',
@@ -197,14 +196,17 @@ function Register() {
     })
 
     .then(function (response) {
-      setTimeStart(true)
+      console.log(response)
       setSmsCheckOpen(true);
       setMessageId(response.data.data.messageId);
-      
       setFocus('confirmCode')
+      setIsActiveTimer(true);
+      
     })
+    
   }
 
+  
   const openSmsCheck = async () => {
     await axios({
       url: 'http://localhost:8080/api/public/sms_check',
@@ -214,10 +216,29 @@ function Register() {
         authKey: watch('confirmCode')
       }
     }).then(function (response) {
-      
+      console.log(response)
 
+      if (response.data.status === 200) {
+        alert('인증이 완료되었습니다.')
+        setCodeValidate(true)
+        setSmsCheckOpen(false)
+        setButton(false)
+      }
     }).catch(function (error) {
-    
+      console.log(error)
+      setCodeValidate(false)
+      if (error.response.data.message === '인증번호가 일치하지 않습니다.') {
+        setError('confirmCode', {
+          type: 'custom',
+          message: '인증번호가 일치하지 않습니다.'
+        })
+      }
+      if (error.response.data.message === '인증번호 시간이 만료 되었습니다.') {
+        setError('confirmCode', {
+          type: 'custom',
+          message: '인증번호 시간이 만료 되었습니다.'
+        })
+      }
     })
   }
  
@@ -287,23 +308,28 @@ function Register() {
                   message: '규칙에 맞는 휴대폰 번호를 입력해 주세요.'
                 }}
               />
-              <div className='button' onClick={openSmsSend}>
-                <Text color='WHITE' bold='200'>{buttonMessage}</Text>
+              <div className={button? 'button' : 'button disabled'} onClick={button ? openSmsSend : null}>
+                <Text color='WHITE' bold='200'>인증번호받기</Text>
               </div>
             </div>
             {smsCheckOpen && (
               <SmsCheckBox>
-                <input
-                  name='confirmCode'
-                  type='number'
-                  placeholder='인증번호를 입력해주세요'
-                  {...register('confirmCode', {
-                    require: true
-                  })}
-                />
-              <div className='confirmButton' onClick={openSmsCheck}>
-                <Text color='WHITE' bold='200'>확인</Text>
-              </div>
+                <div>
+                  <input
+                    type='number'
+                    placeholder='인증번호를 입력해주세요'
+                    {...register('confirmCode', {
+                      required: '*필수 입력 사항입니다.'
+                    })}
+                  />
+                 {isActiveTimer && (
+                    <Timer active={isActiveTimer} />
+                 )}
+                </div>
+                {errors.confirmCode?.message && (<ErrorText>{errors.confirmCode?.message}</ErrorText>)}
+                <div className='confirmButton' onClick={openSmsCheck}>
+                  <Text color='WHITE' bold='200'>확인</Text>
+                </div>
               </SmsCheckBox>
             )}
           </PhoneGroup>

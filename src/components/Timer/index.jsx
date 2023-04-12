@@ -4,34 +4,39 @@ import styled from "styled-components";
 const TimerWrap = styled.p`
   color: #2F2F2F;
   position: absolute;
-  bottom: 30px;
-  right: 20px;
+  bottom: 15px;
+  right: 0;
 `;
 
-const Timer = ({ mm, ss }) => {
-  const [minutes, setMinutes] = useState(parseInt(mm));
-  const [seconds, setSeconds] = useState(parseInt(ss));
+const Timer = ({ active }) => {
+  const [min, setMin] = useState(3);
+  const [sec, setSec] = useState(0);
 
   useEffect(() => {
-    const countdown = setInterval(() => {
-      if (parseInt(seconds) > 0) {
-        setSeconds(parseInt(seconds) - 1);
-      }
-      if (parseInt(seconds) === 0) {
-        if (parseInt(minutes) === 0) {
-          clearInterval(countdown);
-        } else {
-          setMinutes(parseInt(minutes) - 1);
-          setSeconds(59);
+    let timer;
+    //clearInterval(timer);
+    if (active) {
+      timer = setInterval(() => {
+        if (Number(sec) > 0) {
+          setSec(Number(sec) - 1);
         }
-      }
-    }, 1000);
-    return () => clearInterval(countdown);
-  }, [minutes, seconds]);
+        if (Number(sec) === 0) {
+          if (Number(min) === 0) {
+            clearInterval(timer);
+            // onCheckTime();
+          } else {
+            setMin(Number(min) - 1);
+            setSec(59);
+          }
+        }
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [min, sec, active]);
 
   return (
     <TimerWrap>
-      {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+      {min}:{sec < 10 ? `0${sec}` : sec}
     </TimerWrap>
   );
 };
