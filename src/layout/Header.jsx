@@ -178,6 +178,7 @@ function Header() {
     localStorage.removeItem("@access-Token");
     localStorage.removeItem("@user");
     navigate('/')
+    window.location.reload()
   }
   const auth = localStorage.getItem("@access-Token");
   const user = localStorage.getItem("@user");

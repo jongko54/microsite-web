@@ -3,13 +3,13 @@ import AuthLayout from '../components/Auth/AuthLayout';
 import styled from 'styled-components';
 import Input from '../components/Input';
 import { Text } from '../components/Font';
-import useWindowSize from '../hooks/useWindowSize';
-import { useFormContext } from 'react-hook-form';
 import CustomButton from '../components/Button/CustomButton';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Form = styled.form`
   padding: 54px 0 147px;
-  
 
 `;
 
@@ -46,6 +46,24 @@ const InputGroup = styled.div`
 	}
 `;
 
+const PasswordGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
+  label {
+    display: block;
+    width: 100%;
+    color: #2F2F2F;
+    font-size: 1rem;
+    font-weight: 300;
+    margin-bottom: 15px;
+  }
+  a {
+    display: block;
+    color: #6F85E3;
+    font-weight: 400;
+  }
+`;
+
 const ButtonWrap = styled.div`
   padding-top: 20px;
 
@@ -54,11 +72,22 @@ const ButtonWrap = styled.div`
 
   }
 `;
+
 function EditProfile() {
-  const { handleSubmit, watch, setFocus, reset } = useFormContext();
-  const { width } = useWindowSize();
+  const auth = localStorage.getItem("@access-Token");
 
+  useEffect(() => {
+    axios({
+      url: 'http://localhost:8080/api/private/profile',
+      method: 'get',
+      headers: {
+        Authorization : `Bearer ${auth}`
+      }
+    }).then(function (response) {
+      console.log(response)
 
+    })
+  }, [])
   return (
     <AuthLayout title='프로필 수정'>
       <Form>
@@ -66,46 +95,15 @@ function EditProfile() {
           <Input
             label='이름'
             name='userName'
-            placeholder='이메일주소를 입력하세요'
+            placeholder='이름을 입력해주세요'
             require='*필수 입력 사항입니다.'
-            pattern={{
-              value: /^[a-zA-Z0-9+-.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-              message: '규칙에 맞는 이메일 주소를 입력해주세요.'
-            }}
           />
         </InputGroup>
         <InputGroup>
-          <Input 
-            label='비밀번호' 
-            name='beforePw'
-            type='password'
-            placeholder='비밀번호 변경하기'
-            require='*필수 입력 사항입니다.'
-            pattern={{
-              value: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/,
-              message: '규칙에 맞는 비밀번호를 입력해주세요.'
-            }}
-          />
-					{/* <Input 
-            name='afterPw'
-            type='password'
-            placeholder='새로운 비밀번호'
-            require='*필수 입력 사항입니다.'
-            pattern={{
-              value: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/,
-              message: '규칙에 맞는 비밀번호를 입력해주세요.'
-            }}
-          />
-					<Input 
-            name='afterPw          '
-            type='password'
-            placeholder='새로운 비밀번호'
-            require='*필수 입력 사항입니다.'
-            pattern={{
-              value: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/,
-              message: '규칙에 맞는 비밀번호를 입력해주세요.'
-            }}
-          /> */}
+          <PasswordGroup>
+            <lable>비밀번호</lable>
+            <Link to='/myProfile/password'>비밀번호 변경하기</Link>
+          </PasswordGroup>
         </InputGroup>
         <InputGroup>
 					<Input

@@ -124,7 +124,7 @@ const ErrorText = styled.p`
 
 
 function FindAccount() {
-  const { handleSubmit, watch, setError ,setFocus, reset, setValue, register, formState: { errors } } = useFormContext();
+  const { handleSubmit, watch, setError ,setFocus, setValue, register, formState: { errors } } = useFormContext();
   const [button, setButton] = useState(true);
   const [messageId, setMessageId] = useState('');
   const [message, setMessage] = useState('');
