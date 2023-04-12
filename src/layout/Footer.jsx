@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Section from '../components/Content';
-import { Text } from '../components/Font'; 
+import { Text } from '../components/Font';
 import cs from '../assets/img/customer_service_center_icon.png';
 import useWindowSize from '../hooks/useWindowSize';
 
@@ -106,9 +106,9 @@ const Icon = styled.div`
 function Footer() {
   const {width} = useWindowSize();
   return (
-    <Section 
-      color='BG_BLACK' 
-      top={width > 768 ? '5%' : '6.2%'} 
+    <Section
+      color='BG_BLACK'
+      top={width > 768 ? '5%' : '6.2%'}
       bottom={width > 768 ? '2%' : '15.451%'}
     >
       <FooterWrap>
@@ -118,9 +118,10 @@ function Footer() {
             <li>개인정보처리방침</li>
           </Menu>
           <Info>
+            <p>상 호 명 | (주)인슈로보</p>
             <p>대&nbsp;&nbsp;표 | 서 민</p>
             <p>이 메 일 | info@insurobo.com</p>
-            <p>06247 ) <br />서울특별시 강남구 역삼동 746-18 4층</p>
+            <p>06247 ) <br />서울특별시 강남구 논현로75길 10 4층</p>
             <p>사업자등록번호 690-87-01268</p>
           </Info>
         </LeftContent>
