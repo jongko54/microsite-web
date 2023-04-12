@@ -14,6 +14,7 @@ import { useFormContext } from 'react-hook-form';
 import { setAccessToken, setUser } from '../container/Auth';
 import { useEffect } from 'react';
 import LoginFailModal from "../components/Modal/LoginFailModal"
+import {CommonAPI} from "../api/CommonAPI";
 
 const SocialLoginGroup = styled.div`
   display: flex;
@@ -159,7 +160,16 @@ function Login() {
     console.log(error)
   }
   const onSubmit = async (data) => {
-    console.log(data)
+    // console.log(data)
+
+    // const res = await CommonAPI.post("/api/public/login",data);
+    //   if(res.status === 200){
+    //     setAccessToken(res.data.data.accessToken);
+    //     setUser(res.data.data.userName)
+    //     navigate('/')
+    //   }else{
+    //     alert(res.response.data.message);
+    //   }
 
     await axios({
       url: 'http://localhost:8080/api/public/login',
