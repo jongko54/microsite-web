@@ -4,6 +4,7 @@ import Modal from '.';
 import { useFormContext } from 'react-hook-form';
 import checkIcon from '../../assets/img/checkboxIcon.png';
 import { useState } from 'react';
+
 const Form = styled.form`
   background-color: #FFFFFF;
   padding: 50px 20px;
@@ -33,11 +34,19 @@ const Form = styled.form`
 
 const InputGroup = styled.div`
   padding-bottom: 30px;
+  > div {
+    margin-bottom: 20px;
+    display: flex;
+    flex-flow: row wrap;
+    position: relative;
+    align-items: center;
+  }
   label {
     font-size: 0.8rem;
+    width: 10%;
   }
   input {
-    width: 100%;
+    width: 80%;
     border-bottom: 1px solid #EBEBEB;
     /* border-radius: 5px; */
     height: 50px;
@@ -107,7 +116,7 @@ const CheckBoxGroup = styled.div`
 `;
 
 function ApplyModal({onClick}) {
-  const { register, watch, reset, formState: { errors } } = useFormContext();
+  const { register, formState: { errors } } = useFormContext();
   const [showPopup, setShowPopup] = useState(false);
     return (
       <Modal onClick={onClick}>

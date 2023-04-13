@@ -124,7 +124,7 @@ function Footer() {
         <LeftContent>
           <Menu>
             <li><Link to='https://insurobo.com/policy/service'>이용안내</Link></li>
-            <li><Link ti='https://insurobo.com/policy/privacy'>개인정보처리방침</Link></li>
+            <li><Link to='https://insurobo.com/policy/privacy'>개인정보처리방침</Link></li>
           </Menu>
           <Info>
             <div>
