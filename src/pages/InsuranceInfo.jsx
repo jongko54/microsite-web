@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import Layout from '../layout';
 import InfoContent from '../components/Content/InfoContent';
@@ -12,6 +12,9 @@ import d_icon4 from '../assets/icon/dutyIcon4.png';
 import d_icon5 from '../assets/icon/dutyIcon5.png';
 import m_icon1 from '../assets/icon/mustIcon1.png';
 import m_icon2 from '../assets/icon/mustIcon2.png';
+import CustomButton from '../components/Button/CustomButton';
+import { Text } from '../components/Font';
+import ApplyModal from '../components/Modal/ApplyModal';
 
 const list_duty = [
   {
@@ -66,6 +69,37 @@ const list_must = [
     link: 'https://insurobowindstorm.com/cardifarea',
     icon: m_icon2
   }
+]
+
+const list_invest = [
+  {
+    id: 1,
+    title: '국산 자동차 구매가격 평균',
+    money: '3079만원',
+    icon: '',
+    source: '<컨슈머인사이트 2017>'
+  },
+  {
+    id: 2,
+    title: '해외여행 경비 평균',
+    money: '143.5만원',
+    icon: '',
+    source: '<컨슈머인사이트 2017>'
+  },
+  {
+    id: 3,
+    title: '결혼자금 평균',
+    money: '2억 3천만원',
+    icon: '',
+    source: '<듀오웨드 2018>'
+  },
+  {
+    id: 4,
+    title: '4년제 대학 1학기 등록금 평균',
+    money: '671만원',
+    icon: '',
+    source: '<교육부 2018>'
+  },
 ]
 
 const Banner = styled.div`
@@ -142,6 +176,33 @@ const ItemList = styled.ul`
   }
 `;
 
+const InvestList = styled.div`
+  width: 100%;
+  > ul {
+    display: flex;
+    justify-content: space-between;
+    
+    width: 100%;
+    margin-top: 20px;
+    > li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      > h2 {
+        font-size: 1rem;
+        text-align: center;
+        span {
+          display: block;
+          font-size: 0.65rem;
+        }
+      }
+      > p {
+        font-size: 0.6rem;
+      }
+    }
+  }
+`;
+
 const StyledLink = styled(Link)`
   font-size: 12px;
   font-weight: 700;
@@ -168,7 +229,8 @@ export default InsuranceInfo
 
 function Item() {
   const location = useLocation();
-  console.log(location)
+  const [showPopup, setShowPopup] = useState(false);
+
   if (location.search === '?item=duty') {
     return (
       <InfoContent>
@@ -256,7 +318,65 @@ function Item() {
   }
   if (location.search === '?item=invest') {
     return (
-      <div>재태크보험</div>
+      <InfoContent>
+        <Banner color='#FFFFFF' shadow>
+          <div>
+            <h2>
+              사장님!!<br />
+              운영하시는 사업장 마다<br />
+              의무적으로 가입하실 보험입니다.
+            </h2>
+            <p>**미가입시 과태로 부과 대상입니다.</p>
+          </div>
+          <div>
+            <img src={imgPlace} alt='의무보험'/>
+          </div>
+        </Banner>
+        <Banner color='#FFFFFF' shadow>
+          <InvestList>
+            <h2>
+              <span>01</span>목적자금!!<br />
+              자금 준비계획이 꼭 필요합니다.
+            </h2>
+            <ul>
+              {list_invest.map((dt) => (
+                <li key={dt.id}>
+                  <h2>
+                    <span>{dt.title}</span>
+                    {dt.money}
+                  </h2>
+                  <img src={dt.icon} alt='icon' />
+                  <p>{dt.source}</p>
+                </li>
+              ))}
+            </ul>
+          </InvestList>
+        </Banner>
+        <Banner color='#FFFFFF' shadow>
+          <InvestList>
+            <h2>
+              <span>02</span>목적자금!!<br />
+              마련시 꼭 체크하실 내용입니다.
+            </h2>
+            <ul className='text-box'>
+              <li>1. 비과세 혜택과 연복리효과는?</li>
+              <li>2. 목돈 필요시 일시 수령 가능여부는?</li>
+              <li>3. 노후 준비 필요시 연금 전환 가능여부는?</li>
+              <li>4. 보험회사의 안정성은?</li>
+            </ul>
+          </InvestList>
+        </Banner>
+        <CustomButton 
+          onClick={() => setShowPopup(true)} 
+          width='100%'
+          bgColor='BLUE3'
+        >
+          <Text color='WHITE'>목돈마련 상담신청</Text>
+        </CustomButton>
+        {showPopup && (
+          <ApplyModal onClick={() => setShowPopup(false)} />
+        )}
+      </InfoContent>
     )
   }
 }

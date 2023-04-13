@@ -32,8 +32,8 @@ function App() {
         <GlobalStyle />
         <Router>
           <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='?:category'  element={<Home />} />
+            <Route path='/' element={<PublicRoute component={<Home />} />} />
+            <Route path='?:category'  element={<PublicRoute componen={<Home />}/>} />
             <Route path='/view?:id'  element={<Home />} />
             <Route path='?:page'  element={<Home />} />
             <Route path='/event' element={<Event />} />

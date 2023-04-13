@@ -4,6 +4,7 @@ import Section from '../components/Content';
 import { Text } from '../components/Font';
 import cs from '../assets/img/customer_service_center_icon.png';
 import useWindowSize from '../hooks/useWindowSize';
+import { Link } from 'react-router-dom';
 
 
 const FooterWrap = styled.footer`
@@ -114,8 +115,8 @@ function Footer() {
       <FooterWrap>
         <LeftContent>
           <Menu>
-            <li>이용안내</li>
-            <li>개인정보처리방침</li>
+            <li><Link to='https://insurobo.com/policy/service'>이용안내</Link></li>
+            <li><Link ti='https://insurobo.com/policy/privacy'>개인정보처리방침</Link></li>
           </Menu>
           <Info>
             <p>상 호 명 | (주)인슈로보</p>

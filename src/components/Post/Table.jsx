@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled, { css } from 'styled-components';
 import { Link,  } from 'react-router-dom';
 import useWindowSize from '../../hooks/useWindowSize';
@@ -7,6 +7,7 @@ import moreIcon from '../../assets/img/moreIcon.svg';
 import axios from 'axios';
 import Pagination from '../Pagination';
 import useAsync from '../../hooks/useAsync';
+import { CommonAPI } from '../../api/CommonAPI';
 
 const categories = [
   {
@@ -220,6 +221,7 @@ export default function Table() {
   const [limit, setLimit] = useState(4);
   // const limit = 4;
   const [page, setPage] = useState(1);
+  // const [data, setData] = useState([]);
   const offset = (page - 1) * limit;
   const [category, setCategory] = useState('all');
   const categoryValue = category === 'all' ? '' : `?category=${category}`
@@ -229,6 +231,17 @@ export default function Table() {
   if (error) return <div>에러가 발생했습니다</div>;
   if (!data) return null;
 
+  // useEffect(async() => {
+  
+    
+  //   const response =  await CommonAPI.get(
+  //       `/api/public/communityList${categoryValue}`
+  //     )
+        
+  //     return setData(response.data.data.slice(0).reverse())
+    
+  
+  // }, [categoryValue])
   async function getData() {
     const response = await axios.get(
       `http://localhost:8080/api/public/communityList${categoryValue}`
