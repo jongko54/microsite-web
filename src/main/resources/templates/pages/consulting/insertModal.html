@@ -1,0 +1,43 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<div class="modal fade" id="consultingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" th:fragment="insertModal">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">상담신청 등록</h5>
+        <button type="button" th:onclick="handleCloseModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="insertForm">
+          <div class="mb-4 w-25">
+            <label for="stateInput" class="form-label">분류</label>
+            <select id="stateInput" name="category" class="form-select">
+              <option selected th:value="loan">대출</option>
+              <option th:value="windstorm">풍수해</option>
+              <option th:value="event">이벤트</option>
+              <option th:value="bizsupport">지원정책</option>
+              <option th:value="promotion">홍보</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label for="titleInput" class="form-label">제목</label>
+            <input type="text" class="form-control" name="title" id="titleInput" placeholder="제목을 입력하세요">
+          </div>
+          <div class="mb-4">
+            <label for="summernote_insert" class="form-label">내용</label>
+            <textarea id="summernote_insert" type="text" th:class="form-control" name="boardContents" rows="10"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:onclick="handleCloseModal()">닫기</button>
+        <button type="submit" class="btn btn-primary" th:onclick="handleSave()">저장</button>
+      </div>
+    </div>
+  </div>
+</div>
+</html>

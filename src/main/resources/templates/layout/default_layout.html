@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>관리자 페이지</title>
+
+    <!-- 공통 css 및 폰트 -->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+
+    <link href="/css/common.css" rel="stylesheet" type="text/css">
+
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" />
+    <!-- 공통 css 및 폰트 끝 -->
+
+    <!-- 공통 스크립트 부분 -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/js/common.js"></script>
+    <!-- 공통 스크립트 부분 끝 -->
+    <!-- summernote   -->
+    <script src="/js/summernote/summernote-lite.js"></script>
+    <script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+    <link rel="stylesheet" href="/css/summernote/summernote-lite.css">
+</head>
+<body id="page-top">
+<div id="wrapper">
+    <th:block th:replace="fragments/sidemenu :: sidemenuFragment"></th:block>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <th:block th:replace="fragments/header :: headerFragment"></th:block>
+            <th:block layout:fragment="content"></th:block>
+        </div>
+<!--            <th:block th:replace="fragments/footer :: footerFragement"></th:block>-->
+        </div>
+</div>
+
+
+<script src="/js/sb-admin-2.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
+
+<th:block layout:fragment="script"></th:block>
+
+</body>
+</html>

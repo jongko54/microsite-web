@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>관리자 페이지</title>
+</head>
+
+<th:block layout:fragment="script">
+    <script th:src="@{/js/unjoin/unjoin.js}"></script>
+</th:block>
+
+<div class="container-fluid" layout:fragment="content">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">미가입자 관리</h1>
+    </div>
+    <div class="button-wrap">
+        <span class="insert-btn">
+         <button type="button" class="btn btn-default" style="background-color: #217346; color: white" th:onclick="handleExcelDownload()">
+             엑셀다운로드
+         </button>
+        </span>
+        <span class="search-btn">
+      <select id="searchType" class="form-select-sm ">
+        <option value="2">이름</option>
+        <option value="4">사업자번호</option>
+      </select>
+      <input type="text" id="searchInput" class="form-control bg-light border-1 d-inline-block" onkeyup="if(window.event.keyCode ==13){searchBtn()}" placeholder="Search..." style="padding-bottom: 0.7rem; width: 55% !important;">
+      <button class="btn btn-primary" id="searchBtn" th:onclick="searchBtn()"><i class="fas fa-search fa-sm"></i></button>
+    </span>
+    </div>
+    <table id="unjoin_table" class="table table-hover" style="width: 100%">
+        <thead>
+        <tr>
+            <th scope="col" style="text-align: center"><input type="checkbox" id="checkall"></th>
+            <th scope="col">제휴코드</th>
+            <th scope="col">성명</th>
+            <th scope="col">휴대폰번호</th>
+            <th scope="col">사업자등록번호</th>
+            <th scope="col">상호명</th>
+            <th scope="col">소재지</th>
+            <th scope="col">상세주소</th>
+            <th scope="col">가입신청날짜</th>
+        </tr>
+        </thead>
+    </table>
+
+    <!-- 상세보기 / 수정 모달 -->
+    <th:block th:replace="pages/unjoin/detailModal :: detailModal"></th:block>
+</div>
+</html>

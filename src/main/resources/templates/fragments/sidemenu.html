@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" th:fragment="sidemenuFragment">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-text mx-3">비즈로보 관리자 <br>페이지</br></div>
+    </a>
+    <hr class="sidebar-divider">
+    <li class="nav-item">
+        <a class="nav-link collapsed" th:href="@{/admin/main}">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>커뮤니티</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" th:href="@{/admin/notice}">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>정책 공지</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" th:href="@{/admin/consulting}">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>상담 신청</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" th:href="@{/admin/infoPlace}">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>정책 마당</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" th:href="@{/admin/insuranceList}">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>보험 리스트</span>
+        </a>
+    </li>
+<!--    <li class="nav-item">-->
+<!--        <a class="nav-link collapsed" th:href="@{/admin/unjoin}">-->
+<!--            <i class="fas fa-fw fa-folder"></i>-->
+<!--            <span>미가입자 관리</span>-->
+<!--        </a>-->
+<!--    </li>-->
+    <li class="nav-item">
+        <div class="dropdown">
+            <a class="nav-link collapsed" href="#">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>미가입자 목록</span>
+            </a>
+            <div class="dropdown-content">
+                    <a class="nav-link collapsed" th:href="@{/admin/unjoin}">
+                        <span style="margin-left: 1.2rem">- 미가입자 관리</span>
+                    </a>
+            </div>
+            <div class="dropdown-content">
+                <a class="nav-link collapsed" th:href="@{/admin/batch}">
+                    <span style="margin-left: 1.2rem">- 배치 관리</span>
+                </a>
+            </div>
+        </div>
+    </li>
+    <hr class="sidebar-divider d-none d-md-block">
+    <li class="nav-item">
+        <a class="nav-link collapsed" th:href="@{/admin/manager}">
+            <i class="fas fa-fw fa-lock"></i>
+            <span>관리자 목록</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" th:href="@{/admin/generalMember}">
+            <i class="fas fa-fw fa-lock"></i>
+            <span>일반회원 목록</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" th:href="@{/admin/insuAgent}">
+            <i class="fas fa-fw fa-lock"></i>
+            <span>설계사 관리</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" th:href="@{/admin/mydataMember}">
+            <i class="fas fa-fw fa-lock"></i>
+            <span>마이데이터 회원 </span>
+        </a>
+    </li>
+    <hr class="sidebar-divider d-none d-md-block">
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+
+    <script th:inline="javascript" type="text/javascript">
+        $(document).ready(function() {
+
+
+            // const cl = $(".nav-item").hasClass("dropdown");
+            //
+            // //
+            // // console.log(cl)
+            // //
+            // $('.nav-item').hover(function (){
+            //     console.log($(this));
+            //     const test = $(this).children().hasClass("dropdown");
+            //
+            //     if(test){
+            //         console.log("드롭다운 있음")
+            //         $(this).children().addClass("hover");
+            //     }
+            // })
+
+            const test = $(".nav-item").find('a[href="' + document.location.pathname + '"]').parent().hasClass("dropdown-content");
+
+
+            if (test) {
+                const active_div = $('.nav-item').find('a[href="' + document.location.pathname + '"]');
+
+                console.log(active_div.prev("dropdown"));
+                console.log(active_div.prevAll("dropdown"));
+                console.log(active_div.closest().prop("dropdown"));
+                active_div.addClass("active")
+                active_div.parent("div").css("display", "block");
+                active_div.parents("dropdown").attr("dropdown_select");
+            } else {
+                console.log("test2")
+                $('.nav-item').find('a[href="' + document.location.pathname + '"]').parents("li").addClass('active');
+            }
+
+        })
+    </script>
+</ul>
+</div>
+</html>

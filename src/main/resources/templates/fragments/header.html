@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:fragment="headerFragment">
+ <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+    <!-- Topbar Search -->
+<!--    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">-->
+<!--        <div class="input-group">-->
+<!--            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."-->
+<!--                   aria-label="Search" aria-describedby="basic-addon2">-->
+<!--            <div class="input-group-apqpend">-->
+<!--                <button class="btn btn-primary" type="button">-->
+<!--                    <i class="fas fa-search fa-sm"></i>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </form>-->
+    <ul class="navbar-nav ml-auto mr-3">
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img class="img-profile rounded-circle mr-2"
+                     src="/img/undraw_profile.svg">
+                <th:block th:if="${#authentication} != null">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${#authentication.name}"></span>
+                </th:block>
+                <th:block th:unless="${#authentication} != null">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">테스트유저</span>
+                </th:block>
+            </a>
+        </li>
+        <div class="topbar-divider d-none d-sm-block"></div>
+        <div>
+                <a class="dropdown-item" href="/admin/logoutProc" style="margin-top: 1.3rem;">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw text-gray-400"></i>
+                </a>
+        </div>
+    </ul>
+ </nav>
+</div>
+</html>

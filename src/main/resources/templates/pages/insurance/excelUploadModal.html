@@ -1,0 +1,45 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<div class="modal fade" id="excelFormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" th:fragment="excelModal">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">엑셀업로드</h5>
+        <button type="button" th:onclick="handleCloseModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="excelUploadForm" enctype="multipart/form-data">
+          <label for="fileInput" class="form-label">파일업로드</label>
+          <div class="input-group-append mb-4">
+            <input type="file" class="form-control mr-3 w-25" name="fileName" id="fileInput" th:onchange="handleFileUpload()" placeholder="엑셀파일을 업로드 해주세요.">
+            <button class="btn btn-primary" th:onclick="handleFormDownload()">양식다운로드</button>
+          </div>
+          <div class="mb-4">
+            <label for="listTable" class="form-label">업로드 목록</label>
+            <table class="table" id="listTable">
+              <thead>
+              <tr>
+                <th scope="col">번호</th>
+                <th scope="col">회사명</th>
+                <th scope="col">비즈로보ID</th>
+                <th scope="col">이름</th>
+              </tr>
+              </thead>
+              <tbody id="excelData">
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:onclick="handleCloseModal()">닫기</button>
+        <button type="submit" class="btn btn-primary" th:onclick="handleExcelSave()">저장</button>
+      </div>
+    </div>
+  </div>
+</div>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<div class="modal fade" id="editFormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" th:fragment="detailModal">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">상세보기</h5>
+                <button type="button" th:onclick="handleCloseModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <input type="hidden" name="id" id="edit_id">
+                    <div class="mb-4 w-25">
+                        <label for="edit_companyInput" class="form-label">회사명</label>
+                        <input type="text" class="form-control" name="companyName" id="edit_companyInput" placeholder="회사명을 입력하세요">
+                    </div>
+                    <div class="mb-4 w-25">
+                        <label for="edit_idInput" class="form-label">설계사ID</label>
+                        <input type="text" class="form-control" name="insu_id" id="edit_idInput" placeholder="아이디를 입력하세요">
+                    </div>
+                    <div class="mb-4 w-25">
+                        <label for="edit_nameInput" class="form-label">설계사명</label>
+                        <input type="text" class="form-control" name="insu_name" id="edit_nameInput" placeholder="이름을 입력하세요">
+                    </div>
+                    <div class="mb-4 w-25">
+                        <label for="edit_regdate" class="form-label">등록일시</label>
+                        <input type="text" class="form-control" name="regdate" id="edit_regdate" disabled>
+                    </div>
+                    <div class="mb-4 w-25">
+                        <label for="edit_deleteYn" class="form-label">상태</label>
+                        <select select id="edit_deleteYn" name="status" class="form-select">
+                            <option th:value="N">활성</option>
+                            <option th:value="Y">비활성</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:onclick="handleCloseModal()">닫기</button>
+                <button type="submit" class="btn btn-primary" th:onclick="handleEdit()">수정</button>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

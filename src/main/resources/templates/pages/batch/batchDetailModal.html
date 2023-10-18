@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" th:fragment="batchDetailModal">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">상세보기</h5>
+        <button type="button" th:onclick="handleCloseModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editForm" class="d-flex flex-wrap">
+          <input type="hidden" name="id" id="edit_id">
+          <div class="mb-4 w-25 p-2">
+            <label for="edit_name" class="form-label">이름</label>
+            <p id="edit_name">ㅇㅇ</p>
+          </div>
+          <div class="mb-4 w-25 p-2">
+            <label for="edit_front_jumin" class="form-label">주민등록번호(앞)</label>
+            <p id="edit_front_jumin">test</p>
+          </div>
+          <div class="mb-4 w-25 p-2">
+            <label for="edit_back_jumin" class="form-label">주민등록번호(뒤)</label>
+            <p id="edit_back_jumin">test</p>
+          </div>
+          <div class="mb-4 w-25 p-2">
+            <label for="edit_mobile" class="form-label">휴대폰번호</label>
+            <p id="edit_mobile">test</p>
+          </div>
+          <div class="mb-4 w-25 p-2">
+            <label for="edit_address" class="form-label">주소</label>
+            <p id="edit_address">test</p>
+          </div>
+          <div class="mb-4 w-25 p-2">
+            <label for="edit_detail_address" class="form-label">상세주소</label>
+            <p id="edit_detail_address">test</p>
+          </div>
+          <div class="mb-4 w-25 p-2">
+            <label for="edit_business_type" class="form-label">업종</label>
+            <p id="edit_business_type">test</p>
+          </div>
+          <div class="mb-4 w-25 p-2">
+            <label for="edit_business_number" class="form-label">사업자번호</label>
+            <p id="edit_business_number">test</p>
+          </div>
+          <div class="mb-4 w-25 p-2">
+            <label for="edit_business_name" class="form-label">상호명</label>
+            <p id="edit_business_name">test</p>
+          </div>
+          <div class="mb-4 w-25 p-2">
+            <label for="edit_business_owner" class="form-label">소유여부</label>
+            <p id="edit_business_owner">test</p>
+          </div>
+          <div class="mb-4 w-25 p-2">
+            <label for="edit_area" class="form-label">면적</label>
+            <p id="edit_area">test</p>
+          </div>
+          <div class="mb-4 w-25 p-2">
+            <label for="edit_floor_low" class="form-label">시작층</label>
+            <p id="edit_floor_low">test</p>
+          </div>
+          <div class="mb-4 w-25 p-2">
+            <label for="edit_floor_high" class="form-label">끝층</label>
+            <p id="edit_floor_high">test</p>
+          </div>
+          <div class="mb-4 w-25 p-2">
+            <label for="edit_regdate" class="form-label">가입일시</label>
+            <p id="edit_regdate">test</p>
+          </div>
+          <div class="mb-4 w-25 p-2">
+            <label for="edit_flag" class="form-label">제휴코드</label>
+            <p id="edit_flag">test</p>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:onclick="handleCloseModal()">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+</html>
