@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>관리자 페이지</title>
+</head>
+<th:block layout:fragment="script">
+  <script type="text/javascript" th:src="@{/js/mydataInsurance/mydataInsurance.js}"></script>
+</th:block>
+
+<div class="container-fluid" layout:fragment="content">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">보험 상품</h1>
+  </div>
+  <div class="button-wrap">
+      <span class="insert-btn">
+        <button type="button" class="btn btn-primary" th:onclick="handleInsertMydataInsurance()">
+          신규등록
+        </button>
+      </span>
+    <span class="delete-btn">
+        <button class="btn btn-danger" th:onclick="handleDelete()">삭제</button>
+      </span>
+  </div>
+  <table id="mydata_insurance_table" class="table table-hover">
+    <thead>
+    <tr>
+      <th scope="col" style="text-align: center"><input type="checkbox"  id="checkall" /></th>
+      <th scope="col">번호</th>
+      <th scope="col">이름</th>
+      <th scope="col">보험</th>
+      <th scope="col">제목</th>
+      <th scope="col">내용</th>
+      <th scope="col">가입일자</th>
+      <th scope="col">작성자</th>
+      <th scope="col">상태</th>
+    </tr>
+    </thead>
+    <tbody>
+  </table>
+
+  <!--신규 등록 Modal-->
+  <div class="modal fade" id="mydataInsuranceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">정보 마당 새로등록</h5>
+          <button type="button" th:onclick="handleCloseModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="insertForm">
+            <div class="mb-4 w-25">
+              <label for="insuranceInput" class="form-label">보험 상품</label>
+              <select id="insuranceInput" name="category" class="form-select">
+                <option selected th:value="01">보험 상품</option>
+                <option th:value="02">삼성화재 손해보험</option>
+                <option th:value="03">한화생명 알찬보험</option>
+                <option th:value="04">신한생명 생명보험</option>
+                <option th:value="05">교보생명 책보험</option>
+                <option th:value="06">한화생명 풍수해보험</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label for="titleInput" class="form-label">제목</label>
+              <input type="text" class="form-control" name="title" id="titleInput" placeholder="제목을 입력하세요">
+            </div>
+            <div class="mb-4" id="summenoteContent">
+              <label for="summernote" class="form-label">내용</label>
+              <textarea id="summernote" type="text" th:class="form-control" name="boardContents" rows="10"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:onclick="handleCloseModal()">닫기</button>
+          <button type="submit" class="btn btn-primary" th:onclick="handleSave()">저장</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--정책공지 수정 모달    -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">상세보기</h5>
+          <button type="button" th:onclick="updateCloseModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editForm">
+            <div class="mb-4">
+              <input type="hidden" name="id" id="edit_id">
+              <div class="mb-4 w-25">
+                <label for="insuranceEditInput" class="form-label">정책</label>
+                <select id="insuranceEditInput" name="category" class="form-select">
+                  <option selected th:value="01">보험 상품</option>
+                  <option th:value="02">삼성화재 손해보험</option>
+                  <option th:value="03">한화생명 알찬보험</option>
+                  <option th:value="04">신한생명 생명보험</option>
+                  <option th:value="05">교보생명 책보험</option>
+                  <option th:value="06">한화생명 풍수해보험</option>
+                </select>
+              </div>
+              <label for="titleUpdateInput" class="form-label">제목</label>
+              <input type="text" class="form-control" name="insuranceTitle" id="titleUpdateInput" placeholder="제목을 입력하세요">
+            </div>
+            <div class="mb-4">
+              <label for="summernoteEdit" class="form-label">내용</label>
+              <textarea id="summernoteEdit" type="text" th:class="form-control" name="boardContents" rows="10"></textarea>
+            </div>
+            <div class="mb-4 w-25">
+              <label for="edit_deleteYn" class="form-label">상태</label>
+              <select select id="edit_deleteYn" name="status" class="form-select">
+                <option th:value="N">활성</option>
+                <option th:value="Y">비활성</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:onclick="updateCloseModal()">닫기</button>
+          <button type="submit" class="btn btn-primary" th:onclick="handleUpdate()">수정</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</html>
