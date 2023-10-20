@@ -74,6 +74,13 @@ public class RootController {
         return "pages/infoPlace/infoPlace";
     }
 
+    //정보 마당
+    @GetMapping(path = "/mydataInsurance")
+    public String mydataInsurance(Model model, @AuthenticationPrincipal MemberDetails user){
+        model.addAttribute("user",user);
+        return "pages/mydataInsurance/mydataInsurance";
+    }
+
     //상담신청 관리 페이지
     @GetMapping(path = "/consulting")
     public String consulting(){

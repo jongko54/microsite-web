@@ -10,7 +10,7 @@ $(document).ready(function () {
     pageLength: 10,
     ajax: {
       type : "POST",
-      url : '/admin/public/insuranceList',
+      url : '/admin/mydataInsurance/mydataInsuranceList',
       "dataType": "JSON",
     },
     //scrollY:500,
@@ -32,13 +32,12 @@ $(document).ready(function () {
     columns: [
       { data: null},
       { data: "id" },
-      { data: "user_name" },
-      { data: "insurance_title" },
-      { data: "insurance_content" },
+      { data: "userName" },
+      { data: "mydataInsuranceProduct" },
+      { data: "mydataInsuranceTitle" },
+      { data: "mydataInsuranceContent" },
       { data: "createdDate" },
       { data: "createdBy" },
-      { data: "updatedDate" },
-      { data: "updatedBy" },
       { data: "deleteYn" }
     ],
     columnDefs: [
@@ -50,7 +49,44 @@ $(document).ready(function () {
         defaultContent:'',
       },
       {
-        targets: [9],
+        targets: [3],
+        render: function (data, type, full, meta) {
+
+          if(data === '1')
+          {
+            return "보험 상품";
+          }
+          else if(data === '2')
+          {
+            return "삼성화재 손해보험";
+          }
+          else if(data === '3')
+          {
+            return  "한화생명 알찬보험"
+          }
+          else if(data === '4')
+          {
+            return  "신한생명 생명보험"
+          }
+          else if(data === '5')
+          {
+            return "교보생명 책보험"
+          }
+          else
+          {
+            return "한화생명 풍수해보험"
+          }
+        }
+      },
+      {
+        targets: [5],
+        render: function (data, type, full, meta) {
+          console.log(data)
+          return `<a href="#" class="link-primary" onclick="handleDetailForm(${full.id})">${sliceText(data)}</a>`
+        }
+      },
+      {
+        targets: [8],
         render: function (data, type, full, meta) {
           if(data === 'N'){
             return "활성";
@@ -60,13 +96,7 @@ $(document).ready(function () {
         }
       },
       {
-        targets: [4],
-        render: function (data, type, full, meta) {
-          return `<a href="#" class="link-primary" onclick="handleDetailForm(${full.id})">${sliceText(data)}</a>`
-        }
-      },
-      {
-        targets: [4],
+        targets: [6],
         render: function (data, type, full, meta) {
           if(data !== null){
             return data.substring(0,10);
@@ -105,14 +135,14 @@ $(document).ready(function () {
   // $('#contentHidden').attr('style',"display:none;");
 
   //등록 모달 에디터
-  summerNote("summernote", "insuranceList");
-  summerNote("summernoteEdit",'insuranceList');
+  summerNote("summernote", "mydataInsurance");
+  summerNote("summernoteEdit",'mydataInsurance');
 
 })
 
 //신규 등록 클릭
-const handleInsertIp = () => {
-  $("#ipModal").modal("show");
+const handleInsertMydataInsurance = () => {
+  $("#mydataInsuranceModal").modal("show");
 }
 
 //닫기 버튼
@@ -120,8 +150,9 @@ const handleCloseModal = () => {
   clickEsc();
   $("#titleInput").val("");
   $('#summernote').summernote('code','');
+  $("#insuranceInput").val(1);
 
-  $("#ipModal").modal("hide");
+  $("#mydataInsuranceModal").modal("hide");
   $("#editModal").modal("hide");
 }
 //ESC로 닫을 때
@@ -130,6 +161,7 @@ const clickEsc = () =>{
     if ( event.keyCode == 27 || event.which == 27 ) {
       $("#titleInput").val("");
       $('#summernote').summernote('code','');
+      $("#insuranceInput").val(1);
     }
   });
 }
@@ -138,6 +170,7 @@ $(document).keydown(function(event) {
   if ( event.keyCode == 27 || event.which == 27 ) {
     $("#titleInput").val("");
     $('#summernote').summernote('code','');
+    $("#insuranceInput").val(1);
   }
 });
 
@@ -148,23 +181,25 @@ const updateCloseModal = () => {
 
 //신규등록
 const handleSave = () => {
-  const title      = $("#titleInput").val();
-  const content    = $("#summernote").val();
+  const mydataInsuranceTitle      = $("#titleInput").val();
+  const mydataInsuranceContent    = $("#summernote").val();
+  const mydataInsuranceProduct     = $("#insuranceInput").val();
+  console.log(mydataInsuranceProduct)
 
   let regexEmail = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
   let regexDate = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
-  if(title=='')
+  if(mydataInsuranceTitle=='')
   {
     alert("제목을 입력해주세요");
   }
-  else if(content=='')
+  else if(mydataInsuranceContent=='')
   {
     alert("내용을 입력해주세요");
   }
   else{
     $.ajax({
-      url: "/admin/infoPlace/ipSave",
-      data: JSON.stringify({"title":title , "content":content}),
+      url: "/admin/mydataInsurance/mydataInsuranceSave",
+      data: JSON.stringify({"mydataInsuranceTitle":mydataInsuranceTitle , "mydataInsuranceContent":mydataInsuranceContent,"mydataInsuranceProduct":mydataInsuranceProduct}),
       type: "post",
       contentType:"application/json",
       success:function (res){
@@ -197,7 +232,7 @@ const handleDelete = () => {
   }
 
   $.ajax({
-    url:"/admin/infoPlace/ipDelete",
+    url:"/admin/mydataInsurance/mydataInsuranceDelete",
     type:"put",
     contentType: "application/x-www-form-urlencoded; charset=UTF-8;",
     data: data,
@@ -213,20 +248,23 @@ const handleDetailForm = (id) => {
   $("#editModal").modal("show");
 
   $.ajax({
-    url:`/admin/infoPlace/ipSelctOne?id=${id}`,
+    url:`/admin/mydataInsurance/mydataInsuranceSelctOne?id=${id}`,
     type:"get",
     contentType: "application/x-www-form-urlencoded; charset=UTF-8;",
     success: function (res){
+      console.log(res)
       $("#edit_deleteYn").val(res.deleteYn).prop("selected",true);
-      const id            = $("#edit_id").val(res.id);
-      const title         = $("#titleUpdateInput").val(res.title);
-      const content       = $("#summernoteEdit").summernote('code', res.content);
-      const createdBy     = $("#update_createdBy").val(res.createdBy);
-      const createdDate   = $("#update_createdDate").val(res.createdDate);
-      const updatedBy     = $("#update_updatedBy").val(res.updatedBy);
-      const updatedDate   = $("#update_updatedDate").val(res.updatedDate);
+      const id                      = $("#edit_id").val(res.id);
+      const mydataInsuranceTitle    = $("#titleUpdateInput").val(res.mydataInsuranceTitle);
+      const mydataInsuranceContent  = $("#summernoteEdit").summernote('code', res.mydataInsuranceContent);
+      const createdBy               = $("#update_createdBy").val(res.createdBy);
+      const createdDate             = $("#update_createdDate").val(res.createdDate);
+      const updatedBy               = $("#update_updatedBy").val(res.updatedBy);
+      const updatedDate             = $("#update_updatedDate").val(res.updatedDate);
+      const mydataInsuranceProduct  = $("#insuranceEditInput").val(res.mydataInsuranceProduct);
     }
   })
+
 }
 
 //검색 버튼
@@ -252,17 +290,19 @@ const handleDetailForm = (id) => {
 //수정 버튼
 const handleUpdate = () => {
   const id = $("#edit_id").val();
-  const title = $("#titleUpdateInput").val();
+  const mydataInsuranceProduct = $("#insuranceEditInput").val();
+  const mydataInsuranceTitle = $("#titleUpdateInput").val();
   const deleteYn = $("#edit_deleteYn").val();
-  const content = $("#summernoteEdit").val();
+  const mydataInsuranceContent = $("#summernoteEdit").summernote('code');
 
   const data = {
-    title : title,
-    content : content,
+    mydataInsuranceProduct : mydataInsuranceProduct,
+    mydataInsuranceTitle   : mydataInsuranceTitle,
+    mydataInsuranceContent : mydataInsuranceContent,
     deleteYn : deleteYn
   };
   $.ajax({
-    url:`/admin/infoPlace/ipUpdate?id=${id}`,
+    url:`/admin/mydataInsurance/mydataInsuranceUpdate?id=${id}`,
     type: "put",
     data: JSON.stringify(data),
     contentType: "application/json",
