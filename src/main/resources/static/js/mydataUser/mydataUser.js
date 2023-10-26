@@ -1,5 +1,18 @@
 $(document).ready(function () {
   var table = $('#mydataUser_table').DataTable({
+    serverSide: true,
+    processing: false,
+    searching: true,
+    destroy:true,
+    ordering:false,
+    autoWidth:false,
+    paginate: true,
+    pageLength: 10,
+    ajax: {
+      type : "POST",
+      url : '/admin/mydataUser/mydataUser',
+      "dataType": "JSON",
+    },
     //scrollY:500,
     "language": {
       "emptyTable": "데이터가 없어요.",
@@ -16,24 +29,13 @@ $(document).ready(function () {
         "previous": "이전",
       }
     },
-    ajax: {
-      "type" : "GET",
-      "url" : '/admin/mydataUser/mydataUserList',
-      "dataType": "JSON",
-      "dataSrc":function (res){
-        const data = res;
-        return data;
-      }
-    },
     columns: [
-      { data: ''},
+      { data: null},
       { data: "id" },
+      { data: "userName" },
       { data: "userEmail" },
-      { data: "phoneRole" },
-      { data: "residentNumberFront" },
-      { data: "residentNumberBack" },
-      { data: "createdDate" },
       { data: "createdBy"},
+      { data: "createdDate" },
       { data: "deleteYn" }
     ],
     columnDefs: [
@@ -44,28 +46,28 @@ $(document).ready(function () {
         data: null,
         defaultContent:'',
       },
-      // {
-      //   targets: [6],
-      //   render: function (data, type, full, meta) {
-      //     if(data === 'N'){
-      //       return "활성";
-      //     }else{
-      //       return "비활성";
-      //     }
-      //   }
-      // },
-      // {
-      //   targets: [2],
-      //   render: function (data, type, full, meta) {
-      //     return `<a href="#" class="link-primary" onclick="handleDetailForm(${full.id})">${sliceText(data)}</a>`
-      //   }
-      // },
-      // {
-      //   targets: [4],
-      //   render: function (data, type, full, meta) {
-      //     return data.substring(0,10);
-      //   }
-      // },
+      {
+        targets: [6],
+        render: function (data, type, full, meta) {
+          if(data === 'N'){
+            return "활성";
+          }else{
+            return "비활성";
+          }
+        }
+      },
+      {
+        targets: [3],
+        render: function (data, type, full, meta) {
+          return `<a href="#" class="link-primary" onclick="handleDetailForm(${full.id})">${sliceText(data)}</a>`
+        }
+      },
+      {
+        targets: [5],
+        render: function (data, type, full, meta) {
+          return data.substring(0,10);
+        }
+      },
     ],
     select: {
       style: "multi",
@@ -95,71 +97,9 @@ $(document).ready(function () {
   //$('#manager_table1_filter').remove();
 })
 
-//신규 등록 클릭
-const handleInsertManager = () => {
-  $("#managerModal").modal("show");
-}
-
-//닫기 버튼
-const handleCloseModal = () => {
-  $("#idInput").val("");
-  $("#phoneNumInput").val("");
-  $("#floatingInput").val("");//이메일
-  $("#nameInput").val("");
-  $("#dateInput").val("");
-
-  $("#managerModal").modal("hide");
-  $("#editModal").modal("hide");
-}
-
 //수정화면 닫기 버튼
 const updateCloseModal = () => {
-  $("#updateModal").modal("hide");
-}
-
-//신규등록
-const handleSave = () => {
-  const userId      = $("#idInput").val();
-  const phoneNum    = $("#phoneNumInput").val();
-  const name        = $("#nameInput").val();
-
-  let regexEmail = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
-  let regexDate = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
-
-  if(userId.trim().length == 0)
-  {
-    alert("아이디를 입력해주세요");
-  }
-  else if(phoneNum.trim().length != 11)
-  {
-    alert("핸드폰번호를 정확히 입력해주세요");
-  }
-      // else if(!regexEmail.test($("input[id='floatingInput']").val()))
-      // {
-      //     console.log($("input[id='floatingInput']").val())
-      //     alert("옳바른 이메일을 입력해주세요")
-  // }
-  else if(name.trim().length < 0)
-  {
-    alert("성함을 입력해주세요.")
-  }
-      // else if(!regexDate.test($("input[id='dateInput']").val()))
-      // {
-      //     alert("옳바른 형식의 날짜를 입력해주세요")
-  // }
-  else{
-    $.ajax({
-      url: "/admin/manager/managerSave",
-      data: JSON.stringify({"userId":userId , "phoneRole":phoneNum, "name":name}),
-      type: "post",
-      contentType:"application/json",
-      success:function (res){
-        alert("등록되었습니다.");
-        handleCloseModal();
-        $('#mydataUser_table').DataTable().ajax.reload(null, false);
-      }
-    })
-  }
+  $("#editModal ").modal("hide");
 }
 
 //삭제 비활성화
@@ -183,7 +123,7 @@ const handleDelete = () => {
   }
 
   $.ajax({
-    url:"/admin/manager/managerDelete",
+    url:"/admin/mydataUser/mydataUserDelete",
     type:"put",
     contentType: "application/x-www-form-urlencoded; charset=UTF-8;",
     data: data,
@@ -196,21 +136,45 @@ const handleDelete = () => {
 
 //데이터 상세보기 함수
 const handleDetailForm = (id) => {
-  $("#updateModal").modal("show");
+  $("#editModal").modal("show");
 
   $.ajax({
-    url:`/admin/manager/managerSelctOne?id=${id}`,
+    url:`/admin/mydataUser/mydataUserSelctOne?id=${id}`,
     type:"get",
     contentType: "application/x-www-form-urlencoded; charset=UTF-8;",
     success: function (res){
+      console.log(res)
       $("#edit_deleteYn").val(res.deleteYn).prop("selected",true);
-      const id = $("#edit_id").val(res.id);
-      const userId = $("#update_userId").val(res.userId);
+      const id = $("#edit_id").text(res.id);
+      const userName = $("#edit_userName").text(res.username);
+      const userEmail = $("#edit_userEmail").text(res.userEmail);
+      const phoneAgency = $("#edit_phoneAgency").text(res.phoneAgency);
+      const phoneRole = $("#edit_phoneRole").text(res.phoneRole);
+      const residentNumberFront = $("#edit_residentNumberFront").text(res.residentNumberFront);
+      const residentNumberBack = $("#edit_residentNumberBack").text(res.residentNumberBack);
+      const companyName = $("#edit_companyName").text(res.companyName);
+      const housingType = $("#edit_housingType").text(res.housingType);
+      const housingDivision = $("#edit_housingDivision").text(res.housingDivision);
+      const businessIncome = $("#edit_businessIncome").text(res.businessIncome);
+      const carOwner = $("#edit_carOwner").text(res.carOwner);
+      const carName = $("#edit_carName").text(res.carName);
+      const motorcycle = $("#edit_motorcycle").text(res.motorcycle);
+      const height = $("#edit_height").text(res.height);
+      const weight = $("#edit_weight").text(res.weight);
+      const disease = $("#edit_disease").text(res.disease);
+      const diseaseName = $("#edit_diseaseName").text(res.diseaseName);
+      const bloodType = $("#edit_bloodType").text(res.bloodType);
+      const physicalDisability = $("#edit_physicalDisability").text(res.physicalDisability);
+      const physicalDisabilityLevel = $("#edit_physicalDisabilityLevel").text(res.physicalDisabilityLevel);
+      const marriage = $("#edit_marriage").text(res.marriage);
+      const children = $("#edit_children").text(res.children);
+      const preschoolChild = $("#edit_preschoolChild").text(res.preschoolChild);
+      const elderlyFamily = $("#edit_elderlyFamily").text(res.elderlyFamily);
+
       const createdBy = $("#update_createdBy").val(res.createdBy);
       const createdDate = $("#update_createdDate").val(res.createdDate);
       const updatedBy = $("#update_updatedBy").val(res.updatedBy);
       const updatedDate = $("#update_updatedDate").val(res.updatedDate);
-      const phoneRole = $("#phoneUpdateInput").val(res.phoneRole);
     }
   })
 }

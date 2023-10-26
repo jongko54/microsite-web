@@ -63,6 +63,7 @@ public enum ErrorCode{
 
     FAIL_EMAIL_DUP(HttpStatus.BAD_REQUEST, "이미 사용 중인 이메일입니다."),
 
+    FAIL_NOT_SAVE(HttpStatus.BAD_REQUEST, "저장 실패 하였습니다.")
     ;
 
 

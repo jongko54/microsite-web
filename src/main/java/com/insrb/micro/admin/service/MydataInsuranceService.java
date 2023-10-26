@@ -34,7 +34,6 @@ public class MydataInsuranceService {
     //page = offset , length = limit
     Pageable pageable = PageRequest.of(page, length, Sort.by(Sort.Direction.DESC, "id"));
     
-    ///수정헤ㅐ야됨
     String searchMydataInsuranceTitleValue = formData.get("columns[4][search][value]").get(0);
     String searchCreatedByValue = formData.get("columns[7][search][value]").get(0);
     Page<MydataInsurance> list = null;
