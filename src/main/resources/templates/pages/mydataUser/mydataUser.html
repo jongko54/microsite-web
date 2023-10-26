@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>마이데이터 유저</title>
+</head>
+<th:block layout:fragment="script">
+  <script type="text/javascript" th:src="@{/js/mydataUser/mydataUser.js}"></script>
+</th:block>
+
+<div class="container-fluid" layout:fragment="content">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">마이데이터 회원</h1>
+  </div>
+  <div class="button-wrap">
+    <span class="delete-btn">
+        <button class="btn btn-danger" th:onclick="handleDelete()">삭제</button>
+    </span>
+  </div>
+  <table id="mydataUser_table" class="table table-hover">
+    <thead>
+    <tr>
+      <th scope="col" style="text-align: center"><input type="checkbox"  id="checkall" /></th>
+      <th scope="col">번호</th>
+      <th scope="col">이름</th>
+      <th scope="col">이메일</th>
+      <th scope="col">작성자</th>
+      <th scope="col">가입일자</th>
+      <th scope="col">상태</th>
+    </tr>
+    </thead>
+    <tbody>
+  </table>
+
+<!--  정책공지 수정 모달-->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">상세보기</h5>
+          <button type="button" th:onclick="updateCloseModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editForm" class="d-flex flex-wrap">
+            <input type="hidden" name="id" id="edit_id">
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_userName" class="form-label">이름</label>
+              <p id="edit_userName">ㅇㅇ</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_userEmail" class="form-label">이메일</label>
+              <p id="edit_userEmail">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_phoneAgency" class="form-label">통신사</label>
+              <p id="edit_phoneAgency">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_phoneRole" class="form-label">휴대폰번호</label>
+              <p id="edit_phoneRole">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_residentNumberFront" class="form-label">주민등록번호(앞)</label>
+              <p id="edit_residentNumberFront">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_residentNumberBack" class="form-label">주민등록번호(뒤)</label>
+              <p id="edit_residentNumberBack">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_companyName" class="form-label">회사명</label>
+              <p id="edit_companyName">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_housingType" class="form-label">주거형태</label>
+              <p id="edit_housingType">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_housingDivision" class="form-label">주거구분</label>
+              <p id="edit_housingDivision">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_business_number" class="form-label">사업소득여부</label>
+              <p id="edit_business_number">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_carOwner" class="form-label">자동차소유여부</label>
+              <p id="edit_carOwner">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_carName" class="form-label">차종</label>
+              <p id="edit_carName">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_motorcycle" class="form-label">이륜차보유여부</label>
+              <p id="edit_motorcycle">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_height" class="form-label">키</label>
+              <p id="edit_height">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_weight" class="form-label">몸무게</label>
+              <p id="edit_weight">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_disease" class="form-label">질병여부</label>
+              <p id="edit_disease">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_diseaseName" class="form-label">질병</label>
+              <p id="edit_diseaseName">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_bloodType" class="form-label">혈액형</label>
+              <p id="edit_bloodType">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_physicalDisability" class="form-label">장애여부</label>
+              <p id="edit_physicalDisability">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_physicalDisabilityLevel" class="form-label">장애등급</label>
+              <p id="edit_physicalDisabilityLevel">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_marriage" class="form-label">결혼여부</label>
+              <p id="edit_marriage">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_children" class="form-label">자녀여부</label>
+              <p id="edit_children">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_preschoolChild" class="form-label">미취학자녀</label>
+              <p id="edit_preschoolChild">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_elderlyFamily" class="form-label">60세이상 고령부양가족</label>
+              <p id="edit_elderlyFamily">test</p>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:onclick="updateCloseModal()">닫기</button>
+<!--          <button type="submit" class="btn btn-primary" th:onclick="handleUpdate()">수정</button>-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</html>
