@@ -35,7 +35,6 @@ $(document).ready(function () {
       { data: "userName" },
       { data: "mydataInsuranceProduct" },
       { data: "mydataInsuranceTitle" },
-      { data: "mydataInsuranceContent" },
       { data: "createdDate" },
       { data: "createdBy" },
       { data: "deleteYn" }
@@ -79,14 +78,14 @@ $(document).ready(function () {
         }
       },
       {
-        targets: [5],
+        targets: [4],
         render: function (data, type, full, meta) {
           console.log(data)
           return `<a href="#" class="link-primary" onclick="handleDetailForm(${full.id})">${sliceText(data)}</a>`
         }
       },
       {
-        targets: [8],
+        targets: [7],
         render: function (data, type, full, meta) {
           if(data === 'N'){
             return "활성";
@@ -96,7 +95,7 @@ $(document).ready(function () {
         }
       },
       {
-        targets: [6],
+        targets: [5],
         render: function (data, type, full, meta) {
           if(data !== null){
             return data.substring(0,10);
