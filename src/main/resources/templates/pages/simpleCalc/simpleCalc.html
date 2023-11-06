@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>관리자 페이지</title>
+</head>
+<th:block layout:fragment="script">
+  <script type="text/javascript" th:src="@{/js/simpleCalc/simpleCalc.js}"></script>
+</th:block>
+
+<div class="container-fluid" layout:fragment="content">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">국내 여행자 보험 간편계산</h1>
+  </div>
+  <div class="button-wrap">
+<!--      <span class="insert-btn">-->
+<!--        <button type="button" class="btn btn-primary" th:onclick="handleInsertMydataInsurance()">-->
+<!--          신규등록-->
+<!--        </button>-->
+<!--      </span>-->
+      <span class="delete-btn">
+        <button class="btn btn-danger" th:onclick="handleDelete()">삭제</button>
+      </span>
+  </div>
+  <table id="simple_calc_table" class="table table-hover">
+    <thead>
+    <tr>
+      <th scope="col" style="text-align: center"><input type="checkbox"  id="checkall" /></th>
+      <th scope="col">번호</th>
+      <th scope="col">시작일</th>
+      <th scope="col">마감일</th>
+      <th scope="col">성별</th>
+      <th scope="col">주민 앞번호</th>
+      <th scope="col">작성일</th>
+      <th scope="col">작성자</th>
+      <th scope="col">상태</th>
+    </tr>
+    </thead>
+    <tbody>
+  </table>
+
+  <!--보험상품 수정 모달    -->
+<!--  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+<!--    <div class="modal-dialog modal-xl modal-dialog-scrollable">-->
+<!--      <div class="modal-content">-->
+<!--        <div class="modal-header">-->
+<!--          <h5 class="modal-title" id="editModalLabel">상세보기</h5>-->
+<!--          <button type="button" th:onclick="updateCloseModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--        </div>-->
+<!--        <div class="modal-body">-->
+<!--          <form id="editForm">-->
+<!--            <div class="mb-4">-->
+<!--              <input type="hidden" name="id" id="edit_id">-->
+<!--              <label for="titleUpdateInput" class="form-label">제목</label>-->
+<!--              <input type="text" class="form-control" name="insuranceTitle" id="titleUpdateInput" placeholder="제목을 입력하세요">-->
+<!--            </div>-->
+<!--            <div class="mb-4">-->
+<!--              <label for="titleUpdateInput" class="form-label">제목</label>-->
+<!--              <input type="text" class="form-control" name="insuranceTitle" id="titleUpdateInput" placeholder="제목을 입력하세요">-->
+<!--            </div>-->
+<!--            <div class="mb-4">-->
+<!--              <label for="titleUpdateInput" class="form-label">제목</label>-->
+<!--              <input type="text" class="form-control" name="insuranceTitle" id="titleUpdateInput" placeholder="제목을 입력하세요">-->
+<!--            </div>-->
+
+<!--            <div class="mb-4 w-25">-->
+<!--              <label for="edit_deleteYn" class="form-label">상태</label>-->
+<!--              <select select id="edit_deleteYn" name="status" class="form-select">-->
+<!--                <option th:value="N">활성</option>-->
+<!--                <option th:value="Y">비활성</option>-->
+<!--              </select>-->
+<!--            </div>-->
+<!--          </form>-->
+<!--        </div>-->
+<!--        <div class="modal-footer">-->
+<!--          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:onclick="updateCloseModal()">닫기</button>-->
+<!--          <button type="submit" class="btn btn-primary" th:onclick="handleUpdate()">수정</button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+</div>
+</html>
