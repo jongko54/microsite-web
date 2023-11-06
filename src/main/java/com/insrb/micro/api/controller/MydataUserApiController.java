@@ -1,18 +1,23 @@
 package com.insrb.micro.api.controller;
 
+import com.insrb.micro.admin.domain.dto.request.CommunityReqDto;
 import com.insrb.micro.api.common.ApiResponse;
 import com.insrb.micro.api.common.ResponseUtil;
 import com.insrb.micro.api.common.SuccessCode;
 import com.insrb.micro.api.domain.dto.request.MydataUserApiRequestDto;
+import com.insrb.micro.api.domain.dto.request.MydataUserApiRequestDto.MydataUserApiReq;
 import com.insrb.micro.api.service.MydataUserApiService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -24,10 +29,23 @@ public class MydataUserApiController {
 
   private final MydataUserApiService mydataUserApiService;
 
+  @GetMapping(path = "/mydataUser")
+  public ApiResponse mydataUserList(@RequestParam(required = false) String id){
+
+    return ResponseUtil.SUCCESS(SuccessCode.SUCCESS_BOARD, mydataUserApiService.mydataUserList(id));
+  }
+
   @Operation(summary = "회원 저장", tags = "mydataUser API")
   @PostMapping(value = "/mydataUserSave") //RequestParam("id") long id,
   public ApiResponse mydataUserSave(@RequestBody MydataUserApiRequestDto.MydataUserApiReq params){
 
     return ResponseUtil.SUCCESS(SuccessCode.SUCCESS_OK, mydataUserApiService.userSave(params));
+  }
+
+  @ResponseBody
+  @PutMapping(path = "/mydataUserUpdate")
+  public Long mydataUserUpdate(@RequestParam("id") long id, @RequestBody final MydataUserApiReq params){
+
+    return mydataUserApiService.mydataUserUpdate(id, params);
   }
 }

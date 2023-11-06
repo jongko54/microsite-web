@@ -33,6 +33,12 @@ public class MydataUserApiRequestDto {
     private String children;
     private String preschoolChild;
     private String elderlyFamily;
+    private String privacyAgreement;
+    private String marketingAgreement;
+    private String thirdPartiesAgreement;
+    
+
+
 
     public MydataUser toEntity(){
       return MydataUser.builder()
@@ -60,6 +66,9 @@ public class MydataUserApiRequestDto {
           .children(this.children)
           .preschoolChild(this.preschoolChild)
           .elderlyFamily(this.elderlyFamily)
+          .privacyAgreement(this.privacyAgreement)
+          .marketingAgreement(this.marketingAgreement)
+          .thirdPartiesAgreement(this.thirdPartiesAgreement)
 
           .deleteYn('N')
           .build();

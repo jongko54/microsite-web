@@ -32,6 +32,9 @@ public class MydataUserResDto {
   private String children;
   private String preschoolChild;
   private String elderlyFamily;
+  private String privacyAgreement;
+  private String marketingAgreement;
+  private String thirdPartiesAgreement;
 
   private String createdBy;
   private String updatedBy;
@@ -64,7 +67,11 @@ public class MydataUserResDto {
     marriage            = entity.getMarriage();
     children            = entity.getChildren();
     preschoolChild      = entity.getPreschoolChild();
-    elderlyFamily        = entity.getElderlyFamily();
+    elderlyFamily       = entity.getElderlyFamily();
+    privacyAgreement    = entity.getPrivacyAgreement();
+    marketingAgreement  = entity.getMarketingAgreement();
+    thirdPartiesAgreement = entity.getThirdPartiesAgreement();
+
 
     createdBy = entity.getCreatedBy();
     updatedBy = entity.getUpdatedBy();

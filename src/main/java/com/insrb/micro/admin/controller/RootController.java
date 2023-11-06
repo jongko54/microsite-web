@@ -88,6 +88,13 @@ public class RootController {
         return "pages/mydataUser/mydataUser";
     }
 
+    //마이데이터 유저
+    @GetMapping(path = "/simpleCalc")
+    public String simpleCalc(Model model, @AuthenticationPrincipal MemberDetails user){
+        model.addAttribute("user",user);
+        return "pages/simpleCalc/simpleCalc";
+    }
+
     //상담신청 관리 페이지
     @GetMapping(path = "/consulting")
     public String consulting(){

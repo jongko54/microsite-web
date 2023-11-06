@@ -1,7 +1,5 @@
 package com.insrb.micro.admin.controller;
 
-import com.insrb.micro.admin.domain.dto.request.MydataInsuranceReqDto;
-import com.insrb.micro.admin.domain.dto.response.MydataInsuranceResDto;
 import com.insrb.micro.admin.domain.dto.response.MydataUserResDto;
 import com.insrb.micro.admin.domain.entity.common.Paging;
 import com.insrb.micro.admin.service.MydataUserService;
