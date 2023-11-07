@@ -7,7 +7,6 @@ import com.insrb.micro.api.domain.entity.CommunityApi;
 import com.insrb.micro.api.exception.CustomException;
 import com.insrb.micro.api.exception.ErrorCode;
 import com.insrb.micro.api.repository.CommunityApiRepository;
-import kotlinx.serialization.Required;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;

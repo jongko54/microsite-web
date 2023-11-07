@@ -30,7 +30,7 @@ public class MydataUserApiController {
   private final MydataUserApiService mydataUserApiService;
 
   @GetMapping(path = "/mydataUser")
-  public ApiResponse mydataUserList(@RequestParam(required = false) String id){
+  public ApiResponse mydataUserList(@RequestParam(required = false) long id){
 
     return ResponseUtil.SUCCESS(SuccessCode.SUCCESS_BOARD, mydataUserApiService.mydataUserList(id));
   }

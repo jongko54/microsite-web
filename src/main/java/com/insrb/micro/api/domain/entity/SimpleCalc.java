@@ -12,26 +12,31 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "tb_simpleCalc")
+@Table(name = "tb_trip_fee")
 @Getter
 @NoArgsConstructor
-public class SimpleCalc extends CommonEntity{
+public class SimpleCalc {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
-  private Date startDate;
-  private Date endDate;
-  private String juminFront;
-  private String gender;
-  private char deleteYn;
+  private char sex;
+  private String age;
+  private String period;
+  private double ratio;
+  private int fee;
+  private Date dueDate;
+  private char gubun;
 
   @Builder
-  public SimpleCalc(long id, Date startDate,Date endDate, String juminFront, String gender, char deleteYn) {
-    this.startDate  = startDate;
-    this.endDate    = endDate;
-    this.juminFront = juminFront;
-    this.gender     = gender;
-    this.deleteYn   = deleteYn;
+  public SimpleCalc(long id, Date dueDate, char sex, String age, double ratio, int fee, String period,
+      char gubun) {
+    this.sex = sex;
+    this.age = age;
+    this.period = period;
+    this.ratio = ratio;
+    this.fee = fee;
+    this.dueDate = dueDate;
+    this.gubun = gubun;
   }
 }

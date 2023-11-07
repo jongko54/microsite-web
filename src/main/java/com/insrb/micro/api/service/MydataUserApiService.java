@@ -23,7 +23,7 @@ public class MydataUserApiService {
 
   //리스트 api
   @javax.transaction.Transactional
-  public List<MydataUserApiResponseDto> mydataUserList(String id){
+  public List<MydataUserApiResponseDto> mydataUserList(Long id){
     List<MydataUser> list = null;
 
     if(id == null){

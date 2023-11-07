@@ -9,29 +9,24 @@ import lombok.Data;
 public class SimpleCalcResDto {
 
   private long id;
-  private Date startDate;
-  private Date endDate;
-  private String juminFront;
-  private String gender;
-  private char deleteYn;
+  private char sex;
+  private String age;
+  private String period;
+  private double ratio;
+  private int fee;
+  private Date dueDate;
+  private char gubun;
 
-  private String createdBy;
-  private String updatedBy;
-  private LocalDateTime createdDate;
-  private LocalDateTime updatedDate;
 
   public SimpleCalcResDto(SimpleCalc entity){
-    id               = entity.getId();
-    startDate        = entity.getStartDate();
-    endDate          = entity.getEndDate();
-    juminFront       = entity.getJuminFront();
-    gender           = entity.getGender();
-
-    createdBy = entity.getCreatedBy();
-    updatedBy = entity.getUpdatedBy();
-    createdDate = entity.getCreatedDate();
-    updatedDate = entity.getUpdatedDate();
-    deleteYn = entity.getDeleteYn();
+    id = entity.getId();
+    sex = entity.getSex();
+    age = entity.getAge();
+    period = entity.getPeriod();
+    ratio = entity.getRatio();
+    fee = entity.getFee();
+    dueDate = entity.getDueDate();
+    gubun = entity.getGubun();
   }
 
 }

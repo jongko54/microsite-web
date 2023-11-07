@@ -10,19 +10,23 @@ public class SimpleCalcApiRequestDto {
   @Data
   @RequiredArgsConstructor
   public static class SimpleCalcApiReq{
-    private Date startDate;
-    private Date endDate;
-    private String juminFront;
-    private String gender;
-    private String deleteYn;
+    private char sex;
+    private String  age;
+    private String period;
+    private double ratio;
+    private int fee;
+    private Date dueDate;
+    private char gubun;
 
     public SimpleCalc toEntity(){
       return SimpleCalc.builder()
-          .startDate(this.startDate)
-          .endDate(this.endDate)
-          .juminFront(this.juminFront)
-          .gender(this.gender)
-          .deleteYn('N')
+          .sex(this.sex)
+          .age(this.age)
+          .period(this.period)
+          .ratio(this.ratio)
+          .fee(this.fee)
+          .dueDate(this.dueDate)
+          .gubun(this.gubun)
           .build();
     }
   }

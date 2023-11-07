@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MydataUserApiRepository extends JpaRepository<MydataUser, Long> {
 
-  List<MydataUser> findAllById(String id, Sort id1);
+  List<MydataUser> findAllById(long id, Sort id1);
 }
