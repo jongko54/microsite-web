@@ -27,35 +27,35 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MydataUserApiController {
 
-  private final MydataUserApiService mydataUserApiService;
+    private final MydataUserApiService mydataUserApiService;
 
-  @GetMapping(path = "/mydataUser")
-  public ApiResponse mydataUserList(@RequestParam(required = false) long id){
+    @GetMapping(path = "/mydataUser")
+    public ApiResponse mydataUserList(@RequestParam(required = false) long id) {
 
-    return ResponseUtil.SUCCESS(SuccessCode.SUCCESS_BOARD, mydataUserApiService.mydataUserList(id));
-  }
+        return ResponseUtil.SUCCESS(SuccessCode.SUCCESS_BOARD, mydataUserApiService.mydataUserList(id));
+    }
 
-  @Operation(summary = "회원 저장", tags = "mydataUser API")
-  @PostMapping(value = "/mydataUserSave") //RequestParam("id") long id,
-  public ApiResponse mydataUserSave(@RequestBody MydataUserApiRequestDto.MydataUserApiReq params){
+    @Operation(summary = "회원 저장", tags = "mydataUser API")
+    @PostMapping(value = "/mydataUserSave") //RequestParam("id") long id,
+    public ApiResponse mydataUserSave(@RequestBody MydataUserApiRequestDto.MydataUserApiReq params) {
 
-    return ResponseUtil.SUCCESS(SuccessCode.SUCCESS_OK, mydataUserApiService.userSave(params));
-  }
+        return ResponseUtil.SUCCESS(SuccessCode.SUCCESS_OK, mydataUserApiService.userSave(params));
+    }
 
-  @ResponseBody
-  @PutMapping(path = "/mydataUserUpdate")
-  public Long mydataUserUpdate(@RequestParam("id") long id, @RequestBody final MydataUserApiReq params){
+    @ResponseBody
+    @PutMapping(path = "/mydataUserUpdate")
+    public ApiResponse mydataUserUpdate(@RequestBody final MydataUserApiReq params) {
 
-    return mydataUserApiService.mydataUserUpdate(id, params);
-  }
+        return ResponseUtil.SUCCESS(SuccessCode.SUCCESS_OK, mydataUserApiService.mydataUserUpdate(params));
+    }
 
-  //중복 확인
-  @PostMapping(path = "/mydataUser/exists")
-  public ApiResponse mydataUserCheck(@NotNull @RequestBody final MydataUserApiReq params){
+    //중복 확인
+    @PostMapping(path = "/mydataUser/exists")
+    public ApiResponse mydataUserCheck(@NotNull @RequestBody final MydataUserApiReq params) {
 
-    String userName = params.getUserName();
-    String phoneRole = params.getPhoneRole();
+        String userName = params.getUserName();
+        String phoneRole = params.getPhoneRole();
 
-    return ResponseUtil.SUCCESS(SuccessCode.SUCCESS_CHECK, mydataUserApiService.mydataUserCheck(userName,phoneRole));
-  }
+        return ResponseUtil.SUCCESS(SuccessCode.SUCCESS_CHECK, mydataUserApiService.mydataUserCheck(userName, phoneRole));
+    }
 }

@@ -5,6 +5,9 @@ import com.insrb.micro.api.common.ResponseUtil;
 import com.insrb.micro.api.common.SuccessCode;
 import com.insrb.micro.api.service.SimpleCalcApiService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,10 +32,16 @@ public class SimpleCalcApiController {
 //    return ResponseUtil.SUCCESS(SuccessCode.SUCCESS_OK, simpleCalcApiService.simpleCalSave(params));
 //  }
 
-  @Operation(summary = "국내여행자 보험 든든플랜,안심플랜", tags = "simpleCalcList API")
-  @GetMapping(value = "/simpleCalcList") //
+  @GetMapping(value = "/simpleCalcList")
+  @ApiOperation(value = "국내여행자 보험 든든플랜,안심플랜 보험금 계산")
+  @ApiImplicitParams({
+          @ApiImplicitParam(name = "age", value = "나이", required = true),
+          @ApiImplicitParam(name = "sex", value = "성별", required = true),
+          @ApiImplicitParam(name = "period", value = "기간", required = true)
+  })
   public ApiResponse SimpleCalcList(
-      @RequestParam("age") String age, @RequestParam("sex") char sex,
+      @RequestParam("age") String age,
+      @RequestParam("sex") char sex,
       @RequestParam("period") String period) {
 
     return ResponseUtil

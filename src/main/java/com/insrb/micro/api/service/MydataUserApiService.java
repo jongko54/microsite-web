@@ -38,9 +38,9 @@ public class MydataUserApiService {
 
   //업데이트
   @javax.transaction.Transactional
-  public Long mydataUserUpdate(long id, MydataUserApiReq params) {
-    System.out.println(id);
-    MydataUser entity = mydataUserApiRepository.findById(id)
+  public Long mydataUserUpdate(MydataUserApiReq params) {
+
+    MydataUser entity = mydataUserApiRepository.findById(params.getUserId())
         .orElseThrow(() -> new IllegalArgumentException());
     entity.update(params);
 //    entity.update(params.getUserName(),params.getUserEmail(), params.getPhoneAgency(), params.getPhoneRole(),
