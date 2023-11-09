@@ -5,6 +5,7 @@ import com.insrb.micro.api.domain.dto.request.DomesticTourApiRequestDto.Domestic
 import com.insrb.micro.api.domain.dto.request.MydataUserApiRequestDto.MydataUserApiReq;
 import com.insrb.micro.api.domain.dto.response.DomesticTourApiResponseDto;
 import com.insrb.micro.api.domain.dto.response.MydataInsuranceApiResponseDto;
+import com.insrb.micro.api.domain.dto.response.TripBojangResponseDto;
 import com.insrb.micro.api.domain.entity.DomesticTourApi;
 import com.insrb.micro.api.domain.entity.MydataInsuranceApi;
 import com.insrb.micro.api.exception.CustomException;
@@ -13,6 +14,8 @@ import com.insrb.micro.api.repository.DomesticTourApiRepository;
 import com.insrb.micro.api.repository.MydataInsuranceApiRepository;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.insrb.micro.api.repository.TripBojangRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class DomesticTourApiService {
 
   private final DomesticTourApiRepository domesticTourApiRepository;
+  private final TripBojangRepository tripBojangRepository;
 
   @Transactional
   public long domesticTourSave( DomesticTourApiReq params) {
@@ -35,4 +39,21 @@ public class DomesticTourApiService {
 
     return entity.getId();
   }
+
+  public List<DomesticTourApiResponseDto> domesticTourList(long userId) {
+    return domesticTourApiRepository.findAllByUserIdOrderByCreatedDateDesc(userId)
+            .stream().map(domesticTourApi ->
+                    new DomesticTourApiResponseDto(domesticTourApi, mappingToGubun(domesticTourApi.getGubun()))
+            )
+            .collect(Collectors.toList());
+  }
+
+  private List<TripBojangResponseDto> mappingToGubun(char gubun) {
+    return tripBojangRepository.findBybFlag(gubun)
+            .stream()
+            .map(TripBojangResponseDto::new)
+            .collect(Collectors.toList());
+
+  }
+
 }

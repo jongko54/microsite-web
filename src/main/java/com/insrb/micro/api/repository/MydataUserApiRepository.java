@@ -10,7 +10,5 @@ public interface MydataUserApiRepository extends JpaRepository<MydataUser, Long>
 
   List<MydataUser> findAllById(long id, Sort id1);
 
-  //boolean existsByPhoneRoleAndUserName();
-
   Optional<MydataUser> findByUserNameAndPhoneRole(String userName,String phoneRole);
 }
