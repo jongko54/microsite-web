@@ -50,7 +50,7 @@ public class MydataUserApiController {
   }
 
   //중복 확인
-  @GetMapping(path = "/mydataUser/exists")
+  @PostMapping(path = "/mydataUser/exists")
   public boolean mydataUserCheck(@NotNull @RequestBody final MydataUserApiReq params){
 
     String userName = params.getUserName();
