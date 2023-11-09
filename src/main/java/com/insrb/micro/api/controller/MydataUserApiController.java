@@ -51,11 +51,11 @@ public class MydataUserApiController {
 
   //중복 확인
   @PostMapping(path = "/mydataUser/exists")
-  public boolean mydataUserCheck(@NotNull @RequestBody final MydataUserApiReq params){
+  public ApiResponse mydataUserCheck(@NotNull @RequestBody final MydataUserApiReq params){
 
     String userName = params.getUserName();
     String phoneRole = params.getPhoneRole();
 
-    return mydataUserApiService.mydataUserCheck(userName,phoneRole);
+    return ResponseUtil.SUCCESS(SuccessCode.SUCCESS_CHECK, mydataUserApiService.mydataUserCheck(userName,phoneRole));
   }
 }
