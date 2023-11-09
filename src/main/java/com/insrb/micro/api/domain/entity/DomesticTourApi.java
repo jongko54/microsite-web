@@ -35,6 +35,7 @@ public class DomesticTourApi extends CommonEntity {
   private Date endDate;
   private String diseasesThreeYearsAgreement;//최근 3년 내에 특정질병
   private String dangerLeisureSportsAgreement;//위험한 레포츠
+  private String foreignerYn;
   private String travelPurpose;//여행 목적
   private String privacyInfoAgreement;//개인정보수집 동의
   private String beforePayment;//결제 전
@@ -46,7 +47,7 @@ public class DomesticTourApi extends CommonEntity {
   @Builder
   public DomesticTourApi(long id,String userName,String juminFront,String juminBack,String phoneNum,String email,String age,
       String sex,String period,String gubun, Date startDate,Date endDate,
-      String diseasesThreeYearsAgreement,String dangerLeisureSportsAgreement,String travelPurpose,String privacyInfoAgreement, String beforePayment,char deleteYn) {
+      String diseasesThreeYearsAgreement,String dangerLeisureSportsAgreement,String foreignerYn,String travelPurpose,String privacyInfoAgreement, String beforePayment,char deleteYn) {
     this.userName = userName;
     this.juminFront = juminFront;
     this.juminBack   = juminBack;
@@ -60,6 +61,7 @@ public class DomesticTourApi extends CommonEntity {
     this.endDate = endDate;
     this.diseasesThreeYearsAgreement = diseasesThreeYearsAgreement;
     this.dangerLeisureSportsAgreement = dangerLeisureSportsAgreement;
+    this.foreignerYn = foreignerYn;
     this.travelPurpose = travelPurpose;
     this.privacyInfoAgreement = privacyInfoAgreement;
     this.beforePayment = beforePayment;

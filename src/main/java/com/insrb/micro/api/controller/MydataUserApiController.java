@@ -1,6 +1,5 @@
 package com.insrb.micro.api.controller;
 
-import com.insrb.micro.admin.domain.dto.request.CommunityReqDto;
 import com.insrb.micro.api.common.ApiResponse;
 import com.insrb.micro.api.common.ResponseUtil;
 import com.insrb.micro.api.common.SuccessCode;
@@ -11,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -47,5 +47,15 @@ public class MydataUserApiController {
   public Long mydataUserUpdate(@RequestParam("id") long id, @RequestBody final MydataUserApiReq params){
 
     return mydataUserApiService.mydataUserUpdate(id, params);
+  }
+
+  //중복 확인
+  @GetMapping(path = "/mydataUser/exists")
+  public boolean mydataUserCheck(@NotNull @RequestBody final MydataUserApiReq params){
+
+    String userName = params.getUserName();
+    String phoneRole = params.getPhoneRole();
+
+    return mydataUserApiService.mydataUserCheck(userName,phoneRole);
   }
 }

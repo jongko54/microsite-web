@@ -25,6 +25,7 @@ public class DomesticTourApiRequestDto {
     private Date endDate;
     private String diseasesThreeYearsAgreement;
     private String dangerLeisureSportsAgreement;
+    private String foreignerYn;
     private String travelPurpose;
     private String privacyInfoAgreement;
     private String beforePayment;
@@ -49,6 +50,7 @@ public class DomesticTourApiRequestDto {
           .travelPurpose(this.travelPurpose)
           .privacyInfoAgreement(this.privacyInfoAgreement)
           .beforePayment(this.beforePayment)
+          .foreignerYn(this.foreignerYn)
           .deleteYn('N')
           .build();
     }

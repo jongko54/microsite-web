@@ -70,5 +70,20 @@ public class MydataUserApiService {
 
     return entity.getId();
   }
+  /**
+   * 마이데이터 회원 중복 확인
+   *
+   * @param userName
+   * @param phoneRole
+   * @return true,false
+   */
+  public boolean mydataUserCheck(String userName,String phoneRole){
 
+    Boolean valCheck = mydataUserApiRepository.existsMydataUserByUserNameAndPhoneRole(userName,phoneRole);
+
+    if(valCheck == true){
+      return true;
+    }
+    return false;
+  }
 }
