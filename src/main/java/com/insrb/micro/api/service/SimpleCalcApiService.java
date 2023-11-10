@@ -9,7 +9,12 @@ import com.insrb.micro.api.exception.CustomException;
 import com.insrb.micro.api.exception.ErrorCode;
 import com.insrb.micro.api.repository.SimpleCalcApiRepository;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import com.insrb.micro.api.repository.TripBojangRepository;
@@ -17,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static java.util.stream.Collectors.*;
 
 @Service
 @Slf4j
@@ -41,18 +48,21 @@ public class SimpleCalcApiService {
     //리스트
     @javax.transaction.Transactional
     public List<SimpleCalcApiResponseDto> simpleCalcList(String age, char sex, String period) {
-        return simpleCalcApiRepository.findByAgeAndSexAndPeriod(age, sex, period)
+        Map<Character, SimpleCalc> simpleCalcMap = simpleCalcApiRepository.findByAgeAndSexAndPeriodGreaterThanEqual(age, sex, period)
                 .stream()
-                .map(simpleCalc ->
-                        new SimpleCalcApiResponseDto(simpleCalc, mappingToGubun(simpleCalc.getGubun()))
-                ).collect(Collectors.toList());
+                .collect(toMap(SimpleCalc::getGubun, Function.identity(), BinaryOperator.minBy(Comparator.comparing(calc -> Integer.parseInt(calc.getPeriod())))));
+
+        return simpleCalcMap.values().stream().map(
+                        simpleCalc -> new SimpleCalcApiResponseDto(simpleCalc, mappingToGubun(simpleCalc.getGubun())))
+                .collect(toList());
     }
+
 
     private List<TripBojangResponseDto> mappingToGubun(char gubun) {
         return tripBojangRepository.findBybFlag(gubun)
                 .stream()
                 .map(TripBojangResponseDto::new)
-                .collect(Collectors.toList());
+                .collect(toList());
 
     }
 }
