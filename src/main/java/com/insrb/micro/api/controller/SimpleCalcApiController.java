@@ -42,7 +42,7 @@ public class SimpleCalcApiController {
   public ApiResponse SimpleCalcList(
       @RequestParam("age") String age,
       @RequestParam("sex") char sex,
-      @RequestParam("period") String period) {
+      @RequestParam("period") int period) {
 
     return ResponseUtil
         .SUCCESS(SuccessCode.SUCCESS_OK, simpleCalcApiService.simpleCalcList(age, sex, period));

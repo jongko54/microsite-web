@@ -22,15 +22,14 @@ public class SimpleCalc {
   private long id;
   private char sex;
   private String age;
-  private String period;
+  private int period;
   private double ratio;
   private int fee;
   private Date dueDate;
   private char gubun;
 
   @Builder
-  public SimpleCalc(long id, Date dueDate, char sex, String age, double ratio, int fee, String period,
-      char gubun) {
+  public SimpleCalc(long id, Date dueDate, char sex, String age, double ratio, int fee, int period, char gubun) {
     this.sex = sex;
     this.age = age;
     this.period = period;

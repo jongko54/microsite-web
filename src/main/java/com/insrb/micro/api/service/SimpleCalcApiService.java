@@ -47,10 +47,10 @@ public class SimpleCalcApiService {
 
     //리스트
     @javax.transaction.Transactional
-    public List<SimpleCalcApiResponseDto> simpleCalcList(String age, char sex, String period) {
+    public List<SimpleCalcApiResponseDto> simpleCalcList(String age, char sex, int period) {
         Map<Character, SimpleCalc> simpleCalcMap = simpleCalcApiRepository.findByAgeAndSexAndPeriodGreaterThanEqual(age, sex, period)
                 .stream()
-                .collect(toMap(SimpleCalc::getGubun, Function.identity(), BinaryOperator.minBy(Comparator.comparing(calc -> Integer.parseInt(calc.getPeriod())))));
+                .collect(toMap(SimpleCalc::getGubun, Function.identity(), BinaryOperator.minBy(Comparator.comparing(SimpleCalc::getPeriod))));
 
         return simpleCalcMap.values().stream().map(
                         simpleCalc -> new SimpleCalcApiResponseDto(simpleCalc, mappingToGubun(simpleCalc.getGubun())))

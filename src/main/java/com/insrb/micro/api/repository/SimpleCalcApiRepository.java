@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SimpleCalcApiRepository extends JpaRepository<SimpleCalc, Long> {
 
-  List<SimpleCalc> findByAgeAndSexAndPeriodGreaterThanEqual(String age, char sex, String period);
+  List<SimpleCalc> findByAgeAndSexAndPeriodGreaterThanEqual(String age, char sex, int period);
 //  List<SimpleCalc> findByAgeAndSexAndPeriod(String age, char sex, String period);
 }
