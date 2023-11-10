@@ -30,8 +30,14 @@ public class DomesticTourApiController {
 
     @ApiOperation(value = "국내여행자 보험 가입 내역 호출")
     @GetMapping(value = "/domesticTourList")
-    public ApiResponse domesticTourList(@RequestParam(required = true) long userId) {
-        return ResponseUtil.SUCCESS(SuccessCode.SUCCESS_BOARD, domesticTourApiService.domesticTourList(userId));
+    public ApiResponse domesticTourList() {
+        return ResponseUtil.SUCCESS(SuccessCode.SUCCESS_BOARD, domesticTourApiService.domesticTourList());
+    }
+
+    @ApiOperation(value = "선택한 보험 삭제")
+    @DeleteMapping(value = "/domesticTourDelete/{id}")
+    public ApiResponse domesticTourDelete(@PathVariable long id ) {
+        return ResponseUtil.SUCCESS(SuccessCode.SUCCESS_OK, domesticTourApiService.deleteDomesticTour(id));
     }
 
 }

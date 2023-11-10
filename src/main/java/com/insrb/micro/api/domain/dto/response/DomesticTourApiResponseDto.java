@@ -22,6 +22,7 @@ public class DomesticTourApiResponseDto {
   private Date endDate;
   private String travelPurpose;
   private String beforePayment;
+  private int fee;
   private List<TripBojangResponseDto> tripBojangResponseDtos;
 
   public DomesticTourApiResponseDto(DomesticTourApi entity, List<TripBojangResponseDto> tripBojangResponseDtos) {
@@ -35,6 +36,7 @@ public class DomesticTourApiResponseDto {
     this.endDate = entity.getEndDate();
     this.travelPurpose = entity.getTravelPurpose();
     this.beforePayment = entity.getBeforePayment();
+    this.fee = entity.getFee();
     this.tripBojangResponseDtos = tripBojangResponseDtos;
   }
 

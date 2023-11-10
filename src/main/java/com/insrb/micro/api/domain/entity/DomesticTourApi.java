@@ -68,8 +68,12 @@ public class DomesticTourApi extends CommonEntity {
         this.travelPurpose = travelPurpose;
         this.privacyInfoAgreement = privacyInfoAgreement;
         this.beforePayment = beforePayment;
-
+        this.fee = fee;
         this.deleteYn = deleteYn;
+    }
+
+    public void delete() {
+        this.deleteYn = 'Y';
     }
 
 }
