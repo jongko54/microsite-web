@@ -33,12 +33,12 @@ public class MydataInsuranceApi extends CommonEntity {
 
   @Builder
   public MydataInsuranceApi(long id, String userName,String mydataInsuranceProduct, String mydataInsuranceTitle, String mydataInsuranceContent,String keyword, char deleteYn) {
-    this.userName = userName;
+    this.userName               = userName;
     this.mydataInsuranceProduct = mydataInsuranceProduct;
     this.mydataInsuranceTitle   = mydataInsuranceTitle;
     this.mydataInsuranceContent = mydataInsuranceContent;
-    this.keyword = keyword;
-    this.deleteYn = deleteYn;
+    this.keyword                = keyword;
+    this.deleteYn               = deleteYn;
   }
 
   public void update(String mydataInsuranceProduct ,String mydataInsuranceTitle,String mydataInsuranceContent,String keyword, char deleteYn) {

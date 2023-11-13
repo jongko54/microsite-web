@@ -1,5 +1,6 @@
 package com.insrb.micro.api.service;
 
+import com.insrb.micro.admin.domain.entity.MydataInsurance;
 import com.insrb.micro.admin.domain.entity.MydataUser;
 import com.insrb.micro.admin.repository.MydataUserRepository;
 import com.insrb.micro.api.common.Utils;
@@ -41,19 +42,19 @@ public class MydataInsuranceApiService {
       return list.stream().map(MydataInsuranceApiResponseDto::new).collect(Collectors.toList());
 
     return list.stream()
-        .filter(insurance -> insurance.getKeyword().contains(findUser.get().getHousingType()))
-        .filter(insurance -> insurance.getKeyword().contains(findUser.get().getHousingDivision()))
-        .filter(insurance -> {
-          if (!"".equals(findUser.get().getMotorcycle())) {
-            return insurance.getKeyword().contains(findUser.get().getMotorcycle());
-          }
-
-          return true;
-        })
+        .filter(insurance -> insurance.getKeyword().contains(findUser.get().getHousingType())
+            || insurance.getKeyword().contains(findUser.get().getHousingDivision())
+            || motorCycle(findUser.get(), insurance))
         .map(MydataInsuranceApiResponseDto::new)
         .collect(Collectors.toList());
   }
 
+  private boolean motorCycle (MydataUser findUser, MydataInsuranceApi insurance) {
+      if (!"".equals(findUser.getMotorcycle())) {
+        return insurance.getKeyword().contains(findUser.getMotorcycle());
+      }
+      return true;
+  }
 
   public MydataInsuranceApiResponseDto mydataInsuranceDetail(long param) {
     MydataInsuranceApi entity = mydataInsuranceApiRepository.findById(param).orElseThrow(() -> new CustomException(
