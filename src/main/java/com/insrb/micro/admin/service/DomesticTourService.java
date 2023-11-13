@@ -2,12 +2,14 @@ package com.insrb.micro.admin.service;
 
 import com.insrb.micro.admin.domain.dto.response.DomesticTourResDto;
 import com.insrb.micro.admin.domain.dto.response.MydataInsuranceResDto;
+import com.insrb.micro.admin.domain.dto.response.SimpleCalcResDto;
 import com.insrb.micro.admin.domain.entity.MydataInsurance;
 import com.insrb.micro.admin.domain.entity.common.Paging;
 import com.insrb.micro.admin.repository.DeleteBatchRepository;
 import com.insrb.micro.admin.repository.DomesticTourRepository;
 import com.insrb.micro.admin.repository.MydataInsuranceRepository;
 import com.insrb.micro.api.domain.entity.DomesticTourApi;
+import com.insrb.micro.api.domain.entity.SimpleCalc;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
@@ -70,5 +72,27 @@ public class DomesticTourService {
 
     return pagingDto;
   }
+  public void deleteById(Long id) {
+    domesticTourRepository.deleteById(id);
+  }
+
+  //비활성화
+  public long batchDelete(List<Long> id) {
+    deleteBatchRepository.batchUpdate(id, "tb_domestic_tour");
+
+    return id.size();
+  }
+
+  //상세
+  @Transactional
+  public DomesticTourResDto selectOne(long id) {
+    DomesticTourApi entity = domesticTourRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+
+    return new DomesticTourResDto(entity);
+  }
+
+
+
 
 }

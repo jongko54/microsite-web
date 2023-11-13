@@ -57,23 +57,39 @@ $(document).ready(function () {
           }
           else if(data === '2')
           {
-            return "삼성화재 손해보험";
+            return "교보생명";
           }
           else if(data === '3')
           {
-            return  "한화생명 알찬보험"
+            return  "한화생명"
           }
           else if(data === '4')
           {
-            return  "신한생명 생명보험"
+            return  "신한라이프"
           }
           else if(data === '5')
           {
-            return "교보생명 책보험"
+            return "현대해상"
           }
-          else
+          else if(data === '6')
           {
-            return "한화생명 풍수해보험"
+            return "DB손해보험"
+          }
+          else if(data === '7')
+          {
+            return "롯데손해보험"
+          }
+          else if(data === '8')
+          {
+            return "카디프생명"
+          }
+          else if(data === '9')
+          {
+            return "KDB생명"
+          }
+          else (data === '10')
+          {
+            return "삼성화재"
           }
         }
       },

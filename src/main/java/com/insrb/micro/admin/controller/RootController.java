@@ -95,6 +95,12 @@ public class RootController {
         return "pages/simpleCalc/simpleCalc";
     }
 
+    @GetMapping(path = "/domesticTour")
+    public String domesticTour(Model model, @AuthenticationPrincipal MemberDetails user){
+        model.addAttribute("user",user);
+        return "pages/domesticTour/domesticTour";
+    }
+
     //상담신청 관리 페이지
     @GetMapping(path = "/consulting")
     public String consulting(){

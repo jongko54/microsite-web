@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  var table = $('#simple_calc_table').DataTable({
+  let table = $('#simple_calc_table').DataTable({
     serverSide: true,
     processing: false,
     searching: true,
@@ -10,7 +10,7 @@ $(document).ready(function () {
     pageLength: 10,
     ajax: {
       type : "POST",
-      url : '/admin/simpleCalc/simpleCalc',
+      url : '/admin/domesticTour/domesticTourList',
       "dataType": "JSON",
     },
     //scrollY:500,
@@ -32,12 +32,11 @@ $(document).ready(function () {
     columns: [
       { data: null},
       { data: "id" },
-      { data: "startDate" },
-      { data: "endDate" },
-      { data: "gender" },
-      { data: "juminFront" },
-      { data: "createdBy"},
+      { data: "userName" },
+      { data: "email" },
+      { data: "period" },
       { data: "createdDate" },
+      { data: "createdBy"},
       { data: "deleteYn" }
     ],
     columnDefs: [
@@ -49,7 +48,7 @@ $(document).ready(function () {
         defaultContent:'',
       },
       {
-        targets: [8],
+        targets: [7],
         render: function (data, type, full, meta) {
           if(data === 'N'){
             return "활성";
@@ -58,26 +57,14 @@ $(document).ready(function () {
           }
         }
       },
-      // {
-      //   targets: [3],
-      //   render: function (data, type, full, meta) {
-      //     return `<a href="#" class="link-primary" onclick="handleDetailForm(${full.id})">${sliceText(data)}</a>`
-      //   }
-      // },
-      {
-        targets: [2],
-        render: function (data, type, full, meta) {
-          return data.substring(0,10);
-        }
-      },
       {
         targets: [3],
         render: function (data, type, full, meta) {
-          return data.substring(0,10);
+          return `<a href="#" class="link-primary" onclick="handleDetailForm(${full.id})">${sliceText(data)}</a>`
         }
       },
       {
-        targets: [6],
+        targets: [5],
         render: function (data, type, full, meta) {
           return data.substring(0,10);
         }
@@ -137,7 +124,7 @@ const handleDelete = () => {
   }
 
   $.ajax({
-    url:"/admin/simpleCalc/simpleCalcDelete",
+    url:"/admin/domesticTour/domesticTourDelete",
     type:"put",
     contentType: "application/x-www-form-urlencoded; charset=UTF-8;",
     data: data,
@@ -153,17 +140,31 @@ const handleDetailForm = (id) => {
   $("#editModal").modal("show");
 
   $.ajax({
-    url:`/admin/simpleCalc/simpleCalcSelctOne?id=${id}`,
+    url:`/admin/domesticTour/domesticTourSelctOne?id=${id}`,
     type:"get",
     contentType: "application/x-www-form-urlencoded; charset=UTF-8;",
     success: function (res){
       console.log(res)
       $("#edit_deleteYn").val(res.deleteYn).prop("selected",true);
       const id = $("#edit_id").text(res.id);
-      const endDate = $("#edit_phoneAgency").text(res.endDate);
+      const uesrId = $("#edit_userId").text(res.uesrId);
+      const uesrName = $("#edit_userName").text(res.uesrName);
+      const email = $("#edit_email").text(res.email);
+      const phoneNum = $("#edit_phoneNum").text(res.phoneNum);
       const startDate = $("#edit_phoneRole").text(res.startDate);
-      const juminFront = $("#edit_residentNumberFront").text(res.juminFront);
-      const gender = $("#edit_phoneRole").text(res.gender);
+      const juminFront = $("#edit_juminFront").text(res.juminFront);
+      const juminBack = $("#edit_juminBack").text(res.juminBack);
+      const age = $("#edit_age").text(res.age);
+      const period = $("#edit_period").text(res.period);
+      const gubun = $("#edit_gubun").text(res.gubun);
+      const diseasesThreeYearsAgreement = $("#edit_diseasesThreeYearsAgreement").text(res.diseasesThreeYearsAgreement);
+      const dangerLeisureSportsAgreement = $("#edit_dangerLeisureSportsAgreement").text(res.dangerLeisureSportsAgreement);
+      const foreignerYn = $("#edit_foreignerYn").text(res.foreignerYn);
+      const travelPurpose = $("#edit_travelPurpose").text(res.travelPurpose);
+      const privacyInfoAgreement = $("#edit_privacyInfoAgreement").text(res.privacyInfoAgreement);
+      const beforePayment = $("#edit_beforePayment").text(res.beforePayment);
+      const fee = $("#edit_fee").text(res.fee);
+
       const createdBy = $("#update_createdBy").val(res.createdBy);
       const createdDate = $("#update_createdDate").val(res.createdDate);
       const updatedBy = $("#update_updatedBy").val(res.updatedBy);

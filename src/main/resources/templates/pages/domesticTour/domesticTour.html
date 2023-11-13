@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>관리자 페이지</title>
+</head>
+<th:block layout:fragment="script">
+  <script type="text/javascript" th:src="@{/js/domesticTour/domesticTour.js}"></script>
+</th:block>
+
+<div class="container-fluid" layout:fragment="content">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">국내 여행자 보험</h1>
+  </div>
+  <div class="button-wrap">
+<!--      <span class="insert-btn">-->
+<!--        <button type="button" class="btn btn-primary" th:onclick="handleInsertMydataInsurance()">-->
+<!--          신규등록-->
+<!--        </button>-->
+<!--      </span>-->
+      <span class="delete-btn">
+        <button class="btn btn-danger" th:onclick="handleDelete()">삭제</button>
+      </span>
+  </div>
+  <table id="simple_calc_table" class="table table-hover">
+    <thead>
+    <tr>
+      <th scope="col" style="text-align: center"><input type="checkbox"  id="checkall" /></th>
+      <th scope="col">번호</th>
+      <th scope="col">이름</th>
+      <th scope="col">이메일</th>
+      <th scope="col">기간</th>
+      <th scope="col">작성일</th>
+      <th scope="col">작성자</th>
+      <th scope="col">상태</th>
+    </tr>
+    </thead>
+    <tbody>
+  </table>
+
+<!--  보험상품 수정 모달-->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">상세보기</h5>
+          <button type="button" th:onclick="updateCloseModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editForm" class="d-flex flex-wrap">
+            <input type="hidden" name="id" id="edit_id">
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_userName" class="form-label">이름</label>
+              <p id="edit_userName">ㅇㅇ</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_email" class="form-label">이메일</label>
+              <p id="edit_email">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_phoneNum" class="form-label">휴대폰번호</label>
+              <p id="edit_phoneNum">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_juminFront" class="form-label">주민등록번호(앞)</label>
+              <p id="edit_juminFront">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_juminBack" class="form-label">주민등록번호(뒤)</label>
+              <p id="edit_juminBack">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_age" class="form-label">나이</label>
+              <p id="edit_age">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_period" class="form-label">기간</label>
+              <p id="edit_period">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_gubun" class="form-label">구분</label>
+              <p id="edit_gubun">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_fee" class="form-label">비용</label>
+              <p id="edit_fee">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_diseasesThreeYearsAgreement" class="form-label">3년간 질병 Y,N</label>
+              <p id="edit_diseasesThreeYearsAgreement">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_dangerLeisureSportsAgreement" class="form-label">레포츠 Y,N</label>
+              <p id="edit_dangerLeisureSportsAgreement">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_foreignerYn" class="form-label">외국인 Y,N</label>
+              <p id="edit_foreignerYn">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_travelPurpose" class="form-label">여행 목적</label>
+              <p id="edit_travelPurpose">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_privacyInfoAgreement" class="form-label">개인정보 보호 Y,N</label>
+              <p id="edit_privacyInfoAgreement">test</p>
+            </div>
+            <div class="mb-4 w-25 p-2">
+              <label for="edit_beforePayment" class="form-label">결제 여부 Y,N</label>
+              <p id="edit_beforePayment">test</p>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:onclick="updateCloseModal()">닫기</button>
+<!--          <button type="submit" class="btn btn-primary" th:onclick="handleUpdate()">수정</button>-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</html>

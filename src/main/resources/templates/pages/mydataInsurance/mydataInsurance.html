@@ -45,7 +45,7 @@
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">정보 마당 새로등록</h5>
+          <h5 class="modal-title" id="exampleModalLabel">보험상품 새로등록</h5>
           <button type="button" th:onclick="handleCloseModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -54,11 +54,14 @@
               <label for="insuranceInput" class="form-label">보험 상품</label>
               <select id="insuranceInput" name="category" class="form-select">
                 <option selected th:value="01">보험 상품</option>
-                <option th:value="02">삼성화재 손해보험</option>
-                <option th:value="03">한화생명 알찬보험</option>
-                <option th:value="04">신한생명 생명보험</option>
-                <option th:value="05">교보생명 책보험</option>
-                <option th:value="06">한화생명 풍수해보험</option>
+                <option th:value="02">교보생명</option>
+                <option th:value="03">한화생명</option>
+                <option th:value="04">신한라이프</option>
+                <option th:value="05">현대해상</option>
+                <option th:value="06">DB손해보험</option>
+                <option th:value="07">롯데손해보험</option>
+                <option th:value="08">카디프생명</option>
+                <option th:value="09">KDB생명</option>
               </select>
             </div>
             <div class="mb-4">
@@ -95,11 +98,15 @@
                 <label for="insuranceEditInput" class="form-label">정책</label>
                 <select id="insuranceEditInput" name="category" class="form-select">
                   <option selected th:value="01">보험 상품</option>
-                  <option th:value="02">삼성화재 손해보험</option>
-                  <option th:value="03">한화생명 알찬보험</option>
-                  <option th:value="04">신한생명 생명보험</option>
-                  <option th:value="05">교보생명 책보험</option>
-                  <option th:value="06">한화생명 풍수해보험</option>
+                  <option th:value="02">교보생명</option>
+                  <option th:value="03">한화생명</option>
+                  <option th:value="04">신한라이프</option>
+                  <option th:value="05">현대해상</option>
+                  <option th:value="06">DB손해보험</option>
+                  <option th:value="07">롯데손해보험</option>
+                  <option th:value="08">카디프생명</option>
+                  <option th:value="09">KDB생명</option>
+                  <option th:value="10">삼성화재</option>
                 </select>
               </div>
               <label for="titleUpdateInput" class="form-label">제목</label>
