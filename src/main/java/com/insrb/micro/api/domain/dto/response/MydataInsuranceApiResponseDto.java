@@ -12,6 +12,7 @@ public class MydataInsuranceApiResponseDto {
   private String mydataInsuranceProduct;
   private String mydataInsuranceTitle;
   private String mydataInsuranceContent;
+  private String keyword;
   private String createdDate;
   private char deleteYn;
 
@@ -22,6 +23,7 @@ public class MydataInsuranceApiResponseDto {
     this.mydataInsuranceProduct = entity.getMydataInsuranceProduct();
     this.mydataInsuranceTitle = entity.getMydataInsuranceTitle();
     this.mydataInsuranceContent = entity.getMydataInsuranceContent();
+    this.keyword = entity.getKeyword();
     this.deleteYn = entity.getDeleteYn();
     this.createdDate = Utils.getYYYY_MM_DD(entity.getCreatedDate());
   }

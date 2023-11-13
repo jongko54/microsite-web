@@ -1,5 +1,6 @@
 package com.insrb.micro.admin.repository;
 
+import com.insrb.micro.admin.domain.dto.response.MydataInsuranceResDto;
 import com.insrb.micro.admin.domain.entity.MydataInsurance;
 import java.util.List;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,10 @@ public interface MydataInsuranceRepository extends JpaRepository<MydataInsurance
   Page<MydataInsurance> findAllByMydataInsuranceTitleContaining(Pageable pageable, String searchMydataInsuranceTitleValue);
 
   Page<MydataInsurance> findAllByCreatedByContaining(Pageable pageable, String searchCreatedByValue);
+
+  //Page<MydataInsurance> findAllKeywordByContaining(Pageable pageable, String searchCreatedByValue);
+
+//  List<MydataInsurance>
 
 
 }

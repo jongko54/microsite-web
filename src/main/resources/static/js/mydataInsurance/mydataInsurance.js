@@ -166,7 +166,7 @@ const handleCloseModal = () => {
   $("#titleInput").val("");
   $('#summernote').summernote('code','');
   $("#insuranceInput").val(1);
-
+  $("#keywordInput").val("");
   $("#mydataInsuranceModal").modal("hide");
   $("#editModal").modal("hide");
 }
@@ -177,6 +177,7 @@ const clickEsc = () =>{
       $("#titleInput").val("");
       $('#summernote').summernote('code','');
       $("#insuranceInput").val(1);
+      $("#keywordInput").val("");
     }
   });
 }
@@ -186,6 +187,7 @@ $(document).keydown(function(event) {
     $("#titleInput").val("");
     $('#summernote').summernote('code','');
     $("#insuranceInput").val(1);
+    $("#keywordInput").val("");
   }
 });
 
@@ -198,8 +200,9 @@ const updateCloseModal = () => {
 const handleSave = () => {
   const mydataInsuranceTitle      = $("#titleInput").val();
   const mydataInsuranceContent    = $("#summernote").val();
-  const mydataInsuranceProduct     = $("#insuranceInput").val();
-  console.log(mydataInsuranceProduct)
+  const mydataInsuranceProduct    = $("#insuranceInput").val();
+  const keyword                   = $("#keywordInput").val();
+  console.log(keyword)
 
   let regexEmail = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
   let regexDate = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
@@ -214,7 +217,10 @@ const handleSave = () => {
   else{
     $.ajax({
       url: "/admin/mydataInsurance/mydataInsuranceSave",
-      data: JSON.stringify({"mydataInsuranceTitle":mydataInsuranceTitle , "mydataInsuranceContent":mydataInsuranceContent,"mydataInsuranceProduct":mydataInsuranceProduct}),
+      data: JSON.stringify({"mydataInsuranceTitle":mydataInsuranceTitle ,
+        "mydataInsuranceContent" : mydataInsuranceContent,
+        "mydataInsuranceProduct":mydataInsuranceProduct,
+        "keyword":keyword}),
       type: "post",
       contentType:"application/json",
       success:function (res){
@@ -277,6 +283,7 @@ const handleDetailForm = (id) => {
       const updatedBy               = $("#update_updatedBy").val(res.updatedBy);
       const updatedDate             = $("#update_updatedDate").val(res.updatedDate);
       const mydataInsuranceProduct  = $("#insuranceEditInput").val(res.mydataInsuranceProduct);
+      const keyword                 = $("#keywordEdit").val(res.keyword);
     }
   })
 
@@ -309,11 +316,13 @@ const handleUpdate = () => {
   const mydataInsuranceTitle = $("#titleUpdateInput").val();
   const deleteYn = $("#edit_deleteYn").val();
   const mydataInsuranceContent = $("#summernoteEdit").summernote('code');
+  const keyword = $("#keywordEdit").val();
 
   const data = {
     mydataInsuranceProduct : mydataInsuranceProduct,
     mydataInsuranceTitle   : mydataInsuranceTitle,
     mydataInsuranceContent : mydataInsuranceContent,
+    keyword                : keyword,
     deleteYn : deleteYn
   };
   $.ajax({

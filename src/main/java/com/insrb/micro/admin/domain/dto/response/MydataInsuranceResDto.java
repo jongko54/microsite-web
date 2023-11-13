@@ -11,6 +11,7 @@ public class MydataInsuranceResDto {
   private String mydataInsuranceProduct;
   private String mydataInsuranceTitle;
   private String mydataInsuranceContent;
+  private String keyword;
   private String createdBy;
   private String updatedBy;
   private LocalDateTime createdDate;
@@ -23,6 +24,7 @@ public class MydataInsuranceResDto {
     mydataInsuranceProduct  = entity.getMydataInsuranceProduct();
     mydataInsuranceTitle    = entity.getMydataInsuranceTitle();
     mydataInsuranceContent  = entity.getMydataInsuranceContent();
+    keyword                 = entity.getKeyword();
     createdBy         = entity.getCreatedBy();
     updatedBy         = entity.getUpdatedBy();
     createdDate       = entity.getCreatedDate();

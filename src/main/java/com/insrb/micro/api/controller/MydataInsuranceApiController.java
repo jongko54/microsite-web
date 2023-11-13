@@ -27,8 +27,8 @@ public class MydataInsuranceApiController {
       notes = "파라미터 = id"
   )
   @GetMapping(path = "/mydataInsurance")
-  public ApiResponse mydataInsuranceList(@RequestParam(required = false) String id){
+  public ApiResponse mydataInsuranceList(@RequestParam(required = false) String id, @RequestParam(required = false) Long userId){
 
-    return ResponseUtil.SUCCESS(SuccessCode.SUCCESS_BOARD, mydataInsuranceApiService.mydataInsuranceList(id));
+    return ResponseUtil.SUCCESS(SuccessCode.SUCCESS_BOARD, mydataInsuranceApiService.mydataInsuranceList(id, userId));
   }
 }
