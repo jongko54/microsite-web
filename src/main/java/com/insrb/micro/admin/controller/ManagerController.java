@@ -2,6 +2,7 @@ package com.insrb.micro.admin.controller;
 
 import com.insrb.micro.admin.domain.dto.request.MemberReqDto;
 import com.insrb.micro.admin.domain.dto.response.MemberResDto;
+import com.insrb.micro.admin.domain.enumrate.Role;
 import com.insrb.micro.admin.service.ManagerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 관리자 컨트롤러
@@ -35,6 +38,8 @@ public class ManagerController {
     public long save(@RequestBody final MemberReqDto params){
         return managerService.save(params);
     }
+
+
     //관리자 삭제
     @PutMapping(path = "/managerDelete")
     @ResponseBody
@@ -48,7 +53,6 @@ public class ManagerController {
     @GetMapping(path = "/managerSelctOne")
     @ResponseBody
     public MemberResDto selectOne(@RequestParam("id") long id){
-        System.out.println(id);
 
         return managerService.selectOne(id);
     }
@@ -58,6 +62,14 @@ public class ManagerController {
     public Long update(@RequestParam("id") long id, @RequestBody final MemberReqDto params){
 
         return managerService.update(id, params);
+    }
+
+    //
+    @GetMapping(path = "/role")
+    @ResponseBody
+    public Role[] roleList(){
+
+        return Role.values();
     }
 
 

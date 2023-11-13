@@ -1,6 +1,7 @@
 package com.insrb.micro.admin.domain.entity;
 
 import com.insrb.micro.admin.domain.entity.common.CommonEntity;
+import com.insrb.micro.admin.domain.enumrate.Role;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,27 +19,30 @@ public class Manager extends CommonEntity {
         private String userId;
         private String userPw;
         private String phoneRole;
+        @Enumerated(EnumType.STRING)
+        private Role hasRole;
         private char deleteYn;
 
 //        @Column(name = "created_date")
 //        private LocalDateTime createdDate;
 
         @Builder
-        public Manager(int id, String userId, String userPw, String phoneRole, char deleteYn){
+        public Manager(int id, String userId, String userPw, String phoneRole, Role role, char deleteYn){
                 this.id = (long) id;
                 this.userId = userId;
                 this.userPw = userPw;
                 this.phoneRole = phoneRole;
+                this.hasRole = role;
                 this.deleteYn = deleteYn;
                 //this.createdDate = createdDate;
         }
 
-        public void update(String phoneRole, char deleteYn ){
+        public void update(String phoneRole, char deleteYn, Role role ){
                 //this.userId = userId;
                 //this.userPw = userPw;
                 this.phoneRole = phoneRole;
                 this.deleteYn = deleteYn;
-
+                this.hasRole = role;
         }
 
 }

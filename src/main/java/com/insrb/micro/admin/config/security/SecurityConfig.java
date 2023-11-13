@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
@@ -17,11 +19,15 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final LoginValidtor loginValidtor;
+  private final LoginSuccessHandler successHandler;
+  private final LogoutSuccessHandler logoutSuccessHandler;
+
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -36,11 +42,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginProcessingUrl("/admin/loginProc")  //form에 action url
                     .usernameParameter("id")    //사용자 아이디 (input 태그에 name값으로 받음)
                     .passwordParameter("pw")    //사용자 비밀번호 (input 태그에 name값으로 받음)
-                    .defaultSuccessUrl("/admin/main",true) // 로그인 성공 했을 시 이동할 화면
+                    .successHandler(successHandler)
+//                    .defaultSuccessUrl("/admin/main",true) // 로그인 성공 했을 시 이동할 화면
                     .permitAll()
                 .and()
                     .logout()
+                    .addLogoutHandler(logoutSuccessHandler)
+//                    .logoutSuccessHandler(());
                     .logoutRequestMatcher(new AntPathRequestMatcher("/admin/logoutProc"));//로그아웃 url
+
     }
 
     /**
@@ -56,5 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(loginValidtor).passwordEncoder(new BCryptPasswordEncoder());
+//        auth.authenticationProvider(customAuthenticationProvider());
     }
+
+
 }

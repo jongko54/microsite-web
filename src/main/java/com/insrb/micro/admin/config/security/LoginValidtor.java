@@ -1,15 +1,24 @@
 package com.insrb.micro.admin.config.security;
 
 
+import com.insrb.micro.admin.domain.entity.JoinLog;
 import com.insrb.micro.admin.domain.entity.Manager;
+import com.insrb.micro.admin.repository.JoinLogRepository;
 import com.insrb.micro.admin.repository.ManagerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.net.UnknownHostException;
+import java.time.LocalDateTime;
 
+import static com.insrb.micro.utils.CommonUtils.*;
 
 /**
  * 사용자 id를 검증하는 클래스
@@ -22,7 +31,7 @@ import javax.transaction.Transactional;
 public class LoginValidtor implements UserDetailsService {
 
     private final ManagerRepository managerRepository;
-
+    private final JoinLogRepository joinLogRepository;
 
     /**
      * UserDetailsService의 구현체로 사용자 ID를 검증하는 로직이 필요함
@@ -35,10 +44,12 @@ public class LoginValidtor implements UserDetailsService {
     public MemberDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 
         Manager mem = managerRepository.findByUserId(id);
-        System.out.println(mem.toString());
+
         if (mem == null) {
             return null;
         }
+
+
         return new MemberDetails(mem);
         }
 }

@@ -21,6 +21,7 @@ $(document).ready(function () {
                     "url" : '/admin/manager/managerList',
                     "dataType": "JSON",
                     "dataSrc":function (res){
+                            console.log(res);
                         const data = res;
                         return data;
                     }
@@ -31,7 +32,7 @@ $(document).ready(function () {
                 { data: "userId" },
                 { data: "phoneRole" },
                 { data: "createdDate" },
-                { data: "createdBy"},
+                { data: "hasRole.name"},
                 { data: "deleteYn" }
             ],
             columnDefs: [
@@ -96,6 +97,15 @@ $(document).ready(function () {
 //신규 등록 클릭
 const handleInsertManager = () => {
     $("#managerModal").modal("show");
+    $.ajax({
+        url: "/admin/manager/role",
+        type: "get",
+        contentType:"application/json",
+        success:function (res){
+            console.log(res);
+        }
+    })
+
 }
 
 //닫기 버튼
@@ -113,13 +123,18 @@ const handleCloseModal = () => {
 //수정화면 닫기 버튼
 const updateCloseModal = () => {
     $("#updateModal").modal("hide");
+
 }
 
 //신규등록
 const handleSave = () => {
     const userId      = $("#idInput").val();
+    const userPw      = $("#pwInput").val();
     const phoneNum    = $("#phoneNumInput").val();
     const name        = $("#nameInput").val();
+    const role        = $("#roleSelect option:selected").val();
+
+    console.log(role)
 
     let regexEmail = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
     let regexDate = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
@@ -148,7 +163,7 @@ const handleSave = () => {
     else{
         $.ajax({
             url: "/admin/manager/managerSave",
-            data: JSON.stringify({"userId":userId , "phoneRole":phoneNum, "name":name}),
+            data: JSON.stringify({"userId":userId ,"userPw": userPw, "phoneRole":phoneNum, "role":role, "name":name}),
             type: "post",
             contentType:"application/json",
             success:function (res){
@@ -209,6 +224,19 @@ const handleDetailForm = (id) => {
             const updatedBy = $("#update_updatedBy").val(res.updatedBy);
             const updatedDate = $("#update_updatedDate").val(res.updatedDate);
             const phoneRole = $("#phoneUpdateInput").val(res.phoneRole);
+
+            const roleVal = res.hasRole.name;
+
+            console.log(roleVal);
+
+            let sel3 = document.querySelector("select[name=role2]").options;
+
+            for (let i=0; i<sel3.length; i++) {
+                if (sel3[i].text === roleVal)
+                    sel3[i].selected = true;
+            }
+
+
         }
     })
 }
@@ -216,12 +244,16 @@ const handleDetailForm = (id) => {
 const handleUpdate = () => {
     const id = $("#edit_id").val();
     const phoneRole = $("#phoneUpdateInput").val();
+    const role        = $("#roleSelect2 option:selected").val();
     const deleteYn = $("#update_deleteYn").val();
     const userId = $("#update_userId").val();
 
+    console.log(role);
+
     const data = {
         phoneRole : phoneRole,
-        deleteYn : deleteYn
+        deleteYn : deleteYn,
+        role : role
     };
     $.ajax({
         url:`/admin/manager/managerUpdate?id=${id}`,

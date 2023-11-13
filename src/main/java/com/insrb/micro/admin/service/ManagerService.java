@@ -25,7 +25,7 @@ public class ManagerService {
 
     private final DeleteBatchRepository deleteBatchRepository;
 
-    PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public void deleteById(Long id) {
         managerRepository.deleteById(id);
@@ -40,6 +40,7 @@ public class ManagerService {
     //관리자 등록
     @Transactional
     public long save(MemberReqDto params) {
+        params.setUserPw(passwordEncoder.encode(params.getUserPw()));
         Manager entity = managerRepository.save(params.toEntity());
         return entity.getId();
     }
@@ -61,7 +62,7 @@ public class ManagerService {
     @Transactional
     public Long update(long id, MemberReqDto params) {
         Manager entity = managerRepository.findById(id).orElseThrow(()-> new IllegalArgumentException());
-        entity.update(params.getPhoneRole(),params.getDeleteYn());
+        entity.update(params.getPhoneRole(),params.getDeleteYn(), params.getRole());
         return id;
     }
 
