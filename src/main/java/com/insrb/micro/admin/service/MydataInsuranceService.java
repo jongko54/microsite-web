@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 
@@ -32,10 +33,12 @@ public class MydataInsuranceService {
     Paging pagingDto = new Paging();
 
     //page = offset , length = limit
-    Pageable pageable = PageRequest.of(page, length, Sort.by(Sort.Direction.DESC, "id"));
+    Pageable pageable = PageRequest.of(page, length, Sort.by(Direction.DESC, "id"));
     
     String searchMydataInsuranceTitleValue = formData.get("columns[4][search][value]").get(0);
     String searchCreatedByValue = formData.get("columns[7][search][value]").get(0);
+    //formData.get("keyword").get(0);
+
     Page<MydataInsurance> list = null;
 
     //검색 값 여부에 따라 분기 처리
@@ -51,6 +54,14 @@ public class MydataInsuranceService {
       //전체 검색x
       list = mydataInsuranceRepository.findAll(pageable);
     }
+
+    System.out.println(formData);
+
+
+//    word = word.replaceAll("[^\\^]","");
+
+
+    //list = mydataInsuranceRepository.findAllBy
 
     List<MydataInsuranceResDto> listToDto = list.stream().map(MydataInsuranceResDto::new).collect(
         Collectors.toList());
@@ -98,7 +109,7 @@ public class MydataInsuranceService {
   @Transactional
   public Long update(long id, MydataInsuranceReqDto params) {
     MydataInsurance entity = mydataInsuranceRepository.findById(id).orElseThrow(()-> new IllegalArgumentException());
-    entity.update(params.getMydataInsuranceProduct(),params.getMydataInsuranceTitle(), params.getMydataInsuranceContent(), params.getDeleteYn() );
+    entity.update(params.getMydataInsuranceProduct(),params.getMydataInsuranceTitle(), params.getMydataInsuranceContent(),params.getKeyword(), params.getDeleteYn() );
 
     return id;
   }

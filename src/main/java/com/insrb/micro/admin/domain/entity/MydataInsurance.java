@@ -23,21 +23,24 @@ public class MydataInsurance extends CommonEntity {
   private String mydataInsuranceProduct;
   private String mydataInsuranceTitle;
   private String mydataInsuranceContent;
+  private String keyword;
   private char deleteYn;
 
   @Builder
-  public MydataInsurance(int id, char deleteYn,String mydataInsuranceTitle,String mydataInsuranceContent ,String mydataInsuranceProduct){
+  public MydataInsurance(int id, char deleteYn,String mydataInsuranceTitle,String mydataInsuranceContent ,String mydataInsuranceProduct, String keyword){
     this.id                      = (long) id;
     this.mydataInsuranceProduct  = mydataInsuranceProduct;
     this.mydataInsuranceTitle    = mydataInsuranceTitle;
     this.mydataInsuranceContent  = mydataInsuranceContent;
+    this.keyword                 = keyword;
     this.deleteYn                = deleteYn;
   }
 
-  public void update(String mydataInsuranceProduct,String mydataInsuranceTitle,String mydataInsuranceContent, char deleteYn ){
+  public void update(String mydataInsuranceProduct,String mydataInsuranceTitle,String mydataInsuranceContent,String keyword, char deleteYn ){
     this.mydataInsuranceProduct  = mydataInsuranceProduct;
     this.mydataInsuranceTitle    = mydataInsuranceTitle;
     this.mydataInsuranceContent  = mydataInsuranceContent;
+    this.keyword                 = keyword;
     this.deleteYn                = deleteYn;
   }
 

@@ -16,6 +16,7 @@ public class MydataInsuranceReqDto extends CommonEntity {
   private String mydataInsuranceProduct;
   private String mydataInsuranceTitle;
   private String mydataInsuranceContent;
+  private String keyword;
   private char deleteYn;
 
   @Builder
@@ -24,6 +25,7 @@ public class MydataInsuranceReqDto extends CommonEntity {
             .mydataInsuranceProduct(mydataInsuranceProduct)
             .mydataInsuranceTitle(mydataInsuranceTitle)
             .mydataInsuranceContent(mydataInsuranceContent)
+            .keyword(keyword)
             .deleteYn('N')
             .build();
   }
