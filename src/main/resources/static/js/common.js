@@ -34,11 +34,22 @@ const asteriskName = (name) => {
  * @returns {string}
  */
 const sliceMobile = (mobile) => {
-    if(mobile.length <= 0){
-        return mobile
-    }
-    return mobile.substring(0,mobile.length-4) + "****";
+    return isEmpty(mobile) ? "" : mobile.substring(0,mobile.length-4) + "****";
 }
+
+const isEmpty = (input) => {
+    if (
+        typeof input === "undefined" ||
+        input === null ||
+        input === "" ||
+        input === "null" ||
+        input.length === 0 ||
+        (typeof input === "object" && !Object.keys(input).length)
+    ) {
+        return true;
+    } else
+        return false;
+};
 
 /**
  * 주민번호 뒷번호 한자리 빼고 *처리 함수
