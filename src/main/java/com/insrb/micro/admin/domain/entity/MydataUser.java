@@ -93,7 +93,7 @@ public class MydataUser extends CommonEntity {
     this.deleteYn            = deleteYn;
   }
 
-  public void update(MydataUserApiReq mydataUserApiReq) {
+  public void update(MydataUserApiReq mydataUserApiReq) throws Exception {
     this.userEmail = mydataUserApiReq.getUserEmail();
     this.phoneAgency         = mydataUserApiReq.getPhoneAgency();
     this.phoneRole           = mydataUserApiReq.getPhoneRole();
@@ -159,4 +159,13 @@ public class MydataUser extends CommonEntity {
     this.deleteYn            = deleteYn;
   }
 
+  public void updateEncryptedValues(String encryptedJuminFront,String encryptedJuminBack) {
+    this.residentNumberBack = encryptedJuminBack;
+    this.residentNumberFront = encryptedJuminFront;
+  }
+
+  public void updateDecryptedValues(String encryptedJuminFront,String encryptedJuminBack) {
+    this.residentNumberBack = encryptedJuminBack;
+    this.residentNumberFront = encryptedJuminFront;
+  }
 }

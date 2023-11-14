@@ -47,6 +47,12 @@ $(document).ready(function () {
         defaultContent:'',
       },
       {
+        targets: [2],
+        render: function (data, type, full, meta) {
+          return `${asteriskName(data)}`
+        }
+      },
+      {
         targets: [6],
         render: function (data, type, full, meta) {
           if(data === 'N'){
@@ -146,7 +152,7 @@ const handleDetailForm = (id) => {
       console.log(res)
       $("#edit_deleteYn").val(res.deleteYn).prop("selected",true);
       const id = $("#edit_id").text(res.id);
-      const userName = $("#edit_userName").text(res.username);
+      const userName = $("#edit_userName").text(res.userName);
       const userEmail = $("#edit_userEmail").text(res.userEmail);
       const phoneAgency = $("#edit_phoneAgency").text(res.phoneAgency);
       const phoneRole = $("#edit_phoneRole").text(res.phoneRole);

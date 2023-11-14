@@ -6,12 +6,21 @@ import com.insrb.micro.api.domain.dto.response.MydataUserApiResponseDto;
 import com.insrb.micro.api.exception.CustomException;
 import com.insrb.micro.api.exception.ErrorCode;
 import com.insrb.micro.api.repository.MydataUserApiRepository;
+import com.insrb.micro.utils.cyper.AESUtil;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
+
+import java.util.Base64;
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,13 +41,27 @@ public class MydataUserApiService {
     } else {
       list = mydataUserApiRepository.findAllById(id, Sort.by(Sort.Direction.DESC, "id"));
     }
+    System.out.println(list);
 
-    return list.stream().map(MydataUserApiResponseDto::new).collect(Collectors.toList());
+    return list.stream()
+        .map(
+            mydataUser -> {
+              try {
+                String juminFront= AESUtil.decrypt(mydataUser.getResidentNumberFront());
+                String juminBack = AESUtil.decrypt(mydataUser.getResidentNumberBack());
+                mydataUser.updateDecryptedValues(juminFront, juminBack);
+              } catch (Exception e) {
+                e.printStackTrace();
+              }
+
+              return new MydataUserApiResponseDto(mydataUser);
+            }
+            ).collect(Collectors.toList());
   }
 
   //업데이트
   @javax.transaction.Transactional
-  public Long mydataUserUpdate(MydataUserApiReq params) {
+  public Long mydataUserUpdate(MydataUserApiReq params) throws Exception {
 
     MydataUser entity = mydataUserApiRepository.findById(params.getUserId())
         .orElseThrow(() -> new IllegalArgumentException());
@@ -54,7 +77,6 @@ public class MydataUserApiService {
     return entity.getId();
   }
 
-
   /**
    * 마이데이터 회원 정보 저장
    *
@@ -63,15 +85,20 @@ public class MydataUserApiService {
    * @return
    */
   @Transactional
-  public long userSave(MydataUserApiReq params) {
+  public long userSave(MydataUserApiReq params) throws Exception {
+
     MydataUser entity = mydataUserApiRepository.save(params.toEntity());
 
     if (entity == null) {
       throw new CustomException(ErrorCode.FAIL_NOT_SAVE);
     }
 
+    entity.updateEncryptedValues(AESUtil.encrypt(entity.getResidentNumberFront()), AESUtil.encrypt(entity.getResidentNumberBack()));
+
     return entity.getId();
   }
+
+
 
   /**
    * 마이데이터 회원 중복 확인

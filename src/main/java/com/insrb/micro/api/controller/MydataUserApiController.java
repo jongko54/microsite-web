@@ -37,14 +37,16 @@ public class MydataUserApiController {
 
     @Operation(summary = "회원 저장", tags = "mydataUser API")
     @PostMapping(value = "/mydataUserSave") //RequestParam("id") long id,
-    public ApiResponse mydataUserSave(@RequestBody MydataUserApiRequestDto.MydataUserApiReq params) {
+    public ApiResponse mydataUserSave(@RequestBody MydataUserApiRequestDto.MydataUserApiReq params)
+        throws Exception {
 
         return ResponseUtil.SUCCESS(SuccessCode.SUCCESS_OK, mydataUserApiService.userSave(params));
     }
 
     @ResponseBody
     @PutMapping(path = "/mydataUserUpdate")
-    public ApiResponse mydataUserUpdate(@RequestBody final MydataUserApiReq params) {
+    public ApiResponse mydataUserUpdate(@RequestBody final MydataUserApiReq params)
+        throws Exception {
 
         return ResponseUtil.SUCCESS(SuccessCode.SUCCESS_OK, mydataUserApiService.mydataUserUpdate(params));
     }
