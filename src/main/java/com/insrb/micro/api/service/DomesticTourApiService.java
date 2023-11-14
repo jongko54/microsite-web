@@ -35,6 +35,8 @@ public class DomesticTourApiService {
 
     @Transactional
     public long domesticTourSave(DomesticTourApiReq params) {
+        long userId = tokenProvider.getAutId();
+        params.setUserId(userId);
         DomesticTourApi entity = domesticTourApiRepository.save(params.toEntity());
 
         if (entity == null) {
