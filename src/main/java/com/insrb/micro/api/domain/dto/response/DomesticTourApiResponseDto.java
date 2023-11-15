@@ -15,7 +15,10 @@ public class DomesticTourApiResponseDto {
   private Long id;
   private Long userId;
   private String userName;
-  private String createdDate;
+  private String juminFront;
+  private String juminBack;
+  private String phoneNum;
+  private String email;
   private String period;
   private char gubun;
   private Date startDate;
@@ -23,6 +26,7 @@ public class DomesticTourApiResponseDto {
   private String travelPurpose;
   private String beforePayment;
   private int fee;
+  private String createdDate;
   private List<TripBojangResponseDto> tripBojangResponseDtos;
 
   public DomesticTourApiResponseDto(DomesticTourApi entity, List<TripBojangResponseDto> tripBojangResponseDtos) {
@@ -30,6 +34,10 @@ public class DomesticTourApiResponseDto {
     this.createdDate = Utils.getYYYY_MM_DD(entity.getCreatedDate());
     this.userId = entity.getUserId();
     this.userName = entity.getUserName();
+    this.juminFront = entity.getJuminFront();
+    this.juminBack = entity.getJuminBack();
+    this.phoneNum = entity.getPhoneNum();
+    this.email = entity.getEmail();
     this.period = entity.getPeriod();
     this.gubun = entity.getGubun();
     this.startDate = entity.getStartDate();
