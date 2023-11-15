@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>관리자 페이지</title>
+</head>
+
+<th:block layout:fragment="script">
+    <script type="text/javascript" th:src="@{/js/log/joinlog.js}">alert("eeee");</script>
+</th:block>
+
+<div class="container-fluid" layout:fragment="content">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">접속 로그관리</h1>
+    </div>
+    <!--div-- class="button-wrap">
+    <span class="search-btn">
+      <select id="searchType" class="form-select-sm ">
+        <option value="3">아이디</option>
+        <option value="5">접속시간</option>
+      </select>
+      <input type="text" id="searchInput" class="form-control bg-light border-1 d-inline-block" onkeyup="if(window.event.keyCode ==13){searchBtn()}" placeholder="Search..." style="padding-bottom: 0.7rem; width: 60% !important;">
+      <button class="btn btn-primary" id="searchBtn" th:onclick="searchBtn()"><i class="fas fa-search fa-sm"></i></button>
+    </span>
+    </div-->
+    <div>
+        <table id="community_table" class="table table-hover" style="width: 100%">
+            <thead>
+            <tr>
+                <th scope="col">번호</th>
+                <th scope="col">아이디</th>
+                <th scope="col">로그인시간</th>
+                <th scope="col">종료시간</th>
+                <th scope="col">수행업무</th>
+                <th scope="col">접속IP</th>
+            </tr>
+
+            </thead>
+        </table>
+    </div>
+
+</div>
+</html>

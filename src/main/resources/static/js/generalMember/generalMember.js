@@ -49,6 +49,18 @@ $(document).ready(function () {
                 defaultContent:'',
             },
             {
+                targets: [3],
+                render: function (data, type, full, meta){
+                    return `${asteriskName(data)}`
+                }
+            },
+            {
+                targets: [4],
+                render: function (data, type, full, meta){
+                    return `${sliceMobile(data)}`
+                }
+            },
+            {
                 targets: [5],
                 render: function (data, type, full, meta){
                     //주소랑 상세주소 합쳐서 출력해주기 위함

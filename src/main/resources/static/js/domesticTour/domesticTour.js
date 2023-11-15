@@ -48,6 +48,12 @@ $(document).ready(function () {
         defaultContent:'',
       },
       {
+        targets: [2],
+        render: function (data, type, full, meta){
+          return `${asteriskName(data)}`
+        }
+      },
+      {
         targets: [7],
         render: function (data, type, full, meta) {
           if(data === 'N'){

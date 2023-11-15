@@ -13,13 +13,43 @@ const sliceText = (text) =>{
 }
 
 /**
+ * 이름 가운데 *처리 함수
+ * @param name (주민번호)
+ * @returns {string}
+ */
+const asteriskName = (name) => {
+    if (name.length <= 2) {
+        return name.replace(name.substring(0, 1), "*");
+    }
+    return (
+        name[0] +
+        "*".repeat(name.substring(1, name.length - 1).length) +
+        name[name.length - 1]
+    );
+}
+
+/**
  * 휴대폰번호 마지막 4자리 *처리 함수
  * @param mobile (휴대폰번호)
  * @returns {string}
  */
 const sliceMobile = (mobile) => {
-    return mobile.substring(0,mobile.length-4) + "****";
+    return isEmpty(mobile) ? "" : mobile.substring(0,mobile.length-4) + "****";
 }
+
+const isEmpty = (input) => {
+    if (
+        typeof input === "undefined" ||
+        input === null ||
+        input === "" ||
+        input === "null" ||
+        input.length === 0 ||
+        (typeof input === "object" && !Object.keys(input).length)
+    ) {
+        return true;
+    } else
+        return false;
+};
 
 /**
  * 주민번호 뒷번호 한자리 빼고 *처리 함수

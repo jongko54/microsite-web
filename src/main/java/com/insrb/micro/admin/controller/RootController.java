@@ -120,7 +120,11 @@ public class RootController {
         return "pages/unjoin/unjoin";
     }
 
-
+    //접속로그 페이지
+    @GetMapping(path = "/joinLog")
+    public String joinlog(){
+        return "pages/log/joinLog";
+    }
     @GetMapping(path = "/batch")
     public String batchForm(){
         return "pages/batch/batchList";
