@@ -13,6 +13,10 @@ public class TripBojangResponseDto {
     private long bSelfMoney;
     private char bFlag;
     private LocalDateTime bDueDate;
+    private int order;
+    private String displayName;
+    private int category;
+
 
     public TripBojangResponseDto(TripBojang mappingToEntity) {
         this.bCode = mappingToEntity.getBCode();
@@ -21,5 +25,8 @@ public class TripBojangResponseDto {
         this.bSelfMoney = mappingToEntity.getBSelfMoney();
         this.bFlag = mappingToEntity.getBFlag();
         this.bDueDate = mappingToEntity.getBDueDate();
+        this.order = mappingToEntity.getOrder();
+        this.displayName = mappingToEntity.getDisplayName();
+        this.category = mappingToEntity.getCategory();
     }
 }

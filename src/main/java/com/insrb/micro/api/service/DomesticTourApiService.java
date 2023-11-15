@@ -76,7 +76,7 @@ public class DomesticTourApiService {
     }
 
     private List<TripBojangResponseDto> mappingToGubun(char gubun) {
-        return tripBojangRepository.findBybFlag(gubun)
+        return tripBojangRepository.findBybFlagOrderByOrderAsc(gubun)
                 .stream()
                 .map(TripBojangResponseDto::new)
                 .collect(Collectors.toList());

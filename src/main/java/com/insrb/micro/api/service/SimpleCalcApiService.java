@@ -59,7 +59,7 @@ public class SimpleCalcApiService {
 
 
     private List<TripBojangResponseDto> mappingToGubun(char gubun) {
-        return tripBojangRepository.findBybFlag(gubun)
+        return tripBojangRepository.findBybFlagOrderByOrderAsc(gubun)
                 .stream()
                 .map(TripBojangResponseDto::new)
                 .collect(toList());

@@ -24,9 +24,13 @@ public class TripBojang {
     private long bSelfMoney;
     private char bFlag;
     private LocalDateTime bDueDate;
+    private int order;
+    private String displayName;
+    private int category;
 
     @Builder
-    public TripBojang( long bCode, String bName, long bMoney, long bSelfMoney, char bFlag, LocalDateTime bDueDate) {
+    public TripBojang( long bCode, String bName, long bMoney, long bSelfMoney, char bFlag, LocalDateTime bDueDate, int order,
+                       String displayName, int category) {
 
         this.bCode = bCode;
         this.bName = bName;
@@ -34,5 +38,8 @@ public class TripBojang {
         this.bSelfMoney = bSelfMoney;
         this.bFlag = bFlag;
         this.bDueDate = bDueDate;
+        this.order = order;
+        this.displayName = displayName;
+        this.category = category;
     }
 }

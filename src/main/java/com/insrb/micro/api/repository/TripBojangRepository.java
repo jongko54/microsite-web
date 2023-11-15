@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface TripBojangRepository extends JpaRepository<TripBojang, Long> {
-    List<TripBojang> findBybFlag(char bFlag);
+    List<TripBojang> findBybFlagOrderByOrderAsc(char bFlag);
 }
