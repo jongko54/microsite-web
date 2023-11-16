@@ -1,7 +1,11 @@
 package com.insrb.micro.api.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.insrb.micro.api.exception.CustomException;
+import com.insrb.micro.api.exception.ErrorCode;
 import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +20,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.net.http.HttpResponse;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -59,13 +66,40 @@ public class OcrController {
 //        return false;
 //    }
 
-    public File convertFile(MultipartFile mfile) throws IOException {
-        File file = new File(mfile.getOriginalFilename());
-        file.createNewFile();
+    public File convertFile(MultipartFile mfile)  {
+        String originalFileName = mfile.getOriginalFilename();
+        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
 
-        FileOutputStream fos = new FileOutputStream(file);
-        fos.write(mfile.getBytes());
-        fos.close();
+
+        if(originalFileName == null){
+            throw new CustomException(ErrorCode.BAD_REQUEST);
+        }
+
+        if(extension.equals("doc") || extension.equals("pdf") || extension.equals("hwp") ||
+                extension.equals("xls")){
+            throw new CustomException(ErrorCode.BAD_REQUEST);
+        }
+
+        File file = new File(originalFileName);
+
+        FileOutputStream fos = null;
+        try {
+            file.createNewFile();
+
+
+
+            fos = new FileOutputStream(file);
+            fos.write(mfile.getBytes());
+            fos.close();
+        } catch (IOException e) {
+            System.out.println("IOException OCR 파일 예외발생");
+        }finally {
+            try{
+                fos.close();
+            }catch (IOException e){
+                System.out.println("IOException 파일 예외발생");
+            }
+        }
 
         return file;
     }
@@ -219,8 +253,10 @@ public class OcrController {
      */
     @PostMapping(path = "/getIdCardOcr")
     @ResponseBody
-    public Map<String, Object> getIdCardOcr(@RequestParam("file") MultipartFile multipartFile,@RequestParam("type") String type) {
+    public Map<String, Object> getIdCardOcr(@RequestParam("file") MultipartFile multipartFile,@RequestParam("type") String type){
         Map<String, Object> rtnMap = new HashMap<String, Object>();
+        DataOutputStream wr = null;
+        BufferedReader br = null;
         try {
             File file = convertFile(multipartFile);
             String fileName = file.getName();
@@ -252,13 +288,13 @@ public class OcrController {
             String postParams = json.toString();
 
             con.connect();
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr = new DataOutputStream(con.getOutputStream());
 
             writeMultiPart(wr, postParams, file, boundary);
             wr.close();
 
             int responseCode = con.getResponseCode();
-            BufferedReader br;
+            
             if (responseCode == 200) {
                 br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
             } else {
@@ -272,19 +308,32 @@ public class OcrController {
                 response.append(inputLine);
             }
             br.close();
-            System.out.println("response =====> " + response);
+            log.debug("response =====> " + response);
             rtnMap = getOcrResult(response.toString(), false, type);
 
             System.out.println("test -------->" + rtnMap.toString());
-            if( file.exists() ){
-                if(file.delete()){
+            if (file.exists()) {
+                if (file.delete()) {
                     System.out.println("파일삭제 성공");
-                }else{
+                } else {
                     System.out.println("파일삭제 실패");
                 }
             }
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (ProtocolException e) {
+            System.out.println("ProtocolException OCR 프로토콜 예외발생");
+        } catch (MalformedURLException e) {
+            System.out.println("MalformedURLException OCR 프로토콜 예외발생");
+        } catch (UnsupportedEncodingException e) {
+            System.out.println("UnsupportedEncodingException OCR 인코딩 예외발생");
+        } catch (IOException e) {
+            System.out.println("ProtocolException OCR 파일 예외발생");
+        }finally {
+            try{
+                wr.close();
+                br.close();
+            }catch (IOException e){
+                System.out.println("IOException OCR 파일 예외발생");
+            }
         }
 
         return rtnMap;
@@ -361,8 +410,8 @@ public class OcrController {
                                 Date originalDate = originalFormat.parse(dateStr);
                                 String newDate = newFormat.format(originalDate);
                                 textArr = new ArrayList<>(Arrays.asList(newDate.split("/")));
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                            } catch (ParseException e) {
+                                System.out.println("Exception OCR 파싱 예외발생");
                             }
                         } else {
                             textArr.add(value.get(i).get("text").toString());
@@ -399,8 +448,8 @@ public class OcrController {
                                 Date originalDate = originalFormat.parse(dateStr);
                                 String newDate = newFormat.format(originalDate);
                                 textArr = new ArrayList<>(Arrays.asList(newDate.split("/")));
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                            } catch (ParseException e) {
+                                System.out.println("Exception OCR 파싱 예외발생");
                             }
                         }
                         else {
@@ -412,11 +461,10 @@ public class OcrController {
                 }
             }
 
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            System.out.println("JsonMappingException OCR JSON 매핑 예외발생");
+        } catch (JsonProcessingException e) {
+            System.out.println("JsonMappingException OCR JSON 프로세싱 예외발생");
         }
 
         return rtnMap;

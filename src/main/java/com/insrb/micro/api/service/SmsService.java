@@ -17,6 +17,7 @@ import net.nurigo.sdk.message.service.DefaultMessageService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.security.SecureRandom;
 import java.util.Optional;
 import java.util.Random;
 
@@ -139,7 +140,7 @@ public class SmsService {
      */
     public String createKey(){
         StringBuffer key = new StringBuffer();
-        Random rnd = new Random();
+        SecureRandom rnd = new SecureRandom();
 
         for(int i=0; i<5; i++){
             key.append((rnd.nextInt(10)));

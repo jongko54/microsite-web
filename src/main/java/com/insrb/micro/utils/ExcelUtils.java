@@ -105,9 +105,9 @@ public class ExcelUtils {
 
 
          }catch (InvalidFormatException e){
-             e.printStackTrace();
+             System.out.println("InvalidFormatException 유효하지 않은 포맷");
          } catch (IOException e) {
-             e.printStackTrace();
+             System.out.println("IOException 엑셀 업로드 예외 발생");
          }finally {
              opcPackage.close();
          }

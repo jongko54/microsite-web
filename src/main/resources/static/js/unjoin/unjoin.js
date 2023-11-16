@@ -40,7 +40,7 @@ $(document).ready(function () {
             {
                 targets: [3],
                 render: function (data, type, full, meta) {
-                    return sliceMobile(data);
+                    return data;
                 }
             },
             {
@@ -200,10 +200,10 @@ const handleDetailForm = (id) => {
             $("#edit_address").text(res.address);
             $("#edit_detail_address").text(res.detail_addr);
             $("#edit_flag").text(res.flag);
-            $("#edit_mobile").text(sliceMobile(res.mobile));
+            $("#edit_mobile").text(res.mobile);
             $("#edit_regdate").text(res.regdate);
             $("#edit_front_jumin").text(res.regi_birth_front);
-            $("#edit_back_jumin").text(sliceJumin(res.regi_birth_back));
+            $("#edit_back_jumin").text(res.regi_birth_back);
             $("#edit_area").text(res.area);
             $("#edit_floor_low").text(res.floor_low);
             $("#edit_floor_high").text(res.floor_high);

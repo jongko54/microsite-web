@@ -6,7 +6,6 @@ import com.insrb.micro.admin.domain.entity.Community;
 import com.insrb.micro.admin.domain.entity.Unjoin;
 import com.insrb.micro.admin.domain.entity.common.Paging;
 import com.insrb.micro.admin.repository.UnjoinRepository;
-import com.insrb.micro.utils.cyper.UserInfoCyper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
@@ -79,7 +78,7 @@ public class UnjoinService {
 
         listToDto.forEach(data -> {
             try {
-                data.setMobile(UserInfoCyper.DecryptInfo(data.getMobile()));
+//                data.setMobile(UserInfoCyper.DecryptInfo(data.getMobile()));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -138,7 +137,7 @@ public class UnjoinService {
 
 
         }catch (IOException e){
-            e.printStackTrace();
+            System.out.println("IOException 엑셀다운로드 예외발생");
         }
 
     }
@@ -150,8 +149,8 @@ public class UnjoinService {
 
         list.forEach(m->{
             try {
-                m.setMobile(UserInfoCyper.DecryptInfo(m.getMobile().toString()));
-                m.setRegi_birth_back(UserInfoCyper.DecryptInfo(m.getRegi_birth_back().toString()));
+//                m.setMobile(UserInfoCyper.DecryptInfo(m.getMobile().toString()));
+//                m.setRegi_birth_back(UserInfoCyper.DecryptInfo(m.getRegi_birth_back().toString()));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

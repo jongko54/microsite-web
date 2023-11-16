@@ -3,6 +3,8 @@ package com.insrb.micro.admin.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
+import com.insrb.micro.api.exception.CustomException;
+import com.insrb.micro.api.exception.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,18 +37,27 @@ public class FileManageController {
         log.info("Editor Image Upload {}", multipartFile.getOriginalFilename());
 
 
-
         String fileRoot = root+name+"/";	//저장될 파일 경로
 
-        System.out.println("파일 경로" + fileRoot);
-
         String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
+
+        if(originalFileName == null){
+            throw new CustomException(ErrorCode.BAD_REQUEST);
+        }
+
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
 
         // 랜덤 UUID+확장자로 저장될 savedFileName
         String savedFileName = UUID.randomUUID() + extension;
 
-        File targetFile = new File(fileRoot + savedFileName);
+        File targetFile = null;
+
+        if(extension.equals("doc") || extension.equals("pdf") || extension.equals("hwp") ||
+             extension.equals("xls")){
+            throw new CustomException(ErrorCode.BAD_REQUEST);
+        }
+
+        targetFile = new File(fileRoot + savedFileName);
 
         HashMap<String, Object> res = new HashMap<>();
         res.put("url","/summernoteImage/"+ name + "/" + savedFileName);
@@ -65,7 +76,7 @@ public class FileManageController {
             res.put("responseCode", "error");
             jsonString = objectMapper.writeValueAsString(res);
 
-            e.printStackTrace();
+            System.out.println("IOException 파일 업로드 예외 발생");
         }
 
         return jsonString;

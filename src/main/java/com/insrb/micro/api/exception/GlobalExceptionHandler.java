@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse> handleException(final Exception e) {
-        log.error("handleException: {}", e.getMessage());
+        log.error("handleException: {}", "서버내부 에러 발생");
         return ResponseEntity
                 .status(ErrorCode.INTERNAL_SERVER_ERROR.getStatus().value())
                 .body(new ErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR));

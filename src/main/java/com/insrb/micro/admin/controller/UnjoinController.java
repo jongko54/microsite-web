@@ -3,7 +3,6 @@ package com.insrb.micro.admin.controller;
 import com.insrb.micro.admin.domain.dto.response.UnjoinResDto;
 import com.insrb.micro.admin.domain.entity.common.Paging;
 import com.insrb.micro.admin.service.UnjoinService;
-import com.insrb.micro.utils.cyper.UserInfoCyper;
 import com.nimbusds.openid.connect.sdk.claims.UserInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,8 +35,8 @@ public class UnjoinController {
 
         UnjoinResDto res = unjoinService.selectOne(id);
 
-        res.setRegi_birth_back(UserInfoCyper.DecryptInfo(res.getRegi_birth_back()));
-        res.setMobile(UserInfoCyper.DecryptInfo(res.getMobile()));
+//        res.setRegi_birth_back(UserInfoCyper.DecryptInfo(res.getRegi_birth_back()));
+//        res.setMobile(UserInfoCyper.DecryptInfo(res.getMobile()));
 
         return res;
     }

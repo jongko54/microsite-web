@@ -131,7 +131,7 @@ public class InsuAgentService {
 
 
         }catch (IOException e){
-            e.printStackTrace();
+            System.out.println("IOException 엑셀 양식 다운로드 예외 발생");
         }
     }
 

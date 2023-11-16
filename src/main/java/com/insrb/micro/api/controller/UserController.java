@@ -175,9 +175,9 @@ public class UserController {
             } catch (NurigoMessageNotReceivedException exception) {
                 // 발송에 실패한 메시지 목록을 확인할 수 있습니다!
                 System.out.println(exception.getFailedMessageList());
-                System.out.println(exception.getMessage());
+                System.out.println("NurigoMessageNotReceivedException 발송실패");
             } catch (Exception exception) {
-                System.out.println(exception.getMessage());
+                System.out.println("Exception 알림톡 발송 예외발생");
             }
 
 

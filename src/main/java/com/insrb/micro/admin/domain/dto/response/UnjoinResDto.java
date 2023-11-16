@@ -1,10 +1,7 @@
 package com.insrb.micro.admin.domain.dto.response;
 
 import com.insrb.micro.admin.domain.entity.Unjoin;
-import com.insrb.micro.utils.cyper.UserInfoCyper;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 

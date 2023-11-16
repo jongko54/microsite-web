@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.security.SecureRandom;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -30,7 +31,7 @@ class SmsServiceTest {
     @DisplayName("랜덤값 테스트")
     void rnd(){
         StringBuffer key = new StringBuffer();
-        Random rnd = new Random();
+        SecureRandom rnd = new SecureRandom();
 
         for(int i=0; i<5; i++){
             key.append((rnd.nextInt(10)));

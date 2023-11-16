@@ -7,6 +7,8 @@ import com.insrb.micro.admin.domain.entity.Community;
 import com.insrb.micro.admin.domain.entity.common.Paging;
 import com.insrb.micro.admin.repository.BatchRepository;
 import com.insrb.micro.api.common.ApiResponse;
+import com.insrb.micro.api.exception.CustomException;
+import com.insrb.micro.api.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -56,9 +58,14 @@ public class BatchService {
             list = batchRepository.findAll(pageable);
         }
 
+
         List<BatchResDto> listToDto = list.stream().map(BatchResDto::new).collect(Collectors.toList());
 
         int total = Long.valueOf(list.getTotalElements()).intValue();
+
+        if(listToDto.isEmpty() || listToDto.equals(null) || (Integer)total == null){
+            throw new CustomException(ErrorCode.BAD_REQUEST);
+        }
 
         pagingDto.setDraw(draw);
         pagingDto.setRecordsFiltered(total);
