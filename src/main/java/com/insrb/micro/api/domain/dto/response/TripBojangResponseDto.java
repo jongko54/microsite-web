@@ -13,9 +13,9 @@ public class TripBojangResponseDto {
     private long bSelfMoney;
     private char bFlag;
     private LocalDateTime bDueDate;
-    private int order;
+    private Integer order;
     private String displayName;
-    private int category;
+    private Integer category;
 
 
     public TripBojangResponseDto(TripBojang mappingToEntity) {

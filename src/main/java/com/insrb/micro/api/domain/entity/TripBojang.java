@@ -24,9 +24,10 @@ public class TripBojang {
     private long bSelfMoney;
     private char bFlag;
     private LocalDateTime bDueDate;
-    private int order;
+    @Column(name="b_order")
+    private Integer order;
     private String displayName;
-    private int category;
+    private Integer category;
 
     @Builder
     public TripBojang( long bCode, String bName, long bMoney, long bSelfMoney, char bFlag, LocalDateTime bDueDate, int order,
