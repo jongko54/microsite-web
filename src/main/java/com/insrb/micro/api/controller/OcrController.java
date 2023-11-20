@@ -30,7 +30,7 @@ import java.util.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/ocr")
+@RequestMapping("api/pubilc/ocr")
 public class OcrController {
 
     private static final String TMAX_KEY = "key";
