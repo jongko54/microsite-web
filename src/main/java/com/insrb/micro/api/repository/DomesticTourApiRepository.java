@@ -8,9 +8,10 @@ import java.util.Optional;
 
 public interface DomesticTourApiRepository extends JpaRepository<DomesticTourApi, Long> {
 
-
     List<DomesticTourApi> findAllByUserIdAndDeleteYnOrderByCreatedDateDesc(long userId, char deleteYn);
-
     Optional<DomesticTourApi> findByIdAndUserIdAndDeleteYn(long id, long userId, char deleteYn);
 
+    List<DomesticTourApi> findByUserIdAndBeforePaymentAndDeleteYn(long userId, String beforePayment, char deleteYn);
+
+    void deleteAllByUserIdAndIdIn(long userId, List<Long> ids);
 }

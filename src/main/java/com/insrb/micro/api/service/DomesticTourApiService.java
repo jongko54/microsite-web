@@ -37,6 +37,14 @@ public class DomesticTourApiService {
     public long domesticTourSave(DomesticTourApiReq params) {
         long userId = tokenProvider.getAutId();
         params.setUserId(userId);
+
+        List<Long> ids = domesticTourApiRepository.findByUserIdAndBeforePaymentAndDeleteYn(userId, "Y", 'N')
+                .stream()
+                .map(DomesticTourApi::getId)
+                .collect(Collectors.toList());
+
+        domesticTourApiRepository.deleteAllByUserIdAndIdIn(userId, ids);
+
         DomesticTourApi entity = domesticTourApiRepository.save(params.toEntity());
 
         if (entity == null) {
